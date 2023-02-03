@@ -1,0 +1,178 @@
+<!-- location/listComuni.html v.1.0.0. 10/02/2021 -->
+
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-sm-4">
+		<h2>{{ App.pageTitle }} - <small>{{ App.pageSubTitle }}</small></h2>
+	</div>
+	<div class="col-sm-8">
+		<div class="title-action">
+			 <a href="{{ URLSITE }}{{ CoreRequest.action }}/newComuni" title="{{ LocalStrings['['inserisci un nuovo %ITEM%']|replace({'%ITEM%': LocalStrings['['comune']})|capitalize }}" class="btn btn-primary">{{ LocalStrings['['nuovo %ITEM%']|replace({'%ITEM%': LocalStrings['['comune']})|capitalize }}</a>			
+		</div>
+	</div>
+</div>
+
+<div class="wrapper wrapper-content">
+	
+	{% if (App.systemMessages is defined) and (App.systemMessages != '') %}
+		<div class="row">
+			{{ App.systemMessages|raw }}
+		</div>
+	{% endif %}
+
+	<div class="row my-3">
+		<div class="col">
+			<strong>{{ LocalStrings['['impostazioni']|capitalize }} {{ LocalStrings['['modulo'] }}</strong>
+		</div>
+		<div class="col">
+			<a href="{{ URLSITE }}{{ CoreRequest.action }}/listNation" title="{{ LocalStrings['['gestisci %ITEM%']|replace({'%ITEM%':LocalStrings['['nazioni'] })|capitalize }}" class="btn btn-sm btn-primary">{{ LocalStrings['['nazioni']|capitalize }}</a>
+		</div>
+		<div class="col">
+			<a href="{{ URLSITE }}{{ CoreRequest.action }}/listProvin" title="{{ LocalStrings['['gestisci %ITEM%']|replace({'%ITEM%':LocalStrings['['province'] })|capitalize }}" class="btn btn-sm btn-primary">{{ LocalStrings['['province']|capitalize }}</a>
+		</div>
+		<div class="col">
+			<a href="{{ URLSITE }}{{ CoreRequest.action }}/listComuni" title="{{ LocalStrings['['gestisci %ITEM%']|replace({'%ITEM%':LocalStrings['['comuni'] })|capitalize }}" class="btn btn-sm btn-primary">{{ LocalStrings['['comuni']|capitalize }}</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">			
+		   <div class="ibox">
+			   <div class="ibox-content">
+
+				<form class="m-2" id="frm-filters" action="{{ URLSITE }}{{ CoreRequest.action }}/listComuni" method="POST">	
+					<fieldset class="pt-2">
+						<div class="form-group row">
+							 <label for="location_province_idID" class="col-sm-12 col-md-6 col-lg-2 col-xl-2 control-label text-right">{{ LocalStrings['['provincia']|capitalize }}</label>
+							<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+								<select id="location_province_idID" name="filters[location_province_id]" class="custom-select">	
+									<option value=""></option>										
+									{% if App.location_province is iterable %}
+										{% for key,value in App.location_province %}	
+											<option{% if Session[App.sessionName]['filters']['location_province_id'] is defined and Session[App.sessionName]['filters']['location_province_id'] == value.id %} selected="selected"{% endif %} value="{{ value.id }}">
+												{{ value.nome }}
+											</option>
+										{% endfor %}
+									{% endif %}	
+								</select>
+							</div>					
+							<button type="submit" class="btn btn-success btn-sm">Filtra</button>
+						</div>			
+					</fieldset>
+				</form>
+
+				   	<form role="form" action="{{ URLSITE }}{{ CoreRequest.action }}/listComuni" method="post" enctype="multipart/form-data">
+
+					   	<div class="row">
+						   <div class="col-sm-5 m-b-xs">
+							   <div class="form-group row">
+								   <label class="col-sm-4 col-form-label">{{ LocalStrings['['voci per pagina']|capitalize }}</label>
+								   <div class="col-sm-2">
+									   <select class="form-control input-sm" name="itemsforpage" onchange="this.form.submit();" >
+										   <option value="5"{% if App.itemsForPage == 5 %} selected="selected"{% endif %}>5</option>
+										   <option value="10"{% if App.itemsForPage == 10 %} selected="selected"{% endif %}>10</option>
+										   <option value="25"{% if App.itemsForPage == 25 %} selected="selected"{% endif %}>25</option>
+										   <option value="50"{% if App.itemsForPage == 50 %} selected="selected"{% endif %}>50</option>
+										   <option value="100"{% if App.itemsForPage == 100 %} selected="selected"{% endif %}>100</option>
+									   </select>
+								   </div>
+								   
+							   </div>
+						   </div>
+						   <div class="col-sm-4 m-b-xs">
+						   </div>
+
+						   <div class="col-sm-3">
+							   <div class="form-group row">
+								   <label class="col-md-5 col-form-label">{{ LocalStrings['['cerca']|capitalize }}</label>
+								   <div class="col-sm-7">
+									   <input name="searchFromTable" value="{% if MySessionVars[App.sessionName]['srcTab'] is defined and  MySessionVars[App.sessionName]['srcTab'] != '' %}{{ MySessionVars[App.sessionName]['srcTab']|e('html') }}{% endif %}" class="form-control input-sm" type="search" onchange="this.form.submit();">
+								   </div>
+							   </div>			
+						   </div>
+					   	</div>
+
+						<div class="table-responsive">				
+							<table class="table table-striped listData">
+								<thead>
+									<tr>
+										{% if App.userLoggedData.is_root == 1 %}
+											<th class="id">ID</th>							
+										{% endif %}
+										<th>{{ LocalStrings['['titolo']|capitalize }}</th>							
+										<th>{{ LocalStrings['['cap']|upper }}</th>	
+										<th>{{ LocalStrings['['provincia']|capitalize }}</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>				
+									{% if App.items is iterable and App.items|length > 0 %}
+										{% for key,value in App.items %}					
+											<tr>
+												{% if App.userLoggedData.is_root == 1 %}
+													<td class="id">{{ value.id }}</td>
+												{% endif %}
+												<td>{{ value.nome }}</td>	
+												<td>{{ value.cap }}</td>
+												<td>{{ value.provincia }}</td>																								
+												<td class="actions">						
+													<a class="btn btn-default" href="{{ URLSITE }}{{ CoreRequest.action }}/{{ value.active == 1 ? 'disactive' : 'active' }}Comuni/{{ value.id }}" title="{{ value.active == 1 ? LocalStrings['['disattiva']|capitalize : LocalStrings['['attiva']|capitalize }} {{ LocalStrings['['comune'] }}"><i class="fa fa-{{ value.active == 1 ? 'unlock' : 'lock' }}"></i></a><a class="btn btn-default" btn-sm" href="{{ URLSITE }}{{ CoreRequest.action }}/modifyComuni/{{ value.id }}" title="{{ LocalStrings['['modifica']|capitalize }} {{ LocalStrings['['comune'] }}"><i class="fa fa-edit"></i></a><a class="btn btn-default confirm" href="{{ URLSITE }}{{ CoreRequest.action }}/deleteComuni/{{ value.id }}" title="{{ LocalStrings['['cancella']|capitalize }} {{ LocalStrings['['comune'] }}"><i class="fa fa-cut"></i></a>										
+												</td>							
+											</tr>	
+										{% endfor %}
+									{% else %}
+										<tr>
+											{% if App.userLoggedData.is_root == 1 %}<td></td>{% endif %}
+											<td colspan="4">{{ LocalStrings['['nessuna voce trovata!']|capitalize }}</td>
+										</tr>
+									{% endif %}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.table-responsive -->
+									
+						{% if App.pagination.itemsTotal > 0 %}
+						<div class="row">
+							<div class="col-md-6">
+								<div class="pagination-info">
+									{{ App.paginationTitle }}
+								</div>	
+							</div>
+							<div class="col-md-6">
+								<nav aria-label="Page navigation example">
+									<ul class="pagination pagination-sm float-right">
+										<li class="page-Nation previous{% if App.pagination.page == 1 %} disabled{% endif %}">
+											<a class="page-link" title="{{ LocalStrings['['pagina']|capitalize }} {{ LocalStrings['['precedente'] }}" href="{{ URLSITE }}{{ CoreRequest.action }}/pageComuni/{{ App.pagination.itemPrevious }}">{{ LocalStrings['['precedente']|capitalize }}</a>
+										</li>
+										
+										{% if App.pagination.pagePrevious is iterable %}
+											{% for key,value in App.pagination.pagePrevious %}
+												<li class="page-item"><a class="page-link" title="{{ LocalStrings['['torna alla pagina %ITEM%']|replace({'%ITEM%':value })|capitalize }}" href="{{ URLSITE }}{{ CoreRequest.action }}/pageComuni/{{ value }}">{{ value }}</a></li>
+											{% endfor %}
+										{% endif %}
+											
+										<li class="page-item active"><a class="page-link active" title="{{ LocalStrings['['pagina corrente']|capitalize }}" href="{{ URLSITE }}{{ CoreRequest.action }}/pageComuni/{{ App.pagination.page }}">{{ App.pagination.page }}</a></li>
+											
+										{% if App.pagination.pageNext is iterable %}
+											{% for key,value in App.pagination.pageNext %}
+												<li class="page-item"><a class="page-link" title="{{ LocalStrings['['torna alla pagina %ITEM%']|replace({'%ITEM%':value })|capitalize }}" href="{{ URLSITE }}{{ CoreRequest.action }}/pageComuni/{{ value }}">{{ value }}</a></li>
+											{% endfor %}
+										{% endif %}
+										
+										
+										<li class="page-Nation next{% if App.pagination.page >= App.pagination.totalpage %} disabled{% endif %}">
+											<a class="page-link" title="{{ LocalStrings['['pagina']|capitalize }} {{ LocalStrings['['prossima'] }}" href="{{ URLSITE }}{{ CoreRequest.action }}/pageComuni/{{ App.pagination.itemNext }}">{{ LocalStrings['['prossima']|capitalize }}</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+						{% endif %}
+	
+	
+					</form>
+
+				</div><!-- end ibox -->		
+  			</div><!-- end ibox -->
+		</div><!-- end col-lg-12 -->
+	</div><!-- end row -->
+</div><!-- end wrapper wrapper-content -->

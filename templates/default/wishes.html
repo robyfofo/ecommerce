@@ -1,0 +1,195 @@
+<!--=== Breadcrumbs ===-->
+{{ App.breadcrumbsBar }}
+<!--=== End Breadcrumbs ===-->
+
+<div class="container g-pt-70 g-pb-30">
+	<div
+		class="row">
+		<!-- Profile Settings -->
+		<div class="col-lg-3 g-mb-50">
+			<aside
+				class="g-brd-around g-brd-gray-light-v4 rounded g-px-20 g-py-30">
+				<!-- Profile Picture -->
+				<div class="text-center g-pos-rel g-mb-30">
+					<div class="g-width-100 g-height-100 mx-auto mb-3">
+						<img class="img-fluid rounded-circle" src="assets/img-temp/100x100/img1.jpg" alt="Image Decor">
+					</div>
+
+					<span class="d-block g-font-weight-500">James Collins</span>
+
+					<span class="u-icon-v3 u-icon-size--xs g-color-white--hover g-bg-primary--hover rounded-circle g-pos-abs g-top-0 g-right-15 g-cursor-pointer" title="Change Profile Picture" data-toggle="tooltip" data-placement="top">
+						<i class="icon-finance-067 u-line-icon-pro"></i>
+					</span>
+				</div>
+				<!-- End Profile Picture -->
+
+				<hr
+				class="g-brd-gray-light-v4 g-my-30">
+
+				<!-- Profile Settings List -->
+				<ul class="list-unstyled mb-0">
+					<li class="g-pb-3">
+						<a class="d-block align-middle u-link-v5 g-color-text g-color-primary--hover g-bg-gray-light-v5--hover rounded g-pa-3" href="page-wallet-1.html">
+							<span class="u-icon-v1 g-color-gray-dark-v5 mr-2">
+								<i class="icon-finance-059 u-line-icon-pro"></i>
+							</span>
+							Your Wallet
+						</a>
+					</li>
+					<li class="g-pb-3">
+						<a class="d-block align-middle u-link-v5 g-color-text g-color-primary--hover g-bg-gray-light-v5--hover rounded g-pa-3" href="page-orders-1.html">
+							<span class="u-icon-v1 g-color-gray-dark-v5 mr-2">
+								<i class="icon-finance-114 u-line-icon-pro"></i>
+							</span>
+							Your Orders
+						</a>
+					</li>
+					<li class="g-py-3">
+						<a class="d-block align-middle u-link-v5 g-color-text g-color-primary--hover g-bg-gray-light-v5--hover rounded g-pa-3" href="page-open-orders-1.html">
+							<span class="u-icon-v1 g-color-gray-dark-v5 mr-2">
+								<i class="icon-finance-115 u-line-icon-pro"></i>
+							</span>
+							Open Orders
+						</a>
+					</li>
+					<li class="g-py-3">
+						<a class="d-block align-middle u-link-v5 g-color-text g-color-primary--hover g-bg-gray-light-v5--hover rounded g-pa-3" href="page-cancelled-orders-1.html">
+							<span class="u-icon-v1 g-color-gray-dark-v5 mr-2">
+								<i class="icon-finance-113 u-line-icon-pro"></i>
+							</span>
+							Cancelled Orders
+						</a>
+					</li>
+					<li class="g-py-3">
+						<a class="d-block align-middle active u-link-v5 g-color-text g-color-primary--hover g-bg-gray-light-v5--hover g-color-primary--parent-active g-bg-gray-light-v5--active rounded g-pa-3" href="page-wishlist-1.html">
+							<span class="u-icon-v1 g-color-gray-dark-v5 mr-2">
+								<i class="icon-medical-022 u-line-icon-pro"></i>
+							</span>
+							Wishlist
+						</a>
+					</li>
+					<li class="g-py-3">
+						<a class="d-block align-middle u-link-v5 g-color-text g-color-primary--hover g-bg-gray-light-v5--hover rounded g-pa-3" href="page-addresses-1.html">
+							<span class="u-icon-v1 g-color-gray-dark-v5 mr-2">
+								<i class="icon-real-estate-027 u-line-icon-pro"></i>
+							</span>
+							Addresses
+						</a>
+					</li>
+					<li class="g-py-3">
+						<a class="d-block align-middle u-link-v5 g-color-text g-color-primary--hover g-bg-gray-light-v5--hover rounded g-pa-3" href="page-payment-options-1.html">
+							<span class="u-icon-v1 g-color-gray-dark-v5 mr-2">
+								<i class="icon-finance-110 u-line-icon-pro"></i>
+							</span>
+							Payment Options
+						</a>
+					</li>
+					<li class="g-py-3">
+						<a class="d-block align-middle u-link-v5 g-color-text g-color-primary--hover g-bg-gray-light-v5--hover rounded g-pa-3" href="page-login-security-1.html">
+							<span class="u-icon-v1 g-color-gray-dark-v5 mr-2">
+								<i class="icon-finance-135 u-line-icon-pro"></i>
+							</span>
+							Login &amp; Security
+						</a>
+					</li>
+					<li class="g-pt-3">
+						<a class="d-block align-middle u-link-v5 g-color-text g-color-primary--hover g-bg-gray-light-v5--hover rounded g-pa-3" href="page-notifications-1.html">
+							<span class="u-icon-v1 g-color-gray-dark-v5 mr-2">
+								<i class="icon-education-033 u-line-icon-pro"></i>
+							</span>
+							Notifications
+						</a>
+					</li>
+				</ul>
+				<!-- End Profile Settings List -->
+			</aside>
+		</div>
+		<!-- End Profile Settings -->
+
+		<!-- Payment Options -->
+		<div
+			class="col-lg-9 g-mb-50">
+			<!-- Products Block -->
+			<div class="rounded g-brd-around g-brd-gray-light-v4 g-overflow-x-scroll g-overflow-x-visible--lg g-pa-30">
+				{% if App.items is iterable  and App.items|length > 0 %}
+					<table id="wishes-tableID" class="text-center w-100">
+						<thead class="h6 g-brd-bottom g-brd-gray-light-v4 g-color-black text-uppercase">
+							<tr>
+								<th class="g-font-weight-500 text-left g-pb-20">{{ LocalStrings['prodotto']|capitalize }}</th>
+								<th class="g-font-weight-500 g-width-130 g-pb-20">{{ LocalStrings['prezzo']|capitalize }}</th>
+								<th class="g-font-weight-500 g-width-50 g-pb-20">{{ LocalStrings['q.tà']|capitalize }}</th>
+								<th class="g-font-weight-500 g-width-130 g-pb-20">{{ LocalStrings['totale']|capitalize }}</th>
+								<th></th>
+							</tr>
+						</thead>
+
+						<tfoot>
+
+							<tr>
+								<td colspan="5" class="text-right py-5">
+									<a href="{{ SITEURL }}{{ CoreRequest.action }}/clearaaaa" title="{{ LocalStrings['cancella']|capitalize }} {{ LocalStrings['lista dei desideri'] }}" class="btn u-btn-red g-brd-primary--hover g-color-white--hover g-bg-primary--hover g-font-size-11 text-uppercase g-py-10 g-px-20 deletewhishes">{{ LocalStrings['cancella']|capitalize }}</a>
+								</td>
+							</tr>
+						</tfoot>
+
+						<tbody>
+							{% if App.items is iterable  and App.items|length > 0 %}
+								{% for key,value in App.items %}
+									<!-- Item-->
+									<tr id="{{ value.id }}" class="g-brd-bottom g-brd-gray-light-v4">
+										<td class="text-left g-py-25">
+											<img class="d-inline-block g-width-100 mr-4" src="{{ UPLOADDIR }}warehouse/products/{{ value.filename }}" alt="{{ value.product_title}}">
+											<div class="d-inline-block align-middle">
+												<h4 class="h6 g-color-black">{{ value.product_title }}</h4>
+												<ul class="list-unstyled g-color-gray-dark-v4 g-font-size-12 g-line-height-1_6 mb-0">
+													<li>Color: Black</li>
+													<li>Size: MD</li>
+												</ul>
+											</div>
+										</td>
+										<td class="g-color-gray-dark-v2 g-font-size-13">€
+											{{ value.price_unity_taxed|number_format(2,'.',',') }}</td>
+										<td>
+											<div data-quantity-min="1" class="js-quantity input-group u-quantity-v1 g-width-80 g-brd-primary--focus">
+  												<input  id="quantity{{ value.id }}ID" class="js-result form-control text-center g-font-size-13 rounded-0 g-pa-0" type="text" value="{{ value.quantity }}" readonly>
+
+												<div  class="input-group-addon d-flex align-items-center g-width-30 g-bg-white g-font-size-12 rounded-0 g-px-5 g-py-6">
+													<i data-id="{{ value.id }}" class="js-plus g-color-gray g-color-primary--hover fa fa-angle-up"></i>
+													<i data-id="{{ value.id }}" class="js-minus g-color-gray g-color-primary--hover fa fa-angle-down"></i>
+												</div>
+											</div>
+										</td>
+										<td class="text-right g-color-black">
+											<span class="g-color-gray-dark-v2 g-font-size-13 mr-4">€ <span id="price_total{{ value.id }}ID">{{ value.price_total|number_format(2,'.',',') }}</span></span>
+											<span class="g-color-gray-dark-v4 g-color-black--hover g-cursor-pointer deleteproduct" data-id="{{ value.id }}">
+												<i class="mt-auto fa fa-trash"></i>
+											</span>
+										</td>
+									</tr>
+									<!-- End Item-->
+								{% endfor %}
+							{% endif %}
+
+
+						</tbody>
+					</table>
+				{% else %}
+					<div class="container text-center g-py-100">
+						<div class="mb-5">
+							<span class="d-block g-color-gray-light-v1 g-font-size-70 g-font-size-90--md mb-4">
+								<i class="icon-hotel-restaurant-105 u-line-icon-pro"></i>
+							</span>
+							<h2 class="g-mb-30">{{ LocalStrings['la tua lista dei desideri è vuota']|title }}</h2>
+							<p>{{ LocalStrings['la tua lista dei desideri è vuota testo'] }}.</p>
+						</div>
+						<a class="btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25" href="{{ URLSITE }}products">{{ LocalStrings['inizia acquisti']|title }}</a>
+					</div>
+				{% endif %}
+			</div>
+			<!-- End Products Block -->
+		</div>
+		<!-- End Payment Options -->
+	</div>
+</div>
+
+{{ include('strutture/struttura-call-to-action.html') }}

@@ -1,0 +1,16 @@
+<!--=== Breadcrumbs ===-->
+{{ App.breadcrumbsBar }}
+<!--=== End Breadcrumbs ===--> 
+
+<div class="container g-pt-100 g-pb-70">
+	{% if App.pageData.blocks is iterable %}
+		{% for key,value in App.pageData.blocks %}
+			<div class="g-mb-50">
+        		<h2 class="h3 g-color-black g-font-weight-600 mb-3">{{ value.title }}</h2>
+        		<div class="mb-4">
+					{{ value.content|raw }}	      
+				</div>			
+			</div>		
+		{% endfor %}
+	{% endif %}
+</div>

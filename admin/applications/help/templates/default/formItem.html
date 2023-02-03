@@ -1,0 +1,97 @@
+<!-- admin/help/formItem.html v.4.5.1. 25/03/2020 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{ App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+
+		<ul class="nav nav-tabs" id="formTab" role="tablist">
+			{% for LocalStrings[' in GlobalSettings['LocalStrings['uages'] %}		
+				<li class="nav-item">
+					<a class="nav-link{% if LocalStrings[' == LocalStrings['['user'] %} active{% endif %}" href="#datibase{{ LocalStrings[' }}" id="datibase{{ LocalStrings[' }}-tab" aria-controls="datibase{{ LocalStrings[' }}" aria-selected="true" data-toggle="tab">{{ LocalStrings['['dati base']|capitalize }} {{ LocalStrings[' }}</a>
+				</li>
+			{% endfor %}
+			<li class="nav-item">
+				<a class="nav-link" href="#options" id="options-tab" data-toggle="tab" role="tab" aria-controls="options" aria-selected="false">{{ LocalStrings['['opzioni']|capitalize }}</a>
+			</li>
+  		</ul>
+
+		<form id="applicationForm" class="form-horizontal" role="form" action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}"  enctype="multipart/form-data" method="post">
+
+			<div class="tab-content" id="formTabContent">
+			
+<!-- sezione dati base dinamica lingue -->
+			{% for LocalStrings[' in GlobalSettings['LocalStrings['uages'] %}	
+				{% set titleField = "title_#{LocalStrings['}" %}
+				{% set contentField = "content_#{LocalStrings['}" %}
+				<div class="tab-pane{% if LocalStrings[' == LocalStrings['['user'] %} active{% endif %}" id="datibase{{ LocalStrings[' }}" role="tabpanel" aria-labelledby="datibase{{ LocalStrings[' }}">	
+					<fieldset>
+						<div class="form-group row">
+							<label for="title_{{ LocalStrings[' }}ID" class="col-md-2 control-label">{{ LocalStrings['['titolo']|capitalize }} {{ LocalStrings[' }}</label>
+							<div class="col-md-7">
+								<input{% if LocalStrings[' == LocalStrings['['user'] %} required{% endif %} type="text" class="form-control" name="title_{{ LocalStrings[' }}" placeholder="{{ LocalStrings['['inserisci un titolo']|capitalize }} {{ LocalStrings[' }}" id="title_{{ LocalStrings[' }}ID" value="{{ attribute(App.item, titleField) }}" oninvalid="this.setCustomValidity('{{ LocalStrings['['Devi inserire un %ITEM%!']|replace({'%ITEM%': LocalStrings['['titolo']}) }}')" oninput="setCustomValidity('')">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="content_{{ LocalStrings[' }}ID" class="col-md-2 control-label">{{ LocalStrings['['contenuto']|capitalize }} {{ LocalStrings[' }}</label>
+							<div class="col-md-8">
+								<textarea name="content_{{ LocalStrings[' }}" class="form-control editorHTML" id="content_{{ LocalStrings[' }}ID" rows="5">{{ attribute(App.item, contentField) }}</textarea>
+							</div>
+						</div>
+					</fieldset>			
+				
+				</div>
+			{% endfor %}
+<!-- /sezione dati base dinamica lingue -->
+
+<!-- sezione opzioni --> 
+				<div class="tab-pane fade" id="options" role="tabpanel" aria-labelledby="options">		
+					<fieldset>
+						<!-- se e un utente root visualizza l'input altrimenti lo genera o mantiene automaticamente -->	
+						{% if App.userLoggedData.is_root == 1 %}	
+							<div class="form-group row">
+								<label for="orderingID" class="col-md-2 control-label">{{ LocalStrings['['ordine']|capitalize }}</label>
+								<div class="col-md-1">
+									<input type="text" name="ordering" placeholder="{{ LocalStrings['['inserisci un ordine']|capitalize }}" class="form-control" id="orderingID" value="{{ App.item.ordering }}">
+						    	</div>
+							</div>
+							<br>
+						{% else %}
+							<input type="hidden" name="ordering" value="{{ App.item.ordering }}">		
+						{% endif %}
+						<!-- fine se root -->	
+						<div class="form-group row">
+							<label for="activeID" class="col-md-2 control-label">{{ LocalStrings['['attiva']|capitalize }}</label>
+							<div class="col-md-7">
+								<input type="checkbox" name="active" id="activeID" class="form-check-input"{% if App.item.active == 1 %} checked="checked"{% endif %} value="1">     					
+	   					</div>
+	   				</div>
+					</fieldset>				
+				</div>
+<!-- sezione opzioni -->	  		
+	
+
+			</div>
+<!--/Tab panes -->			
+			<hr>
+			<div class="form-group row">
+				<div class="col-md-6 col-xs-12 text-center">
+					<input type="hidden" name="created" id="createdID" value="{{ App.item.created }}">
+					<input type="hidden" name="id" id="idID" value="{{ App.id }}">
+					<input type="hidden" name="method" value="{{ App.methodForm }}">
+					<button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ LocalStrings['['invia']|capitalize }}</button>
+					{% if App.id > 0 %}
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform">{{ LocalStrings['['applica']|capitalize }}</button>
+					{% endif %}
+				</div>
+				<div class="col-md-6 col-xs-12 text-right">				
+					<a href="{{ URLSITEADMIN }}{{ CoreRequest.action }}/listItem" title="{{ LocalStrings['['torna alla lista']|capitalize }}" class="btn btn-success">{{ LocalStrings['['indietro']|capitalize }}</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>

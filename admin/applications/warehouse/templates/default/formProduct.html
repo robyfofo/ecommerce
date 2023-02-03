@@ -1,0 +1,364 @@
+<!-- admin/ecommerce/formProduct.html v.1.0.0. 26/03/2021 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{ App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" id="formTab" role="tablist">
+		
+			<li class="nav-item">
+				<a class="nav-link active" href="#datibase" id="datibase-tab" aria-controls="datibase" aria-selected="true" data-toggle="tab">{{ LocalStrings['dati base']|capitalize }}</a>
+			</li>
+			
+			{% for Lang in GlobalSettings['languages'] %}
+				<li class="nav-item">
+					<a class="nav-link" href="#datibase{{ Lang }}" id="datibase{{ Lang }}-tab" aria-controls="datibase{{ Lang }}" aria-selected="true" data-toggle="tab">{{ LocalStrings['dati base']|capitalize }} {{ Lang }}</a>
+				</li>
+			{% endfor %}
+
+			<li class="nav-item">
+				<a class="nav-link" href="#image" id="image-tab" data-toggle="tab" role="tab" aria-controls="image" aria-selected="false">{{ LocalStrings['immagine']|capitalize }}</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link" href="#tags" id="tags-tab" data-toggle="tab" role="tab" aria-controls="tags" aria-selected="false">{{ LocalStrings['tags']|capitalize }}</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link" href="#options" id="options-tab" data-toggle="tab" role="tab" aria-controls="options" aria-selected="false">{{ LocalStrings['opzioni']|capitalize }}</a>
+			</li>
+
+  		</ul>
+
+		<form id="applicationForm" method="post" class="form-horizontal" role="form" action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}" enctype="multipart/form-data">
+						
+			<div class="tab-content">
+			
+				<div class="tab-pane active" id="datibase" role="tabpanel" aria-labelledby="datibase">
+					<fieldset>				
+						<div class="form-group row">
+							<label for="categories_idID" class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['categoria']|capitalize }}</label>
+							<div class="col-sm-12 col-md-10 col-lg-8 col-xl-8">							
+								<select name="categories_id" id="categories_idID" class="custom-select">								
+										{% if App.categories is iterable and App.categories|length > 0 %}
+											{% for key,value in App.categories %}		
+												<option value="{{ value.id }}"{% if App.categories_id == value.id %} selected="selected"{% endif %}>{% if value.levelString is defined %}{{ value.levelString }} {% endif %}{{ value.title }}</option>														
+											{% endfor %}
+										{% endif %}	
+								</select>										
+							</div>
+						</div>			
+						<hr>					
+						<div class="form-group row">
+							<label for="price_unityID" class="col-sm-6 col-md-6 col-lg-2 col-xl-2 col-form-label">
+								{{ App.params.fields['prod']['price_unity']['label']|capitalize }}
+								{% if App.params.fields['prod']['price_unity']['required'] == true %}
+									<span class="required-sign">*</span>
+								{% endif %}	
+							</label>
+							<div class="col-sm-6 col-md-6 col-lg-2 col-xl-2">
+								<input required type="text" name="price_unity" class="form-control" id="price_unityID" value="{{ App.item.price_unity }}">
+							</div>
+							<label for="taxID" class="col-sm-6 col-md-6 col-lg-2 col-xl-2 col-form-label responsive-text-right">{{ App.params.fields['prod']['tax']['label']|capitalize }} %</label>
+							<div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+								<input type="text" name="tax" class="form-control" id="taxID" value="{{ App.item.tax }}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="price_taxID" class="col-sm-6 col-md-6 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['imponibile']|capitalize }}</label>
+							<div class="col-sm-6 col-md-6 col-lg-2 col-xl-2">
+								<span id="price_taxID"	style="line-height: 2.5;"></span>
+							</div>
+							<label for="price_totalID" class="col-sm-6 col-md-6 col-lg-2 col-xl-2 col-form-label responsive-text-right">{{ LocalStrings['prezzo totale']|capitalize }}</label>
+							<div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+								<span id="price_totalID" style="line-height: 2.5;"></span>
+							</div>
+						</div>			
+					</fieldset>
+				</div>
+			
+				<!-- sezione dati base dinamica lingue -->
+				{% for Lang in GlobalSettings['languages'] %}	 
+					{% set titleField = "title_#{Lang}" %}	
+					{% set contentField = "content_#{Lang}" %}
+					{% set summaryField = "summary_#{Lang}" %}
+					<div class="tab-pane" id="datibase{{ Lang }}" role="tabpanel" aria-labelledby="datibase{{ Lang }}">
+						<fieldset>
+							<div class="form-group row">
+								<label for="title_{{ Lang }}ID" class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-form-label">
+									{{ App.params.fields['prod'][titleField]['label']|capitalize }}
+									{% if App.params.fields['prod'][titleField]['required'] == true %}
+										<span class="required-sign">*</span>
+									{% endif %}	
+								</label>
+								<div class="col-sm-12 col-md-10 col-lg-8 col-xl-8">
+									<input 
+									type="text" 
+									name="title_{{ Lang }}" 
+									id="title_{{ Lang }}ID" 
+									value="{{ attribute(App.item, titleField) }}" 
+									class="form-control"  
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['titolo']})|capitalize }}"
+									{% if App.params.fields['prod'][titleField]['required'] == true %}
+										 required="required" 
+									{% endif %}
+									{% set label = LocalStrings['Devi inserire un %ITEM%!']|replace({'%ITEM%': App.params.fields['prod'][titleField]['label'] })  %}
+									oninvalid="this.setCustomValidity('{{ label }}')" 
+									oninput="setCustomValidity('')"
+									data-errormessage = "{{ App.params.fields['prod'][titleField]['label']|capitalize }}: {{ App.params.fields['prod'][titleField]['error message'] }}"
+									>
+								</div>
+							</div>	
+							<hr>
+							<div class="form-group row">
+								<label for="summary_{{ Lang }}ID" class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-form-label">
+									{{ App.params.fields['prod'][summaryField]['label']|capitalize }}
+									{% if App.params.fields['prod'][summaryield]['required'] == true %}
+										<span class="required-sign">*</span>
+									{% endif %}	
+								</label>
+								<div class="col-sm-12 col-md-10 col-lg-8 col-xl-8">
+									<textarea 
+									name="summary_{{ Lang }}" 
+									class="form-control editorHTML" 
+									id="summary_{{ Lang }}ID" 
+									rows="5"
+									>{{ attribute(App.item, summaryField) }}</textarea>
+								</div>
+							</div>	
+							<hr>
+							<div class="form-group row">
+								<label for="content_{{ Lang }}ID" class="col-sm-12 col-md-2 col-lg-2 col-xl-2 col-form-label">
+									{{ App.params.fields['prod'][contentField]['label']|capitalize }}
+									{% if App.params.fields['prod'][contentField]['required'] == true %}
+										<span class="required-sign">*</span>
+									{% endif %}	
+								</label>
+								<div class="col-sm-12 col-md-10 col-lg-8 col-xl-8">
+									<textarea 
+									name="content_{{ Lang }}" 
+									class="form-control editorHTML" 
+									id="content_{{ Lang }}ID" 
+									rows="5">{{ attribute(App.item, contentField) }}
+								</textarea>
+								</div>
+							</div>		
+						</fieldset>				
+					</div>
+				{% endfor %}
+				<!-- /sezione dati base dinamica lingue -->
+
+				<!-- sezione image -->	
+				<div class="tab-pane fade" id="image" role="tabpanel" aria-labelledby="image-tab">		
+					<fieldset>
+						<div class="form-group row">
+							<label for="filenameID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['immagine']|capitalize }}</label>	
+							<div class="col-sm-12 col-md-9 col-lg-6 col-xl-6">	
+								<div class="custom-file">
+									<input{% if App.item.filenameRequired == true %} required{% endif %} type="file"  name="filename" id="filenameID" class="custom-file-input"{% if App.item.filenameRequired == true %} required{% endif %}>
+									<label class="custom-file-label" for="filenameID">{{ LocalStrings['indica un file da caricare']|capitalize }}</label>    							
+								</div>
+							</div>
+  						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['anteprima']|capitalize }}</label>
+							<div class="col-sm-12 col-md-9 col-lg-6 col-xl-6">
+								{% if App.item.filename is defined and App.item.filename != '' %}
+								<a class="" href="{{ App.params.uploadDirs['prod'] }}{{ App.item.filename }}" data-lightbox="image-1" data-title="{{ value.org_filename }}" title="{{ App.item.org_filename }}">
+									<img  class="img-miniature"  src="{{ App.params.uploadDirs['prod'] }}{{ App.item.filename }}" alt="{{ App.item.org_filename }}">
+								</a>							
+								{% else %}
+									<img class="img-miniature"  src="{{ App.params.uploadDirs['base'] }}default/product.jpg" alt="{{ LocalStrings['immagine di default']|capitalize }}">	
+								{% endif %}
+							</div>			
+						</div>
+						{% if App.item.filename is defined and App.item.filename != '' %}
+						<div class="form-group row">
+							<label for="deleteFilenameID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label  col-form-label-custom-checkbox">{{ LocalStrings['cancella immagine']|capitalize }}</label>						
+							<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">													
+								<div class="custom-control custom-checkbox">
+									<input 
+									name="deleteFilename" 
+									id="deleteFilenameID"
+									value="1" 
+									type="checkbox" 
+									class="custom-control-input"
+									>
+									<label class="custom-control-label" for="deleteFilenameID">{{ LocalStrings['cancella file']|capitalize }}</label>
+								</div>											
+							</div>					
+						</div>
+						{% endif %}
+					</fieldset>
+				</div>
+				<!-- /sezione image --> 
+
+				<!-- sezione tags -->
+				<div class="tab-pane fade" id="tags" role="tabpanel" aria-labelledby="tags">
+					<fieldset>
+						<div class="form-group row">
+							<label for="id_tagsID" class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['tags']|capitalize }}</label>
+							<div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">		
+								{% if App.tags is iterable and App.tags|length > 0 %}
+									<select name="id_tags[]" size="15" multiple id="id_tagsID" class="form-control input-md">								
+									{% for key,value in App.tags %}
+										<option value="{{ value.id }}"{% if value.id in App.itemTags %} selected="selected"{% endif %}>{{ value.title }}</option>														
+									{% endfor %}
+									</select>
+								{% endif %}															
+							</div>
+						</div>	
+						
+						<div class="form-group row">
+							<div class="col-sm-12 col-md-4 col-lg-3 col-xl-3 offset-sm-0 offset-md-3 offset-xl-2">
+								<button class="btn btn-primary btn-sm" type='button' id='selectTagsAll'>{{ LocalStrings['seleziona tutto']|capitalize }}</button>
+							</div>
+							<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4t">
+								<button class="btn btn-primary btn-sm" type='button' id='deselectTagsAll'>{{ LocalStrings['deseleziona tutto']|capitalize }}</button>	
+							</div>	
+						</div>			
+					</fieldset>	
+				</div>
+				<!-- /sezione tags -->
+
+				<!-- sezione opzioni --> 
+				<div class="tab-pane fade" id="options" role="tabpanel" aria-labelledby="options">
+					<fieldset>
+					
+						<!-- se e un utente root visualizza l'input altrimenti lo genera o mantiene automaticamente -->	
+						{% if App.userLoggedData.is_root == 1 %}		
+							<div class="form-group row">
+								<label for="orderingID" class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['prod']['ordering']['label']|capitalize }}</label>
+								<div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+									<input 
+									type="text" 
+									name="ordering" 
+									placeholder="" 
+									class="form-control" 
+									id="orderingID" 
+									value="{{ App.item.ordering }}"
+									>
+						    	</div>
+							</div>
+						<hr>
+						{% else %}
+							<input type="hidden" name="ordering" value="{{ App.item.ordering }}">		
+						{% endif %}
+						<!-- fine se root -->
+
+						<div class="form-group row">
+							<label for="aliasID" class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['prod']['alias']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-9 col-lg-8 col-xl-8">
+								<input 
+								type="text" 
+								class="form-control" 
+								name="alias" 
+								id="aliasID" 
+								placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['prod']['alias']['label'] })|capitalize }}" 
+								value="{{ App.item.alias }}"
+								>
+							</div>
+						</div>	
+						<hr>		
+						<div class="form-group row">
+							<label for="price_scontoID" class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['prod']['price_sconto']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-9 col-lg-2 col-xl-2">
+								<input 
+								type="text" 
+								class="form-control" 
+								name="price_sconto" 
+								id="price_scontoID" 
+								placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['prod']['price_sconto']['label'] })|capitalize }}" 
+								value="{{ App.item.price_sconto }}"
+								>
+							</div>
+						</div>	
+						<hr>	
+
+						<div class="form-group row">
+							<label class="col-sm-2 col-md-3 col-lg-2 col-xl-2 col-form-label col-form-label-custom-checkbox">{{ App.params.fields['prod']['is_new']['label']|capitalize }}</label>	
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">		
+								<div class="custom-control custom-checkbox">
+									<input 
+									name="is_new" 
+									id="is_newID"{% if App.item.is_new == 1 %} checked="checked"{% endif %} 
+									value="1" 
+									type="checkbox" 
+									class="custom-control-input"
+									>
+									<label class="custom-control-label" for="is_newID"></label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-2 col-md-3 col-lg-2 col-xl-2 col-form-label col-form-label-custom-checkbox">{{ App.params.fields['prod']['is_promo']['label']|capitalize }}</label>	
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">		
+								<div class="custom-control custom-checkbox">
+									<input 
+									name="is_promo" 
+									id="is_promoID"{% if App.item.is_promo == 1 %} checked="checked"{% endif %} 
+									value="1" 
+									type="checkbox" 
+									class="custom-control-input"
+									>
+									<label class="custom-control-label" for="is_promoID"></label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-2 col-md-3 col-lg-2 col-xl-2 col-form-label col-form-label-custom-checkbox">{{ App.params.fields['prod']['active']['label']|capitalize }}</label>	
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">		
+								<div class="custom-control custom-checkbox">
+									<input 
+									name="active" 
+									id="activeID"{% if App.item.active == 1 %} checked="checked"{% endif %} 
+									value="1" 
+									type="checkbox" 
+									class="custom-control-input"
+									>
+									<label class="custom-control-label" for="activeID"></label>
+								</div>
+							</div>
+						</div>
+
+					</fieldset>				
+				</div>
+				<!-- sezione opzioni -->	
+
+			</div>
+			<!--/Tab panes -->			
+			<hr>
+			<div class="form-group row">
+				<div class="col-md-6 col-xs-12 text-center actionbutton mt-2">
+					{% for Lang in GlobalSettings['languages'] %}				
+						{% set metaTitleField = "meta_title_#{Lang}" %}
+						{% set metaDescriptionField = "meta_description_#{Lang}" %}
+						{% set metaKeywordField = "meta_keyword_#{Lang}" %}
+						{% set titleSeoField = "title_seo_#{Lang}" %}
+							<input type="hidden" class="form-control" name="meta_title_{{ Lang }}" id="title_seo_{{ Lang }}ID" value="{{ attribute(App.item, metaTitleField)|e('html') }}">
+							<input type="hidden" class="form-control" name="meta_description_{{ Lang }}" id="title_seo_{{ Lang }}ID" value="{{ attribute(App.item, metaDescriptionField)|e('html') }}">
+							<input type="hidden" class="form-control" name="meta_keyword_{{ Lang }}" id="title_seo_{{ Lang }}ID" value="{{ attribute(App.item, metaKeywordField)|e('html') }}">
+							<input type="hidden" class="form-control" name="title_seo_{{ Lang }}" id="title_seo_{{ Lang }}ID" value="{{ attribute(App.item, titleSeoField)|e('html') }}">
+					{% endfor %}
+
+					<input type="hidden" name="created" id="createdID" value="{{ App.item.created }}">
+					<input type="hidden" name="id" id="idID" value="{{ App.id }}">
+					<input type="hidden" name="method" value="{{ App.methodForm }}">
+					<button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ LocalStrings['invia']|capitalize }}</button>
+					{% if App.id > 0 %}
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform ml-5">{{ LocalStrings['applica']|capitalize }}</button>
+					{% endif %}				
+				</div>
+				<div class="col-md-6 col-xs-12 text-center deletebutton mt-2">
+					<a href="{{ URLSITEADMIN }}{{ CoreRequest.action }}/listProd" title="{{ LocalStrings['torna alla lista']|capitalize }}" class="btn btn-success">{{ LocalStrings['indietro']|capitalize }}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

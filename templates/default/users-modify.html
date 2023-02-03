@@ -1,0 +1,94 @@
+<!--=== Breadcrumbs ===-->
+{{ App.breadcrumbsBar }}
+<!--=== End Breadcrumbs ===-->
+
+{{ App.systemMessages }}
+
+<div class="container g-pt-70 g-pb-30">
+	<div
+		class="row">
+		<!-- Profile Settings -->
+		<div class="col-lg-3 g-mb-50">
+			{{ include('users-sidebar.html') }}
+		</div>
+		<!-- End Profile Settings -->
+
+		<!-- profilo -->
+		<div class="col-lg-9 g-mb-50">
+			<div class="row">
+				<div
+					class="col-md-12 g-mb-30">
+					<div class="g-brd-around g-brd-gray-light-v4 rounded g-pa-30">
+						<div class="g-mb-50">
+							<h3 class="h5 mb-3">{{ LocalStrings['anagrafica']|capitalize }}</h3>
+
+							<form action="{{ URLSITE }}{{ App.moduleName }}/upgrade" method="POST">
+								<!-- nome e cognome -->
+								<div class="row">
+									<div class="col-sm-6 form-group g-mb-20">
+										<label class="g-color-text g-font-size-13">{{ LocalStrings['nome']|capitalize }}
+											<span class="text-danger">*</span>
+										</label>
+										<input class="form-control g-brd-gray-light-v4 g-brd-primary--focus g-color-text rounded g-py-13 g-px-15" name="name" id="nameID" type="text" placeholder="{{ LocalStrings['nome']|capitalize }}" {% set label = LocalStrings['Devi inserire un %ITEM%!']|replace({'%ITEM%': LocalStrings['telefono'] } ) %} arequired="required" oninvalid="this.setCustomValidity('{{ label }}')" oninput="setCustomValidity('')" value="{{ App.user.name|e('html') }}">
+									</div>
+
+									<div class="col-sm-6 form-group g-mb-20">
+										<label class="g-color-text g-font-size-13">{{ LocalStrings['cognome']|capitalize }}
+											<span class="text-danger">*</span>
+										</label>
+										<input class="form-control g-brd-gray-light-v4 g-brd-primary--focus g-color-text rounded g-py-13 g-px-15" name="surname" id="faxID" type="text" placeholder="{{ LocalStrings['cognome']|capitalize }}" {% set label = LocalStrings['Devi inserire un %ITEM%!']|replace({'%ITEM%': LocalStrings['cognome'] } ) %} arequired="required" oninvalid="this.setCustomValidity('{{ label }}')" oninput="setCustomValidity('')" value="{{ App.user.surname|e('html') }}">
+									</div>
+
+								</div>
+								<!-- nome e cognome -->
+								<hr>
+
+
+								<!-- telefono e fax -->
+								<div class="row">
+									<div class="col-sm-6 form-group g-mb-20">
+										<label class="g-color-text g-font-size-13">{{ LocalStrings['telefono']|capitalize }}
+											<span class="text-danger">*</span>
+										</label>
+										<input 
+										class="form-control g-brd-gray-light-v4 g-brd-primary--focus g-color-text rounded g-py-13 g-px-15" name="telephone" 
+										id="telephoneID" 
+										type="text" 
+										placeholder="{{ LocalStrings['telefono']|capitalize }}" 
+										{% set label = LocalStrings['Devi inserire un %ITEM%!']|replace({'%ITEM%': LocalStrings['telefono'] } ) %} 
+										arequired="required"
+										oninvalid="this.setCustomValidity('{{ label }}')" 
+										oninput="setCustomValidity('')" 
+										value="{{ App.user.telephone|e('html') }}">
+									</div>
+
+									<div class="col-sm-6 form-group g-mb-20">
+										<label class="g-color-text g-font-size-13">{{ LocalStrings['fax']|capitalize }}
+										</label>
+										<input class="form-control g-brd-gray-light-v4 g-brd-primary--focus g-color-text rounded g-py-13 g-px-15" name="fax" id="faxID" type="text" placeholder="{{ LocalStrings['fax']|capitalize }}" {% set label = LocalStrings['Devi inserire un %ITEM%!']|replace({'%ITEM%': LocalStrings['fax'] } ) %} oninvalid="this.setCustomValidity('{{ label }}')" oninput="setCustomValidity('')" value="{{ App.user.fax|e('html') }}">
+									</div>
+
+								</div>
+								<!-- telefono e fax  -->
+
+								<div class="row">
+									<button id="submitFormID" class="btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25" type="submit">{{ LocalStrings['modifica']|capitalize }}</button>
+
+								</div>
+							</form>
+
+						</div>
+
+
+					</div>
+					<!-- End Addresses -->
+				</div>
+			</div>
+		</div>
+		<!-- profilo -->
+
+	
+	</div>
+</div>
+
+{{ include('strutture/struttura-call-to-action.html') }}

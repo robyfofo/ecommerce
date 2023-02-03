@@ -1,0 +1,82 @@
+<!--=== Breadcrumbs ===-->
+{{ App.breadcrumbsBar }}
+<!--=== End Breadcrumbs ===-->
+
+{{ App.systemMessages }}
+
+<div class="container g-pt-70 g-pb-30">
+	<div
+		class="row">
+		<!-- Profile Settings -->
+		<div class="col-lg-3 g-mb-50">
+			{{ include('users-sidebar.html') }}
+		</div>
+		<!-- End Profile Settings -->
+
+		<!-- Addresses -->
+		<div class="col-lg-9 g-mb-50">
+			<div class="row">
+				<div
+					class="col-md-12 g-mb-30">
+					<!-- Addresses -->
+					<div class="g-brd-around g-brd-gray-light-v4 rounded g-pa-30">
+						<div class="g-mb-50">
+							<h3 class="h5 mb-3">{{ LocalStrings['modifica %ITEM%']|replace({ '%ITEM%': LocalStrings['password'] })|capitalize }}</h3>
+
+							<form action="{{ URLSITE }}{{ App.moduleName }}/upgradeSecurity" method="POST">
+								<div class="row">
+									<div class="col-sm-6 form-group g-mb-20">
+										<label class="g-color-text g-font-size-13">{{ LocalStrings['password']|capitalize }}
+											<span class="text-danger">*</span>
+										</label>
+										<input 
+										class="form-control g-brd-gray-light-v4 g-brd-primary--focus g-color-text rounded g-py-13 g-px-15" 
+										name="password" 
+										id="passwordID" 
+										type="password" 
+										placeholder="{{ LocalStrings['password']|capitalize }}" 
+										{% set label = LocalStrings['Devi inserire una %ITEM%!']|replace({'%ITEM%': LocalStrings['password'] } ) %} 
+										required="required" 
+										oninvalid="this.setCustomValidity('{{ label }}')" 
+										oninput="setCustomValidity('')" 
+										value="">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6 form-group g-mb-20">
+										<label class="g-color-text g-font-size-13">{{ LocalStrings['password di controllo']|capitalize }}
+											<span class="text-danger">*</span>
+										</label>
+										<input 
+										class="form-control g-brd-gray-light-v4 g-brd-primary--focus g-color-text rounded g-py-13 g-px-15" 
+										name="passwordCK" 
+										id="passwordCKID" 
+										type="password" 
+										placeholder="{{ LocalStrings['password di controllo']|capitalize }}" 
+										{% set label = LocalStrings['Devi inserire una %ITEM%!']|replace({'%ITEM%': LocalStrings['password di controllo'] } ) %} 
+										required="required" 
+										oninvalid="this.setCustomValidity('{{ label }}')" 
+										oninput="setCustomValidity('')" 
+										value="">
+									</div>
+								</div>
+								
+								<div class="row">
+									<button id="submitFormID" class="btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25" type="submit">{{ LocalStrings['modifica']|capitalize }}</button>
+
+								</div>
+							</form>
+
+						</div>
+
+
+					</div>
+					<!-- End Addresses -->
+				</div>
+			</div>
+		</div>
+		<!-- Addresses -->
+	</div>
+</div>
+
+{{ include('strutture/struttura-call-to-action.html') }}

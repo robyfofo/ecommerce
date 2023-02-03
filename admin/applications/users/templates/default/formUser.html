@@ -1,0 +1,346 @@
+<!-- admin/users/formUser.html v.1.0.0. 17/03/2021 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{ App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+	
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" id="formTab" role="tablist">
+
+			<li class="nav-item">
+				<a class="nav-link{% if Session[App.sessionName]['formTabActive'] == 1 %} active{% endif %}" href="#login" id="login-tab" data-toggle="tab" role="tab" aria-controls="login" aria-selected="false">{{ LocalStrings['login']|capitalize }}</a>
+			</li>			
+	
+			<li class="nav-item">
+				<a class="nav-link{% if Session[App.sessionName]['formTabActive'] == 2 %} active{% endif %}" href="#anagrafica" id="anagrafica-tab" data-toggle="tab" role="tab" aria-controls="anagrafica" aria-selected="false">{{ LocalStrings['anagrafica']|capitalize }}</a>
+			</li>
+		
+			<li class="nav-item">
+				<a class="nav-link{% if Session[App.sessionName]['formTabActive'] == 3 %} active{% endif %}" href="#contacts" id="contacts-tab" data-toggle="tab" role="tab" aria-controls="contacts" aria-selected="false">{{ LocalStrings['contatti']|capitalize }}</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link{% if Session[App.sessionName]['formTabActive'] == 4 %} active{% endif %}" href="#image" id="image-tab" data-toggle="tab" role="tab" aria-controls="image" aria-selected="false">{{ LocalStrings['immagine']|capitalize }}</a>
+			</li>
+			
+			<li class="nav-item">
+				<a class="nav-link{% if Session[App.sessionName]['formTabActive'] == 5 %} active{% endif %}" href="#options" id="options-tab" data-toggle="tab" role="tab" aria-controls="options" aria-selected="false">{{ LocalStrings['opzioni']|capitalize }}</a>
+			</li>
+
+		</ul>
+		
+		<form autocomplete="off" id="applicationForm" class="" role="form" action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}"  enctype="multipart/form-data" method="post">
+
+			<!-- Tab panes -->
+			<div class="tab-content" id="formTabContent">
+				<!-- accesso -->
+				<div class="tab-pane fade show{% if Session[App.sessionName]['formTabActive'] == 1 %} active{% endif %}" id="login" role="tabpanel" aria-labelledby="login-tab">
+					<fieldset>
+						<div class="form-group row">
+							<label for="usernameID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['username']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-9 col-lg-6 col-xl-6">
+							
+								<input required="required" pattern="[a-zA-Z0-9-_,.?#!]+" type="text" name="username" id="usernameID" value="{{ App.item.username|e('html') }}" class="form-control" placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['nome utente']})|capitalize }}">
+
+								<span class="form-text text-muted">{{ LocalStrings['nome utente caratteri permessi'] }}</span> 
+							</div>
+					    	<div class="col-md-6" id="usernameMessageID"></div>
+						</div>
+						<hr>
+						<div class="form-group row">
+							<label 
+							for="levelID" 
+							class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label"
+							>{{ App.params.fields['item']['id_level']['label']|capitalize }}
+							</label>
+							<div class="col-sm-12 col-md-9 col-lg-4 col-xl-4">
+								{% if App.userLevels is iterable and App.userLevels|length > 0 %}
+								<select name="id_level" class="custom-select">	
+									{% for value in App.userLevels %}
+										<option value="{{ value.id }}"{% if App.item.id_level == value.id %} selected="selected"{% endif %}>{{ value.title|e('html') }}</option>								
+									{% endfor %}
+								</select>
+								{% endif %}				
+					    	</div>
+						</div>
+						<hr>
+						<div class="form-group row">
+							<label for="passwordID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['password']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-9 col-lg-3 col-xl-3">
+								<input type="password" name="password" id="passwordID" value="" class="form-control" placeholder="{{ LocalStrings['inserisci una %ITEM%']|replace({'%ITEM%': LocalStrings['password']})|capitalize }}"{% if App.id == 0 %}   required="required"{% endif %}>
+					    	</div>
+							<label for="passwordCFID" class="col-sm-12 col-md-3 col-lg-3 col-xl-3 col-form-label responsive-text-right">{{ LocalStrings['password di controllo']|capitalize }}</label>
+							<div class="col-sm-12 col-md-9 col-lg-3 col-xl-3">
+								<input type="password" name="passwordCF" id="passwordCFID" value="" class="form-control" placeholder="{{ LocalStrings['inserisci una %ITEM%']|replace({'%ITEM%': LocalStrings['password di controllo']})|capitalize }}"{% if App.id == 0 %} required="required"{% endif %}>
+					    	</div>
+						</div>
+						<hr>
+						<div class="form-group row">
+							<label for="emailID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['email']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-9 col-lg-4 col-xl-4">
+								<input required="required" type="email" name="email" id="emailID" value="{{ App.item.email|e('html') }}" class="form-control" placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['indirizzo email']})|capitalize }}">
+					    	</div>
+					    	<div class="col-md-6" id="emailMessageID"></div>
+						</div>
+					</fieldset>
+
+				</div>
+				<!-- accesso -->
+			
+				<!-- anagrafica -->
+				<div class="tab-pane fade show{% if Session[App.sessionName]['formTabActive'] == 2 %} active{% endif %}" id="anagrafica" role="tabpanel" aria-labelledby="anagrafica-tab">
+			
+					<fieldset>
+						<div class="form-group row">
+
+							<label for="nameID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['name']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+								<input type="text" name="name" id="nameID" value="{{ App.item.name|e('html') }}" class="form-control" placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['nome']})|capitalize }}">
+					    	</div>
+
+							<label for="surnameID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['cognome']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+								<input type="text" name="surname" id="surnameID" value="{{ App.item.surname|e('html') }}" class="form-control" placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['cognome']})|capitalize }}">
+					    	</div>
+
+						</div>
+
+						<div class="form-group row">
+							<label for="streetID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['via']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-10 col-xl-10">
+								<input type="text" name="street" id="streetID" value="{{ App.item.street|e('html') }}" class="form-control" placeholder="{{ LocalStrings['inserisci una %ITEM%']|replace({'%ITEM%': LocalStrings['via']})|capitalize }}">
+					    	</div>
+						</div>		
+
+						<!--- province -->
+						<div class="form-group row">
+							<label for="location_province_idID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['location_province_id']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+								<select name="location_province_id" id="location_province_idID" class="form-control selectpicker selectpicker-provincie" data-live-search="true"  title="{{ LocalStrings['seleziona una %ITEM%']|replace({'%ITEM%': LocalStrings['provincia']})|capitalize }}">
+									<option value="0"{% if 0 == App.item.location_province_id %} selected="selected"{% endif %}>{{ App.params.fields['item']['provincia_alt']['label']|capitalize }}</option>	
+									{% if App.province is iterable %}
+										{% for key,value in App.province %}	
+											<option value="{{ value.id }}"{% if value.id == App.item.location_province_id %} selected="selected"{% endif %}>{{ value.nome|e('html') }}</option>	
+										{% endfor %}							
+									{% endif %}													
+								</select>										
+							</div>
+
+							<label for="provincia_altID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['provincia_alt']['label']|capitalize }}
+								<br><small class="text-muted">{{ LocalStrings['se non in elenco']|capitalize }}</small>
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+								<input type="text" name="provincia_alt" class="form-control" id="provincia_altID" value="{{ App.item.provincia_alt|e('html') }}">
+							</div>
+							</div>
+						<!--- province -->
+
+						<!--- comuni -->
+						<div class="form-group row">
+							<label for="location_comuni_idID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['location_comuni_id']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+								<input type="hidden" name="comune_selected_id" id="comune_selected_idID" value="{{ App.comune.selected.id }}">
+								
+								<select id="location_comuni_idID" name="location_comuni_id" class="selectpicker with-ajax form-control selectpicker-comuni" data-live-search="true" title="{{ LocalStrings['seleziona un %ITEM%']|replace({'%ITEM%': LocalStrings['comune']})|capitalize }}">
+									
+									{% if App.comune.selected.id > 0 %}											
+										<option value="{{ App.comune.selected.id }}" data-subtext="" selected>
+											{{ App.comune.selected.nome }}											
+										</option>	
+									{% endif %}
+																
+								
+								</select>
+								
+							</div>	
+
+							<label for="comune_altID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['comune_alt']['label']|capitalize }}
+								<br><small class="text-muted">{{ LocalStrings['se non in elenco']|capitalize }}</small>
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+								<input type="text" name="comune_alt" class="form-control" id="comune_altID" value="{{ App.item.comune_alt|e('html') }}">
+							</div>
+						</div>
+						<!--- comuni -->
+
+						<!--- zip code -->
+						<div class="form-group row">
+							<label for="zip_codeID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['zip_code']['label']|upper }}</label>
+							<div class="col-sm-12 col-md-6 col-lg-3 col-xl-2">
+								<input type="text" name="zip_code" class="form-control" id="zip_codeID" placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['c.a.p.']}) }}" value="{{ App.item.zip_code|e('html') }}">
+							</div>
+						</div>
+						<!--- zip code -->			
+
+						<!--- nation -->														
+						<div class="form-group row">
+							<label for="location_nations_idID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['location_nations_id']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+								<select id="location_nations_idID" name="location_nations_id" class="form-control selectpicker" data-live-search="true"  title="{{ LocalStrings['seleziona una %ITEM%']|replace({'%ITEM%': LocalStrings['nazione']})|capitalize }}">
+									{% if App.nations is iterable %}
+										{% for key,value in App.nations %}	
+											{% set titleField = "title_#{LocalStrings['user']}" %}
+											<option value="{{ value.id }}"{% if value.id == App.item.location_nations_id %} selected="selected"{% endif %}>{{ attribute(value, titleField)|e('html') }}</option>														
+										{% endfor %}
+									{% endif %}		
+								</select>		
+							</div>
+						</div>
+						<!--- nation -->
+					</fieldset>
+					
+				</div>
+				<!-- anagrafics -->
+
+				<!-- contacts --> 
+				<div class="tab-pane fade show{% if Session[App.sessionName]['formTabActive'] == 3 %} active{% endif %}" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">		
+					<fieldset>				
+						<div class="form-group row">
+							<label for="telephoneID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['telephone']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4">
+								<input type="text" name="telephone" id="telephoneID" value="{{ App.item.telephone|e('html') }}" class="form-control" placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['numero di telefono']})|capitalize }}">
+					    	</div>
+				
+							<label for="mobileID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['mobile']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4">
+								<input type="text" name="mobile" id="mobileID" value="{{ App.item.mobile|e('html') }}" class="form-control" placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['numero mobile']})|capitalize }}">
+					    	</div>
+						</div>
+						<div class="form-group row">
+							<label for="emailID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['fax']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4">
+								<input type="text" name="fax" id="faxID" value="{{ App.item.fax|e('html') }}" class="form-control" placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['numero di fax']})|capitalize }}">
+					    	</div>
+						
+							<label for="skypeID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['skype']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-3 col-lg-4 col-xl-4">
+								<input type="text" name="skype" id="skypeID" value="{{ App.item.skype|e('html') }}" class="form-control" placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['utente skype']})|capitalize }}">
+					    	</div>
+						</div>
+					</fieldset>				
+				</div>
+				<!-- contacts -->
+	
+				<!-- immagini -->		  
+				<div class="tab-pane fade show{% if Session[App.sessionName]['formTabActive'] == 4 %} active{% endif %}" id="image" role="tabpanel" aria-labelledby="image-tab">
+					<fieldset>
+						<div class="form-group row">
+							<label for="avatarID" class="col-sm-6 col-md-5 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['avatar']|capitalize }}</label>
+					    	<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">						
+								<div class="custom-file">
+  									<input type="file" name="avatar" class="custom-file-input" id="avatarID">
+  									<label class="custom-file-label" for="customFile">{{ LocalStrings['indica un file da caricare']|capitalize }}</label>
+								</div>	
+							</div>
+
+					    	<div class="col-md-4">
+					    	
+								{% if App.item.avatar != '' %}
+							
+									<img src="{{ URLSITE }}ajax/renderuseravatarfromdb.php?id={{ App.id }}" alt="{{ LocalStrings['avatar']|capitalize }}" style="max-height: 140px;">
+									
+				            	{% endif %}				
+					    	</div>
+						</div>
+					</fieldset>
+					
+				</div>
+				<!-- immagini -->	
+	
+				<!-- opzioni --> 
+				<div class="tab-pane fade show{% if Session[App.sessionName]['formTabActive'] == 5 %} active{% endif %}" id="options" role="tabpanel" aria-labelledby="options">	
+					<fieldset>
+						<div class="form-group row">
+							<label for="templateID" class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['template']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-9 col-lg-4 col-xl-4">
+								{% if App.templatesAvaiable is iterable and App.templatesAvaiable|length > 0 %}
+								<select name="template" class="custom-select">
+									{% for key,value in App.templatesAvaiable %}
+										<option value="{{ value }}"{% if App.item.template == value %} selected="selected"{% endif %}>{{ value|e('html') }}</option>								
+									{% endfor %}
+								</select>
+								{% endif %}				
+					    	</div>
+						</div>	
+						<hr>
+
+						<div class="form-group row">
+							<label class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-form-label col-form-label-custom-checkbox">{{ App.params.fields['item']['in_admin']['label']|capitalize }}</label>	
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">		
+								<div class="custom-control custom-checkbox">
+									<input 
+									name="in_admin" 
+									id="in_adminID"{% if App.item.in_admin == 1 %} checked="checked"{% endif %} 
+									value="1" 
+									type="checkbox" 
+									class="custom-control-input"
+									>
+									<label class="custom-control-label" for="in_adminID"></label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-form-label col-form-label-custom-checkbox">{{ App.params.fields['item']['from_site']['label']|capitalize }}</label>	
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">		
+								<div class="custom-control custom-checkbox">
+									<input 
+									name="from_site" 
+									id="from_siteID"{% if App.item.from_site == 1 %} checked="checked"{% endif %} 
+									value="1" 
+									type="checkbox" 
+									class="custom-control-input"
+									>
+									<label class="custom-control-label" for="from_siteID"></label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-form-label col-form-label-custom-checkbox">{{ App.params.fields['item']['active']['label']|capitalize }}</label>	
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">		
+								<div class="custom-control custom-checkbox">
+									<input 
+									name="active" 
+									id="activeID"{% if App.item.active == 1 %} checked="checked"{% endif %} 
+									value="1" 
+									type="checkbox" 
+									class="custom-control-input"
+									>
+									<label class="custom-control-label" for="activeID"></label>
+								</div>
+							</div>
+						</div>
+						
+					</fieldset>
+					
+				</div>
+				<!-- opzioni -->	  
+			 
+			</div>
+			<!--/Tab panes -->
+			
+			<hr>
+			
+			<div class="form-group row">
+				<div class="col-md-6 col-xs-12 text-center actionbutton mt-2">
+					<input type="hidden" name="created" id="createdID" value="{{ App.item.created }}">
+					<input type="hidden" name="id" id="idID" value="{{ App.id }}">
+					<input type="hidden" name="method" value="{{ App.methodForm }}">
+					<button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ LocalStrings['invia']|capitalize }}</button>
+					{% if App.id > 0 %}
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform ml-5">{{ LocalStrings['applica']|capitalize }}</button>
+					{% endif %}
+				</div>
+				<div class="col-md-6 col-xs-12 text-center deletebutton mt-2">		
+					<a href="{{ URLSITEADMIN }}{{ CoreRequest.action }}/listItem" title="{{ LocalStrings['torna alla lista']|capitalize }}" class="btn btn-success">{{ LocalStrings['indietro']|capitalize }}</a>
+				</div>
+			</div>
+		
+		</form>
+	</div>
+</div>

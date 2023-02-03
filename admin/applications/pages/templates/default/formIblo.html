@@ -1,0 +1,201 @@
+<!-- admin/pages/formIblo.html v.1.0.0. 23/03/2021 -->
+<div class="row">
+	<div class="col-md-3 new">
+ 	</div>
+	<div class="col-md-7 help-small-form">
+		{% if App.params.help_small is defined and App.params.help_small != '' %}{{ App.params.help_small }}{% endif %}
+	</div>
+	<div class="col-md-2 help">
+	</div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+				{% if App.ownerData.filename != '' %}
+				<a class="" href="{{ App.params.uploadDirs['item'] }}{{ App.ownerData.filename }}" data-lightbox="image-1" data-title="{{ App.ownerData.org_filename }}" title="{{ App.ownerData.org_filename }}">
+					<img class="img-miniature"  src="{{ App.params.uploadDirs['item'] }}{{ App.ownerData.filename }}" alt="{{ App.ownerData.org_filename }}">
+				</a>
+				{% else %}
+				<img class="img-miniature"  src="{{ UPLOADDIR }}default/image.png" alt="{{ LocalStrings['immagine di default']|capitalize }}">										
+				{% endif %}
+			</div>
+
+			<div class="col-sm-12 col-md-12 col-lg-8 col-xl-8"> 
+				<big>{{ App.ownerData.title }}</big>
+			</div>
+		</div>	
+	</div>	
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+	
+		<ul class="nav nav-tabs" id="formTab" role="tablist">
+			{% for lang in GlobalSettings['languages'] %}		
+				<li class="nav-item">
+					<a class="nav-link{% if lang == LocalStrings['user'] %} active{% endif %}" href="#datibase{{ lang }}" id="datibase{{ lang }}-tab" aria-controls="datibase{{ lang }}" aria-selected="true" data-toggle="tab">{{ LocalStrings['dati base']|capitalize }} {{ lang }}</a>
+				</li>
+			{% endfor %}
+			<li class="nav-item">
+				<a class="nav-link" href="#other" id="other-tab" data-toggle="tab" role="tab" aria-controls="other" aria-selected="false">{{ LocalStrings['altro']|capitalize }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#options" id="options-tab" data-toggle="tab" role="tab" aria-controls="options" aria-selected="false">{{ LocalStrings['opzioni']|capitalize }}</a>
+			</li>		
+		</ul>	
+		<form id="applicationForm" class="form-horizontal" role="form" action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}"  enctype="multipart/form-data" method="post">
+			<!-- Tab panes -->
+			<div class="tab-content" id="formTabContent">		
+
+				<!-- sezione dati base dinamica lingue -->
+				{% for lang in GlobalSettings['languages'] %}	
+				{% set titleField = "title_#{lang}" %}
+				{% set contentField = "content_#{lang}" %}
+				{% set url_textField = "url_text_#{lang}" %}
+					<div class="tab-pane{% if lang == LocalStrings['user'] %} active{% endif %}" id="datibase{{ lang }}" role="tabpanel" aria-labelledby="datibase{{ lang }}-tab">
+						<fieldset>
+			
+							<div class="form-group row">
+								<label for="title_{{ lang }}ID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['iblo'][titleField]['label']|capitalize }}
+								</label>
+								<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">								
+									<input 
+									type="text" 
+									name="title_{{ lang }}" 
+									id="title_{{ lang }}ID" 
+									value="{{ attribute(App.item, titleField) }}" 
+									class="form-control"  
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': App.params.fields['iblo'][titleField]['label'] })|capitalize }}"
+									{% if App.params.fields['iblo'][titleField]['required'] == true %} required="required"{% endif %}
+									>
+								</div>
+							</div>					
+							<hr>
+							<div class="form-group row">
+								<label for="content_{{ lang }}ID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['iblo'][contentField]['label']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+									<textarea
+									{% if lang == LocalStrings['user'] %} required{% endif %} name="content_{{ lang }}" 
+									class="form-control editorHTML" 
+									id="content_{{ lang }}ID" rows="5">{{ attribute(App.item, contentField) }}</textarea>
+								</div>
+							</div>					
+							<hr>					
+							<div class="form-group row">
+								<label for="url_text_{{ lang }}ID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['iblo'][url_textField]['label']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">								
+									<input 
+									type="text" 
+									name="url_text_{{ lang }}" 
+									id="url_text_{{ lang }}ID" 
+									value="{{ attribute(App.item, url_textField) }}" 
+									class="form-control"  
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['iblo'][url_textField]['label'] })|capitalize }}"
+									>
+								</div>
+							</div>	
+						<fieldset>
+									
+					</div>
+				{% endfor %}
+				<!-- /sezione dati base dinamica lingue -->
+
+				<!-- sezione altro -->	
+				<div class="tab-pane fade show" id="other" role="tabpanel" aria-labelledby="other">					
+					<fieldset>											
+						<div class="form-group row">
+							<label for="urlID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['iblo']['url']['label']|capitalize }}
+							{{ LocalStrings['label url dinamico'] }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<input 
+								type="text" 
+								class="form-control" 
+								name="url" 
+								placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['iblo']['url']['label'] })|capitalize }}" 
+								id="urlID" 
+								value="{{ App.item.url|e('html') }}"
+								>
+								<small id="urlHelpBlock" class="form-text text-muted">{{ LocalStrings['%URLSITE% per url dinamico'] }}</small>
+							</div>								
+						</div>
+						<div class="form-group row">
+							<label for="targetID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['iblo']['target']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">							
+								<select class="custom-select" name="target">	
+								<option></option>			
+									{% if GlobalSettings['url-targets'] is iterable and GlobalSettings['url-targets']|length > 0 %}
+										{% for value in GlobalSettings['url-targets'] %}											
+											<option value="{{ value }}"{% if App.item.target is defined and App.item.target == value %} selected="selected"{% endif %}>{{ value|e('html') }}</option>		
+										{% endfor %}
+									{% endif %}	
+								</select>							
+							</div>
+						</div>
+					</fieldset>		
+				</div>
+				<!-- sezione altro -->
+
+				 <!-- sezione opzioni -->	
+				 <div class="tab-pane fade show" id="options" role="tabpanel" aria-labelledby="options">
+					<fieldset>						
+						<!-- se e un utente root visualizza l'input altrimenti lo genera o mantiene automaticamente -->	
+						{% if App.userLoggedData.is_root == 1 %}		
+							<div class="form-group row">
+								<label for="orderingID" class="col-sm-6 col-md-6 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['iblo']['ordering']['label']|capitalize }}</label>
+								<div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+									<input 
+									type="text" 
+									name="ordering" 
+									placeholder="" 
+									class="form-control" 
+									id="orderingID" 
+									value="{{ App.item.ordering }}"
+									>
+								</div>
+							</div>
+							<hr>
+						{% else %}
+							<input type="hidden" name="ordering" value="{{ App.item.ordering }}">		
+						{% endif %}
+						<!-- fine se root -->
+				
+						<div class="form-group row ml-2">
+							<div class="custom-control custom-checkbox">
+								<input 
+								name="active" 
+								id="activeID"{% if App.item.active == 1 %} checked="checked"{% endif %} 
+								value="1" 
+								type="checkbox" 
+								class="custom-control-input"
+								>
+								<label class="custom-control-label" for="activeID">{{ App.params.fields['iblo']['active']['label']|capitalize }}</label>
+							</div>
+						</div>
+					</fieldset>		
+				</div>
+				<!-- sezione opzioni -->
+			
+			</div>
+			<!--/Tab panes -->	
+			<hr>		
+			<div class="form-group row">
+				<div class="col-md-6 col-xs-12 text-center actionbutton mt-2">
+					<input type="hidden" name="created" id="createdID" value="{{ App.item.created }}">
+					<input type="hidden" name="id" value="{{ App.id }}">
+					<input type="hidden" name="id_owner" value="{{ App.id_owner }}">
+					<input type="hidden" name="method" value="{{ App.methodForm }}">
+					<button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ LocalStrings['invia']|capitalize }}</button>
+					{% if App.id > 0 %}
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform ml-5">{{ LocalStrings['applica']|capitalize }}</button>
+					{% endif %}
+				</div>	
+				<div class="col-md-6 col-xs-12 text-center deletebutton mt-2">				
+					<a href="{{ URLSITEADMIN }}{{ CoreRequest.action }}/listIblo" title="{{ LocalStrings['torna alla lista']|capitalize }}" class="btn btn-success">{{ LocalStrings['indietro']|capitalize }}</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>

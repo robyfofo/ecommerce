@@ -1,0 +1,316 @@
+<!-- admin/menu/formMenu.html v.1.0.0. 22/03/2021 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{ App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" id="formTab" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" href="#datibase" id="datibase-tab" data-toggle="tab" role="tab" aria-controls="datibase" aria-selected="true">{{ LocalStrings['dati base']|capitalize }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#options" id="options-tab" data-toggle="tab" role="tab" aria-controls="options" aria-selected="false">{{ LocalStrings['opzioni']|capitalize }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#image" id="image-tab" data-toggle="tab" role="tab" aria-controls="image" aria-selected="false">{{ LocalStrings['immagine']|capitalize }}</a>
+			</li>
+
+		</ul>
+		<!--/Nav tabs -->		
+		<form id="applicationForm" method="post" class="form-horizontal" role="form" action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}"  enctype="multipart/form-data" method="post">
+			<!-- Tab panes -->
+			<div class="tab-content" id="formTabContent">					
+
+				<div class="tab-pane fade show active" id="datibase" role="tabpanel" aria-labelledby="datibase-tab">
+					<fieldset>
+						<!--sezione generazione automatica tab dati base e contenuti in base alla lingua -->
+						{% for lang in GlobalSettings['languages'] %}
+							{% set titleField = "title_#{lang}" %}
+							<div class="form-group row">
+								<label for="title_{{ lang }}ID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item'][titleField]['label']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+									<input 
+									type="text"
+									{% if App.params.fields['item'][titleField]['required'] == true %} required="required"{% endif %} 
+									class="form-control" 
+									name="title_{{ lang }}" 
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['item'][titleField]['label'] })|capitalize }}" 
+									id="title_{{ lang }}ID" 
+									value="{{ attribute(App.item, titleField)|e('html') }}"
+									>
+								</div>								
+							</div>
+						{% endfor %}
+					</fieldset>			
+				</div>
+	
+				<!-- sezione opzioni --> 
+				<div class="tab-pane fade" id="options" role="tabpanel" aria-labelledby="options-tab">			
+					<fieldset>
+
+						<div class="form-group row">
+							<label for="parentID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['parent']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">							
+								<select name="parent" class="custom-select">
+									<option value="0"></option>
+									{% if App.subMenu is iterable and App.subMenu|length > 0 %}
+										{% for value in App.subMenu %}		
+											<option 
+											value="{{ value.id }}"
+											{% if App.item.parent is defined and App.item.parent == value.id %} selected="selected"{% endif %}>{{ value.levelString }}
+											>
+											{{ value.title|e('html') }}
+											</option>														
+										{% endfor %}
+									{% endif %}		
+								</select>									
+							</div>
+						</div>
+						<hr>
+						<div class="form-group row">
+							<label for="menu_type_aliasID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['menu_type_alias']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">							
+								<select id="menu_type_aliasID" name="menu_type_alias" class="custom-select">
+									<option value="0"></option>
+									{% if GlobalSettings['menus type available'] is iterable and GlobalSettings['menus type available']|length > 0 %}
+										{% for key,value in GlobalSettings['menus type available'] %}		
+											<option 
+											value="{{ key }}"
+											{% if App.item.menu_type_alias is defined and App.item.menu_type_alias == key %} selected="selected"{% endif %}
+											>
+											{{ value.title|e('html') }}
+											</option>														
+										{% endfor %}
+									{% endif %}		
+								</select>									
+							</div>
+						</div>
+						<hr>
+						<div class="form-group row">
+							<label for="aliasID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{  App.params.fields['item']['alias']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<input 
+								type="text" 
+								class="form-control" 
+								name="alias" 
+								placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['item']['alias']['label'] })|capitalize }}" 
+								id="aliasID" 
+								value="{{ App.item.alias|e('html') }}"
+								>
+							</div>
+						</div>
+						<hr>
+						<div class="form-group row">
+							<label for="typeID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{  App.params.fields['item']['type']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">							
+								<select name="type" id="typeID" class="custom-select">								
+									{% if GlobalSettings['menu-type'] is iterable and GlobalSettings['menu-type']|length > 0 %}
+										{% for key,value in GlobalSettings['menu-type'] %}	
+											<option 
+											value="{{ key }}"
+											{% if App.item.type is defined and App.item.type == key %} selected="selected"{% endif %}
+											>
+											{{ LocalStrings['menu-type'][key]|capitalize|e('html') }}
+											</option>													
+										{% endfor %}
+									{% endif %}		
+								</select>									
+							</div>
+						</div>
+						<hr>		
+						<div id="sectionurlID">								
+							<div class="form-group row">
+								<label for="urlID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{  App.params.fields['item']['url']['label']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+									<input	
+									type="text" 
+									class="form-control" 
+									name="url" 
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['item']['url']['label'] })|capitalize }}" 
+									id="urlID" 
+									value="{{ App.item.url|e('html') }}">
+									<small id="urlHelpBlock" class="form-text text-muted">{{ LocalStrings['%URLSITE% per url dinamico'] }}</small>		
+								</div>												
+							</div>			
+						</div>
+						
+						<div id="sectionmodulelinkID">		
+							<div class="form-group row">					
+								<label for="moduleID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['link a modulo']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">							
+									<select id="moduleID" class="custom-select" name="module">	
+									<option></option>			
+										{% if App.modules is iterable and App.modules|length > 0 %}
+											{% for section in App.modules %}		
+												{% if section is iterable and section|length > 0 %}
+													{% for value in section %}														
+													<option 
+													value="{{ value.alias }}"
+													{% if App.item.url is defined and App.item.url == value.alias %} selected="selected"{% endif %}
+													>
+													{{ value.alias|e('html') }}
+													</option>														
+													{% endfor %}
+												{% endif %}	
+											{% endfor %}
+										{% endif %}	
+									</select>							
+								</div>
+							</div>
+							<hr>
+						
+						</div>
+						
+						<div id="sectiontargetlinkID">	
+							<div class="form-group row">	
+								<label for="targetID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['target']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">							
+									<select class="custom-select" name="target" id="targetID">	
+									<option></option>			
+										{% if GlobalSettings['url-targets'] is iterable and GlobalSettings['url-targets']|length > 0 %}
+											{% for value in GlobalSettings['url-targets'] %}											
+												<option 
+												value="{{ value }}"
+												{% if App.item.target is defined and App.item.target == value %} selected="selected"{% endif %}
+												>
+												{{ value|e('html') }}
+												</option>														
+											{% endfor %}
+										{% endif %}	
+									</select>							
+								</div>
+							</div>
+							<hr>
+						</div>
+						
+						<div id="sectionmodulemenuID">
+							<div class="form-group row">								
+								<label for="menutypevarsID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['tipi di moduli menu gestiti']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">							
+									<select class="custom-select" name="menutypevars" id="menutypevarsID">	
+									<option></option>			
+										{% if LocalStrings['menu-type-vars'] is iterable and LocalStrings['menu-type-vars']|length > 0 %}
+											{% for key,value in LocalStrings['menu-type-vars'] %}											
+												<option 
+												value="{{ key }}"
+												{% if App.item.url is defined and App.item.url == value.varreplace %} selected="selected"{% endif %}
+												>
+												{{ value.title|e('html') }}
+												</option>														
+											{% endfor %}
+										{% endif %}	
+									</select>	
+									<small id="custom-selectHelpBlock" class="form-text text-muted">
+										{{ LocalStrings['tipi di moduli menu gestiti info']|raw }}
+									</small>
+								</div>
+									
+								<div class="col-md-4" id="sectionmoulemenuinfoID">
+									<span>					    		
+									</span>					    	
+								</div>
+							</div>	
+							<hr>							
+						</div>
+						
+
+						<!-- se e un utente root visualizza l'input altrimenti lo genera o mantiene automaticamente -->	
+						{% if App.userLoggedData.is_root == 1 %}		
+							<div class="form-group row">
+								<label for="orderingID" class="col-sm-6 col-md-6 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['ordering']['label']|capitalize }}</label>
+								<div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+									<input 
+									type="text" 
+									name="ordering" 
+									placeholder="" 
+									class="form-control" 
+									id="orderingID" 
+									value="{{ App.item.ordering }}"
+									>
+						    	</div>
+							</div>
+							<hr>
+						{% else %}
+							<input type="hidden" name="ordering" value="{{ App.item.ordering }}">		
+						{% endif %}
+						<!-- fine se root -->
+					
+						<div class="form-group row ml-2">
+							<div class="custom-control custom-checkbox">
+								<input 
+								name="active" 
+								id="activeID"{% if App.item.active == 1 %} checked="checked"{% endif %} 
+								value="1" 
+								type="checkbox" 
+								class="custom-control-input"
+								>
+								<label class="custom-control-label" for="activeID">{{ App.params.fields['item']['active']['label']|capitalize }}</label>
+							</div>
+						</div>
+
+					</fieldset>				
+				</div>
+				<!--/sezione opzioni -->
+				<!-- sezione image -->	
+				<div class="tab-pane fade" id="image" role="tabpanel" aria-labelledby="image-tab">		
+					<fieldset>
+						<div class="form-group">
+							<label for="filenameID" class="col-md-2 control-label">{{ LocalStrings['immagine']|capitalize }}</label>							
+							<div class="col-md-4">						
+								<div class="custom-file">
+  									<input{% if App.item.filenameRequired == true %} required{% endif %} type="file" name="filename" class="custom-file-input" id="filenameID">
+  									<label class="custom-file-label" for="customFile">{{ LocalStrings['indica un file da caricare']|capitalize }}</label>
+								</div>	
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">{{ LocalStrings['anteprima']|capitalize }}</label>
+							<div class="col-md-7">
+								{% if App.item.filename is defined and App.item.filename != '' %}
+								<a class="" href="{{ App.params.uploadDirs['item'] }}{{ App.item.filename }}" data-lightbox="image-1" data-title="{{ value.org_filename }}" title="{{ App.item.org_filename }}">
+									<img  class="img-miniature"  src="{{ App.params.uploadDirs['item'] }}{{ App.item.filename }}" alt="{{ App.item.org_filename }}">
+								</a>							
+								{% else %}
+									<img  class="img-miniature"  src="{{ UPLOADDIR }}default/image.png" alt="{{ LocalStrings['immagine di default']|capitalize }}">											
+								{% endif %}
+							</div>			
+						</div>
+						{% if App.item.filename is defined and App.item.filename != '' %}
+						<div class="form-group">
+							<label for="deleteFilenameID" class="col-md-2 control-label">{{ LocalStrings['cancella immagine']|capitalize }}</label>						
+							<div class="col-md-5">							
+								<input type="checkbox" name="deleteFilename" id="deleteFilenameID" value="1">						
+							</div>					
+						</div>
+						{% endif %}
+					</fieldset>
+				</div>
+				<!-- /sezione image -->
+
+			</div>
+			<!--/Tab panes -->				
+			<hr>			
+			<div class="form-group row">
+				<div class="col-md-6 col-xs-12 text-center actionbutton mt-2">	
+			    	<input type="hidden" name="id" value="{{ App.id }}">
+			    	<input type="hidden" name="method" value="{{ App.methodForm }}">		    	
+			    	<input type="hidden" name="bk_parent" value="{{ App.item.parent }}">
+			      <button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ LocalStrings['invia']|capitalize }}</button>
+			      {% if App.id > 0 %}
+			      	<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform ml-5">{{ LocalStrings['applica']|capitalize }}</button>
+			      {% endif %}
+				</div>
+	 			<div class="col-md-6 col-xs-12 text-center deletebutton mt-2">			
+					<a href="{{ URLSITEADMIN }}{{ CoreRequest.action }}/listItem" title="{{ LocalStrings['torna alla lista']|capitalize }}" class="btn btn-success">{{ LocalStrings['indietro']|capitalize }}</a>
+				</div>
+			</div>
+
+		</form>
+		
+	</div>
+</div>

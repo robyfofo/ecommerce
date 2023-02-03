@@ -1,0 +1,139 @@
+<ul class="navbar-nav ml-auto">
+
+    <!-- menu dinamico -->
+    {{ App.mainMenu1|raw }}
+    <!-- menu dinamico -->
+
+    <!-- menu pages dinamico -->
+    {{ App.menuPages|raw }}
+    <!-- menu pages dinamico -->
+
+    <!-- Categories - Mega Menu -->
+    <li class="hs-has-mega-menu nav-item g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut" data-position="right">
+        <a id="mega-menu-label-3" class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="#"  aria-haspopup="true" aria-expanded="false">
+            {{ LocalStrings['categorie'] }} <i class="hs-icon hs-icon-arrow-bottom g-font-size-11 g-ml-7"></i>
+        </a>
+        <div class="w-100 hs-mega-menu u-shadow-v11 g-text-transform-none g-brd-top g-brd-primary g-brd-top-2 g-bg-white g-pa-30 g-mt-17" aria-labelledby="mega-menu-label-3" style="display: none;">
+            <div class="row">
+                {{ App.megamenuCategories|raw }}                                          
+                <div class="col-md-6 col-lg-4 g-mb-30 g-mb-0--md">
+                    {% if App.randomProductDetails.id is defined and App.randomProductDetails.id > 0 %}
+                    <article class="g-pos-rel">
+                        <img class="img-fluid" src="{{ URLSITE }}img.php?src=/warehouse/products/{{ App.randomProductDetails.image }}&width=400&height=400&crop-to-fit" alt="{{ App.randomProductDetails.title_seo_it }}">
+                        <div class="g-pos-abs g-bottom-30 g-left-30 megamenu-categories-g-pos-abs">
+                            <span class="d-block g-color-gray-dark-v4 mb-2">{{ App.randomProductDetails.category.title_locale }}</span>
+                            <span class="d-block h4">{{ App.randomProductDetails.title_locale }}</span>
+                            <span class="d-block g-color-gray-dark-v3 g-font-size-16 mb-4">{{ App.randomProductDetails.valuta_price_tota }}</span>
+                            <a class="btn u-btn-primary u-shadow-v29 g-font-size-12 text-uppercase g-py-10 g-px-20" href="#">{{ LocalStrings['aggiungi al carrello']|title }}</a>
+                        </div>
+                    </article>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </li>
+    <!-- Categories - Mega Menu -->
+
+    <!-- Singola categoria random - Mega Menu -->
+    <li class="hs-has-mega-menu nav-item g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut" data-position="right">
+        <a id="mega-menu-label-2" class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="#" aria-haspopup="true" aria-expanded="false">
+            {{ App.randomCategoryDetails.title_locale }} <i class="hs-icon hs-icon-arrow-bottom g-font-size-11 g-ml-7"></i>
+        </a>
+        <!-- Mega Menu -->
+        <div class="w-100 hs-mega-menu u-shadow-v11 g-text-transform-none g-brd-top g-brd-primary g-brd-top-2 g-bg-white g-mt-17" aria-labelledby="mega-menu-label-2">
+            <div class="row no-gutters">
+                <div class="col-md-4 g-mb-30 g-mb-0--md">
+                    <div class="g-pa-30">
+                        <!-- Links -->
+                        <span class="d-block g-font-weight-500 text-uppercase mb-2">{{ App.randomCategoryDetails.title_locale }}</span>
+                        <ul class="list-unstyled">
+                            {% if App.randomCategoryProducts is iterable and App.randomCategoryProducts|length > 0 %}
+                                {% for value in App.randomCategoryProducts %}
+                                    <li>
+                                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" title="{{ value.title_seo_locale }}" href="{{ URLSITE }}{{ value.alias }}">{{ value.title_locale }}</a>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                        <!-- End Links -->
+                    </div>
+                </div>
+                <div class="col-md-8 g-min-height-400 g-bg-size-cover g-bg-pos-center"
+                    data-bg-img-src="{{ UPLOADDIR }}warehouse/products/{{ App.randomCategoryProductDetails.image }}" alt="{{ App.randomCategoryProductDetails.title_seo_it }}">
+                    <article class="g-pa-30">
+                        <div class="overlay-for-content mb-2">
+                            <span class="d-block text-uppercase mb-2">{{ App.randomCategoryDetails.title_locale }}</span>
+                            <span class="d-block h1 megamenu-h1">{{ App.randomCategoryProductDetails.title_locale }}</span>
+                            <span class="d-block g-font-weight-700 g-font-size-14">{{ App.randomCategoryProductDetails.subtitle_locale }}</span>
+                        </div>
+  
+                        <a class="btn u-btn-bluegray g-brd-primary--hover g-color-white--hover g-bg-primary--hover g-font-size-11 text-uppercase g-py-10 g-px-20" href="#">{{ LocalStrings['acquista subito'] }}</a>
+                       
+                    </article>
+                </div>
+            </div>
+        </div>
+        <!-- End Mega Menu -->
+    </li>
+    <!-- Singola categoria rendom - Mega Menu -->
+
+    <!-- Mega Menu Catalogo -->
+    <li class="hs-has-mega-menu nav-item g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn"
+        data-animation-out="fadeOut" data-position="right">
+        <a id="mega-menu-label-4"
+            class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="#"
+            aria-haspopup="true" aria-expanded="false">
+            {{ LocalStrings['catalogo'] }}
+            <i class="hs-icon hs-icon-arrow-bottom g-font-size-11 g-ml-7"></i>
+        </a>
+
+        <!-- Mega Menu -->
+        <div class="w-100 hs-mega-menu u-shadow-v11 g-text-transform-none g-brd-top g-brd-primary g-brd-top-2 g-bg-white g-pa-30 g-mt-17"
+            aria-labelledby="mega-menu-label-4">
+            <div class="row">                                        
+                {{ App.megamenuCatalogo|raw }}                                          
+            </div>
+        </div>
+        <!-- End Mega Menu  -->
+    </li>
+    <!-- End Mega Menu Catalogo -->
+
+    <!-- New Arrivals - Mega Menu -->
+    <li class="hs-has-mega-menu nav-item g-ml-10--lg g-ml-15--xl" data-animation-in="fadeIn"
+        data-animation-out="fadeOut" data-position="right">
+        <a id="mega-menu-label-5"
+            class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="#" aria-haspopup="true" aria-expanded="false">
+            {{ LocalStrings['nuovi arrivi'] }} <i class="hs-icon hs-icon-arrow-bottom g-font-size-11 g-ml-7"></i>
+        </a>
+        <!-- Mega Menu -->
+        <div class="w-100 hs-mega-menu u-shadow-v11 g-text-transform-none g-brd-top g-brd-primary g-brd-top-2 g-bg-white g-pa-30 g-mt-17" aria-labelledby="mega-menu-label-5">
+            <div class="row">   
+                {% if App.lastNumbersProducts is iterable and App.lastNumbersProducts|length > 0 %}
+                    {% for value in App.lastNumbersProducts %}
+                        <div class="col-md-4 g-mb-30 g-mb-0--md">
+                        <!-- Article -->
+                            <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="{{ URLSITE }}img.php?src=/warehouse/products/{{ value.image }}&width=350&height=350&crop-to-fit">
+                                <div class="g-pos-rel g-z-index-1">
+                                    <div class="overlay-for-content mb-2">
+                                        <span class="d-block g-font-weight-400 text-uppercase mb-3">{{ value.category.title_locale }}</span>
+                                        <span class="d-block h2 mb-4 megamenu-h2">{{ value.title_locale }}</span>
+                                    </div>
+                                    <a class="btn u-btn-white g-brd-primary--hover g-color-white--hover g-bg-primary--hover g-font-size-11 text-uppercase g-py-10 g-px-20" href="#">{{ LocalStrings['acquista subito'] }}</a>
+                                </div>
+                            </article>
+                        <!-- End Article -->
+                        </div>
+                    {% endfor %}
+                {% endif %}    
+            </div>
+        </div>
+        <!-- End Mega Menu -->
+    </li>
+    <!-- End New Arrivals - Mega Menu -->
+
+    <!-- menu dinamico -->
+    {{ App.mainMenu2|raw }}
+    <!-- menu dinamico -->
+
+</ul>

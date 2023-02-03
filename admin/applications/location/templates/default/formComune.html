@@ -1,0 +1,118 @@
+<!-- location/formComune.html v.1.0.0. 10/02/2021 -->
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-sm-4">
+		<h2>{{ App.pageTitle }} - <small>{{ App.pageSubTitle }}</small></h2>
+	</div>
+	<div class="col-sm-8">
+		<div class="title-action">
+		</div>
+	</div>
+</div>
+
+<div class="wrapper wrapper-content">
+ 	
+	{% if (App.systemMessages is defined) and (App.systemMessages != '') %}
+		<div class="row">
+			{{ App.systemMessages|raw }}
+		</div>
+	{% endif %}
+	
+	<div class="row">
+		<div class="col-md-12">
+			<div class="ibox">
+				<div class="ibox-content">			
+
+					<ul class="nav nav-tabs" id="formTab" role="tablist">		
+						<li class="nav-item">
+							<a class="nav-link active" href="#datibase" id="datibase-tab" data-toggle="tab" role="tab" aria-controls="datibase" aria-selected="true">{{ LocalStrings['['dati base']|capitalize }}</a>
+						</li>  		
+					</ul>
+
+					<form id="applicationForm" method="post" class="form-horizontal" role="form" action="{{ URLSITE }}{{ CoreRequest.action }}/{{ App.methodForm }}"  enctype="multipart/form-data" method="post">
+				
+						<!-- Tab panes -->
+						<div class="tab-content" id="formTabContent">	
+
+							
+							<div class="tab-pane fade show active" id="datibase" role="tabpanel" aria-labelledby="datibase-tab">			
+								<fieldset class="p-3">
+									
+									<div class="form-group row">
+										<label for="nomeID" class="col-md-2 control-label">{{ App.params.fields['comuni']['nome']['label']|capitalize }}</label>
+										<div class="col-md-7">
+											<input type="text"{% if LocalStrings[' == 'it' %} required{% endif %} class="form-control" name="nome" id=nomeID" value="{{ App.item.nome|e('html') }}"placeholder="{{ LocalStrings['['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['['nome']})|capitalize }} {{ LocalStrings[' }}"{% if App.params.fields.comuni.nome.required == true %} required="required" oninvalid="this.setCustomValidity(' {{ LocalStrings['['Devi inserire un %ITEM%!']|replace({ '%ITEM%' : LocalStrings['['nome'] }) }} ')" oninput="setCustomValidity('')"{% endif %}>
+										</div>
+									</div>				
+									
+									<div class="form-group row">
+										<label for="capID" class="col-md-2 control-label">{{ App.params.fields['comuni']['cap']['label']|capitalize }}</label>
+										<div class="col-md-3">
+												<input type="text" name="cap" class="form-control" id="capID" value="{{ App.item.cap|e('html') }}" placeholder="{{ LocalStrings['['inserisci una %ITEM%']|replace({'%ITEM%': LocalStrings['['cap']})|capitalize }}"{% if App.params.fields['comuni']['cap']['required'] == true %} required="required" oninvalid="this.setCustomValidity('{{ LocalStrings['['Devi inserire un %ITEM%!']|replace({'%ITEM%':LocalStrings['['cap']}) }}')" oninput="setCustomValidity('')"{% endif %}>
+										</div>
+									</div>
+									<hr>
+									<div class="form-group row">
+										<label for="location_province_idID" class="col-md-2 control-label">{{ App.params.fields['comuni']['location_province_id']['label']|capitalize }}</label>
+										<div class="col-md-7">
+											<select name="location_province_id" class="selectpicker" data-live-search="true" title="{{ LocalStrings['['seleziona una %ITEM%']|replace({'%ITEM%': LocalStrings['['provincia']})|capitalize }}"
+											{% if App.params.fields['comuni']['location_province_id']['required'] == true %} required="required" oninvalid="this.setCustomValidity('{{ LocalStrings['['Devi inserire una %ITEM%!']|replace({'%ITEM%':LocalStrings['['provincia']}) }}')" onchange="setCustomValidity('')"{% endif %}>
+												{% if App.province is iterable %}
+													{% for key,value in App.province %}	
+														<option value="{{ value.id }}"{% if value.id == App.item.location_province_id %} selected="selected"{% endif %}>{{ value.nome|e('html') }}</option>														
+													{% endfor %}
+												{% endif %}		
+											</select>		
+										</div>
+									</div>						
+									<hr>
+									<div class="form-group row">
+										<label for="location_nations_idID" class="col-md-2 control-label">{{ App.params.fields['comuni']['location_nations_id']['label']|capitalize }}</label>
+										<div class="col-md-7">
+											<select name="location_nations_id" class="selectpicker" data-live-search="true" title="{{ LocalStrings['['seleziona una %ITEM%']|replace({'%ITEM%': LocalStrings['['nazione']})|capitalize }}"
+											{% if App.params.fields['comuni']['location_nations_id']['required'] == true %} required="required" oninvalid="this.setCustomValidity('{{ LocalStrings['['Devi inserire una %ITEM%!']|replace({'%ITEM%':LocalStrings['['nazione']}) }}')" onchange="setCustomValidity('')"{% endif %}>
+												<option value="0"></option>
+												{% if App.nations is iterable %}
+													{% for key,value in App.nations %}	
+														{% set titleField = "title_#{LocalStrings['['user']}" %}
+														<option value="{{ value.id }}"{% if value.id == App.item.location_nations_id %} selected="selected"{% endif %}>{{ attribute(value, titleField)|e('html') }}</option>														
+													{% endfor %}
+												{% endif %}		
+											</select>		
+										</div>
+									</div>														
+									<hr>
+									<div class="form-group row">
+										<label for="activeID" class="col-md-2 control-label">{{ App.params.fields['nations']['active']['label']|capitalize }}</label>
+										<div class="col-md-7">
+											<input type="checkbox" name="active" id="activeID" class="form-check-input"{% if App.item.active == 1 %} checked="checked"{% endif %} value="1">
+										</div>
+									</div>
+								</fieldset>
+							</div>
+
+						</div>
+						<!--/Tab panes -->	
+
+						<hr>
+						<div class="form-group row">
+							<div class="col-md-6 col-xs-12 row-submitapply">
+								<input type="hidden" name="id" id="idID" value="{{ App.id }}">
+								<input type="hidden" name="method" value="{{ App.methodForm }}">
+								<button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ LocalStrings['['invia']|capitalize }}</button>
+								{% if App.id > 0 %}
+									<button type="submit" name="applyForm" value="apply" class="btn btn-primary btn-apply submittheform">{{ LocalStrings['['applica']|capitalize }}</button>
+								{% endif %}
+							</div>
+							<div class="col-md-6 col-xs-12 row-back">		
+								<a href="{{ URLSITE }}{{ CoreRequest.action }}/listComuni" title="{{ LocalStrings['['torna alla %ITEM%']|replace({'%ITEM%': LocalStrings['['lista']})|capitalize }}" class="btn btn-success btn-back">{{ LocalStrings['['indietro']|capitalize }}</a>
+							</div>
+						</div>
+
+					</form>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div><!-- end wrapper wrapper-content -->

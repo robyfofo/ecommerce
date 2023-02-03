@@ -1,0 +1,22 @@
+<!--=== Breadcrumbs ===-->
+{{ App.breadcrumbsBar }}
+<!--=== End Breadcrumbs ===--> 
+
+<!-- Portfolio Single Item -->
+<section class="container g-py-100">
+	{% if (App.item.filename is defined) and (App.item.filename != '') %}
+		<img class="img-fluid w-100 g-mb-50" src="{{ UPLOADDIR }}news/{{ App.item.filename }}" alt="{{ App.item.title }}">
+	{% else %}
+		<img class="img-fluid w-100 g-mb-50" src="{{ UPLOADDIR }}news/default/image.png" alt="{{ LocalStrings['immagine di default']|capitalize }}">
+	{% endif %}
+	<div class="row g-mb-70">
+  		<div class="col-md-12 g-mb-30">
+ 			<div class="mb-5">
+				<h2 class="g-color-black mb-1">{{ App.item.title }}</h2>
+				<span class="d-block lead mb-4">{{ App.item.datains_string|capitalize }}</span>
+ 				{{ App.item.content|raw }}
+  			</div>
+		</div>
+	</div>
+</section>
+ <!-- End Portfolio Single Item -->

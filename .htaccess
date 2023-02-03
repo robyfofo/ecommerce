@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteBase /ecommerce100/
+
+# Don't compress images
+SetEnvIfNoCase Request_URI \
+\.(?:gif|jpe?g|png)$ no-gzip dont-vary
+
+
+#Split the friendly URL and compose the real URL
+RewriteRule ^(scripts|classes|assets|css|font-awesome|images|include|js|templates|uploads) - [L]
+
+#engine
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ index.php?request=$1 [QSA,L]

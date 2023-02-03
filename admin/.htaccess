@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteBase /ecommerce100/admin/
+
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag html_errors on
+php_flag log_errors on
+
+#engine
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ index.php?request=$1 [QSA,L]

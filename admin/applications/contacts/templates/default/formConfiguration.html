@@ -1,0 +1,325 @@
+<!-- admin/help/formConfiguration.html v.1.0.0. 26/06/2021 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{
+		App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+
+		<ul class="nav nav-tabs" id="formTab" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" href="#datibase" id="datibase-tab" aria-controls="datibase"
+					aria-selected="true" data-toggle="tab">{{ LocalStrings['dati base']|capitalize }}</a>
+			</li>
+
+			{% for lang in GlobalSettings['languages'] %}
+			<li class="nav-item">
+				<a class="nav-link" href="#contents{{ lang }}" id="contents{{ lang }}-tab"
+					aria-controls="contents{{ lang }}" aria-selected="false" data-toggle="tab">{{
+					LocalStrings['contenuti']|capitalize }} {{ lang }}</a>
+			</li>
+			{% endfor %}
+
+			<li class="nav-item">
+				<a class="nav-link" href="#admin" id="admin-tab" aria-controls="admin" aria-selected="true"
+					data-toggle="tab">{{ LocalStrings['amministratore']|capitalize }} {{ Lang['sito'] }}</a>
+			</li>
+
+			{% for lang in GlobalSettings['languages'] %}
+			<li class="nav-item">
+				<a class="nav-link" href="#user{{ lang }}" id="user{{ lang }}-tab" aria-controls="user{{ lang }}"
+					aria-selected="true" data-toggle="tab">{{ LocalStrings['utente']|capitalize }} {{ lang }}</a>
+			</li>
+			{% endfor %}
+
+			<li class="nav-item">
+				<a class="nav-link" href="#options" id="options-tab" aria-controls="options" aria-selected="true"
+					data-toggle="tab">{{ LocalStrings['opzioni']|capitalize }}</a>
+			</li>
+		</ul>
+
+		<form id="applicationForm" class="form-horizontal" role="form"
+			action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}" enctype="multipart/form-data"
+			method="post">
+
+			{% set lang = LocalStrings['user'] %}
+			{% set nolang = 'lang' %}
+			<div class="tab-content" id="formTabContent">
+
+				<!-- sezione dati base  -->
+				<div class="tab-pane active" id="datibase" role="tabpanel" aria-labelledby="datibase">
+					<fieldset>
+
+						<div class="form-group row">
+							<label for="email_addressID" class="col-sm-12 col-md-12 col-lg-4 col-xl-3 col-form-label">
+								{{ LocalStrings['indirizzo email']|capitalize }}
+								<br><small>{{ attribute(App.contact_help['email_address'], lang) }}</small>
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
+								<input type="text" class="form-control" name="email_address" id="email_addressID"
+									value="{{ App.contact_config.email_address|e('html') }}"
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': LocalStrings['indirizzo email'] })|capitalize }}">
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="label_email_addressID"
+								class="col-sm-12 col-md-12 col-lg-4 col-xl-3 col-form-label">
+								{{ LocalStrings['etichetta']|capitalize }} {{ LocalStrings['indirizzo email'] }}
+								<br><small>{{ attribute(App.contact_help['label_email_address'], lang) }}</small>
+							</label>
+
+							<div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
+								<input type="text" class="form-control" name="label_email_address"
+									id="label_email_addressID"
+									value="{{ App.contact_config.label_email_address|e('html') }}"
+									placeholder="{{ LocalStrings['inserisci una %ITEM%']|replace({ '%ITEM%': LocalStrings['etichetta'] })|capitalize }}">
+							</div>
+						</div>
+
+						<hr>
+
+						<div class="form-group row">
+							<label for="url_privacy_pageID"
+								class="col-sm-12 col-md-12 col-lg-4 col-xl-3 col-form-label">
+								{{ LocalStrings['url pagina privacy']|capitalize }}
+								<br><small>{{ attribute(App.contact_help['url_privacy_page'], lang) }}</small>
+							</label>
+
+							<div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
+								<input type="text" class="form-control" name="url_privacy_page" id="url_privacy_pageID"
+									value="{{ App.contact_config.url_privacy_page|e('html') }}"
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': LocalStrings['url'] })|capitalize }}">
+							</div>
+						</div>
+
+						<hr>
+
+						<div class="form-group row">
+							<label
+								class="col-sm-4 col-md-4 col-lg-4 col-xl-3 col-form-label col-form-label-custom-checkbox">
+								{{ LocalStrings['invia email debug']|capitalize }}
+								<br><small>{{ attribute(App.contact_help['send_email_debug'], lang) }}</small>
+
+							</label>
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+								<div class="custom-control custom-checkbox">
+									<input name="send_email_debug" id="send_email_debugID" {% if
+										App.contact_config.send_email_debug==1 %} checked="checked" {% endif %}
+										value="1" type="checkbox" class="custom-control-input">
+									<label class="custom-control-label" for="send_email_debugID"></label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="email_debugID" class="col-sm-12 col-md-12 col-lg-4 col-xl-3 col-form-label">
+								{{ LocalStrings['indirizzo email']|capitalize }} {{ LocalStrings['debug'] }}
+								<br><small>{{ attribute(App.contact_help['email_debug'], lang) }}</small>
+							</label>
+
+							<div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
+								<input type="text" class="form-control" name="email_debug" id="email_debugID"
+									value="{{ App.contact_config.email_debug|e('html') }}"
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': LocalStrings['indirizzo email'] })|capitalize }}">
+							</div>
+						</div>
+
+					</fieldset>
+				</div>
+				<!-- /sezione dati base  -->
+
+				<!-- sezione contenuti  -->
+				{% for langue in GlobalSettings['languages'] %}
+				{% set textIntro = "text_intro_#{langue}" %}
+				{% set pageContent = "page_content_#{langue}" %}
+
+				<div class="tab-pane" id="contents{{ langue }}" role="tabpanel" aria-labelledby="contents{{ langue }}">
+					<fieldset>
+
+						<div class="form-group row">
+							<label for="admin_email_subject_{{ langue }}ID"
+								class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">
+								{{ LocalStrings['testo intro']|capitalize }} {{ langue }}
+								<br><small>{{ attribute(App.contact_help[textIntro], nolang) }}</small>
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<textarea name="text_intro_{{ langue }}" id="text_intro_{{ langue }}ID"
+									class="form-control editorHTML"
+									rows="2">{{ attribute(App.contact_config,textIntro)|e('html') }}</textarea>
+
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="page_content_{{ langue }}ID"
+								class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">
+								{{ LocalStrings['contenuto pagina']|capitalize }} {{ langue }}
+								<br><small>{{ attribute(App.contact_help[pageContent], nolang) }}</small>
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<textarea name="page_content_{{ langue }}" id="page_content_{{ langue }}ID"
+									class="form-control editorHTML"
+									rows="8">{{ attribute(App.contact_config,pageContent)|e('html') }}</textarea>
+
+							</div>
+						</div>
+
+					</fieldset>
+				</div>
+				{% endfor %}
+				<!-- /sezione contenuti  -->
+
+
+				<!-- sezione admin  -->
+				<div class="tab-pane" id="admin" role="tabpanel" aria-labelledby="admim">
+					<fieldset>
+
+						<div class="form-group row">
+							<label for="admin_email_subjectID"
+								class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">
+								{{ LocalStrings['soggetto email admin']|capitalize }}
+								<br><small>{{ attribute(App.contact_help['admin_email_subject'], lang) }}</small>
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<textarea name="admin_email_subject" id="admin_email_subjectID" class="form-control"
+									rows="2">{{ App.contact_config.admin_email_subject|e('html') }}</textarea>
+
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="admin_email_contentID"
+								class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">
+								{{ LocalStrings['contenuto email admin']|capitalize }}
+								<br><small>{{ attribute(App.contact_help['admin_email_content'], lang) }}</small>
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<textarea name="admin_email_content" id="admin_email_contentID" class="form-control"
+									rows="8">{{ App.contact_config.admin_email_content|e('html') }}</textarea>
+
+							</div>
+						</div>
+
+					</fieldset>
+
+				</div>
+				<!-- /sezione admin  -->
+
+				<!-- sezione user  -->
+				{% for langue in GlobalSettings['languages'] %}
+				{% set userEmailSubject = "user_email_subject_#{langue}" %}
+				{% set userEmailContent = "user_email_content_#{langue}" %}
+
+				<div class="tab-pane" id="user{{ langue }}" role="tabpanel" aria-labelledby="user{{ langue }}">
+					<fieldset>
+
+						<div class="form-group row">
+							<label for="user_email_subject_{{ langue }}ID"
+								class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">
+								{{ LocalStrings['soggetto email utente']|capitalize }} {{ langue }}
+								<br><small>{{ attribute(App.contact_help[userEmailSubject], nolang) }}</small>
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<textarea name="user_email_subject_{{ langue }}" id="user_email_subject_{{ langue }}ID"
+									class="form-control"
+									rows="2">{{ attribute(App.contact_config,userEmailSubject)|e('html') }}</textarea>
+
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="user_email_content_{{ langue }}ID"
+								class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">
+								{{ LocalStrings['contenuto email utente']|capitalize }} {{ langue }}
+								<br><small>{{ attribute(App.contact_help[userEmailContent], nolang) }}</small>
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<textarea name="user_email_content_{{ langue }}" id="page_content_{{ langue }}ID"
+									class="form-control"
+									rows="8">{{ attribute(App.contact_config,userEmailContent)|e('html') }}</textarea>
+
+							</div>
+						</div>
+
+					</fieldset>
+				</div>
+				{% endfor %}
+				<!-- /sezione user  -->
+
+				<!-- sezione opzioni  -->
+				<div class="tab-pane" id="options" role="tabpanel" aria-labelledby="options">
+					<fieldset>
+
+						<div class="form-group row">
+							<label
+								class="col-sm-4 col-md-4 col-lg-4 col-xl-3 col-form-label col-form-label-custom-checkbox">
+								{{ LocalStrings['salva nel database']|capitalize }}
+								<br><small>{{ attribute(App.contact_help['save_in_db'], lang) }}</small>
+							</label>
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+								<div class="custom-control custom-checkbox">
+									<input name="save_in_db" id="save_in_dbID" {% if
+										App.contact_config.save_in_db == 1 %} checked="checked" {% endif %}
+										value="1" type="checkbox" class="custom-control-input">
+									<label class="custom-control-label" for="save_in_dbID"></label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label
+								class="col-sm-4 col-md-4 col-lg-4 col-xl-3 col-form-label col-form-label-custom-checkbox">
+								{{ LocalStrings['invia email staff']|capitalize }}
+								<br><small>{{ attribute(App.contact_help['send_email_to_staff'], lang) }}</small>
+							</label>
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+								<div class="custom-control custom-checkbox">
+									<input name="send_email_to_staff" id="send_email_to_staffID" {% if
+										App.contact_config.send_email_to_staff == 1 %} checked="checked" {% endif %}
+										value="1" type="checkbox" class="custom-control-input">
+									<label class="custom-control-label" for="send_email_to_staffID"></label>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label
+								class="col-sm-4 col-md-4 col-lg-4 col-xl-3 col-form-label col-form-label-custom-checkbox">
+								{{ LocalStrings['invia email utente']|capitalize }}
+								<br><small>{{ attribute(App.contact_help['send_email_to_user'], lang) }}</small>
+							</label>
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+								<div class="custom-control custom-checkbox">
+									<input name="send_email_to_user" id="send_email_to_userID" {% if
+										App.contact_config.send_email_to_user == 1 %} checked="checked" {% endif %}
+										value="1" type="checkbox" class="custom-control-input">
+									<label class="custom-control-label" for="send_email_to_userID"></label>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<!-- /sezione opzioni  -->
+
+
+
+				<hr>
+				<div class="form-group row">
+					<div class="col-md-12 col-xs-12 text-center actionbutton mt-2">
+						<input type="hidden" name="method" value="{{ App.methodForm }}">
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform">{{
+							LocalStrings['applica']|capitalize }}</button>
+					</div>
+				</div>
+
+			</div>
+
+		</form>
+
+
+	</div>
+</div>

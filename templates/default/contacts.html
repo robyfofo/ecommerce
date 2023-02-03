@@ -1,0 +1,330 @@
+<!--=== Breadcrumbs ===-->
+{{ App.breadcrumbsBar }}
+<!--=== End Breadcrumbs ===-->
+
+<!-- Google Map -->
+{% if App.cookiesThirdyParts == true %}
+
+
+
+<div id="GMapCustomized-light" class="js-g-map embed-responsive embed-responsive-21by9 g-height-400" data-type="custom"
+	data-lat="{{GlobalSettings['azienda latitude'] }}" data-lng="{{ GlobalSettings['azienda longitude'] }}"
+	data-zoom="12" data-title="{{ GlobalSettings['azienda slogan'] }}"
+	data-styles='[["", "", [{"saturation":-100},{"lightness":40},{"visibility":"simplified"}]], ["", "labels", [{"visibility":"on"}]], ["water", "", [{"color":"#CAD2D4"}]] ]'
+	data-pin="true" data-pin-icon="{{ URLSITE }}templates/{{ App.templateUser }}/assets/img/icons/pin/img1.png">
+</div>
+
+
+{% else %}
+<div>Per visualizzare la mappa di devono accettare i cookies di terze parti!</div>
+{% endif %}
+<!-- End Google Map -->
+
+<div class="container g-py-100">
+
+	<!-- Contact Info -->
+	<div class="row g-mb-100">
+		<div class="col-md-6 col-lg-4 mx-auto g-py-15">
+			<!-- Media -->
+			<div class="media g-brd-around g-brd-gray-light-v4 rounded g-pa-40">
+				<div class="d-flex g-mr-30">
+					<i
+						class="d-inline-block g-color-primary g-font-size-40 g-pos-rel g-top-3 icon-communication-062 u-line-icon-pro"></i>
+				</div>
+				<div class="media-body">
+					<span class="d-block g-font-weight-500 g-font-size-default text-uppercase mb-2">{{
+						LocalStrings['numero di telefono'] }}</span>
+					<ul class="list-unstyled mb-0">
+						<li class="d-block g-color-gray-dark-v4">{{ GlobalSettings['azienda telefono'] }}</li>
+						<li class="d-block g-color-gray-dark-v4">{{ GlobalSettings['azienda mobile'] }}</li>
+					</ul>
+				</div>
+			</div>
+			<!-- End Media -->
+		</div>
+
+		<div class="col-md-6 col-lg-4 mx-auto g-py-15">
+			<!-- Media -->
+			<div class="media g-brd-around g-brd-gray-light-v4 rounded g-pa-40">
+				<div class="d-flex g-mr-30">
+					<i
+						class="d-inline-block g-color-primary g-font-size-40 g-pos-rel g-top-3 icon-real-estate-027 u-line-icon-pro"></i>
+				</div>
+				<div class="media-body">
+					<span class="d-block g-font-weight-500 g-font-size-default text-uppercase mb-2">{{
+						LocalStrings['indirizzo'] }}</span>
+					<span class="d-block g-color-gray-dark-v4">
+						{{ GlobalSettings['azienda indirizzo'] }}
+						{{ GlobalSettings['azienda comune'] }}
+						{{ GlobalSettings['azienda cap'] }}
+						{{ GlobalSettings['azienda provincia'] }}
+
+					</span>
+				</div>
+			</div>
+			<!-- End Media -->
+		</div>
+
+		<!-- Media -->
+		<div class="col-md-6 col-lg-4 mx-auto g-py-15">
+			<div class="media g-brd-around g-brd-gray-light-v4 rounded g-pa-40">
+				<div class="d-flex g-mr-30">
+					<i
+						class="d-inline-block g-color-primary g-font-size-40 g-pos-rel g-top-3 icon-hotel-restaurant-249 u-line-icon-pro"></i>
+				</div>
+				<div class="media-body text-left">
+					<span class="d-block g-font-weight-500 g-font-size-default text-uppercase mb-2">{{
+						LocalStrings['orario'] }}</span>
+					<ul class="list-unstyled mb-0">
+						<li class="d-block g-color-gray-dark-v4">Mon - Fri: 09AM to 06PM</li>
+						<li class="d-block g-color-gray-dark-v4">Sat - Sun: 10AM to 04PM</li>
+					</ul>
+				</div>
+			</div>
+			<!-- End Media -->
+		</div>
+	</div>
+	<!-- End Contact Info -->
+
+	<div class="g-max-width-645 text-center mx-auto g-mb-70">
+		<h2 class="h1 mb-3">{{ App.text_intro }}</h2>
+		<p class="g-font-size-17 mb-0">{{ App.page_content }}</p>
+	</div>
+
+	<!-- Contact Form -->
+	<div class="row justify-content-center">
+
+		<div class="col-lg-8">
+			<form novalidate name="contactForm" id="contactFormID" action="" method="post"
+				enctype="multipart/form-data">
+				<div class="row">
+					<div class="col-md-6 form-group u-has-error-v1 g-mb-20">
+						<input value="" name="name" id="nameID"
+							class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v3 g-brd-primary--hover rounded g-py-13 g-px-15"
+							type="text" required="required"
+							placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': LocalStrings['nome'] })|capitalize }}">
+						<small for="nameID" class="form-control-feedback"
+							data-mess="{{ LocalStrings['Devi inserire un %ITEM%!']|replace({ '%ITEM%': LocalStrings['nome'] }) }}">
+						</small>
+					</div>
+
+					<div class="col-md-6 form-group u-has-error-v1 g-mb-20">
+						<input name="email" id="emailID" value=""
+							class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v3 g-brd-primary--hover rounded g-py-13 g-px-15"
+							type="email" required="required"
+							placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': LocalStrings['indirizzo email'] })|capitalize }}">
+						<small for="emailID" class="form-control-feedback"
+							data-messvalidate="{{ LocalStrings['Devi inserire un %ITEM%!']|replace({ '%ITEM%': LocalStrings['indirizzo email valido'] }) }}"
+							data-mess="{{ LocalStrings['Devi inserire un %ITEM%!']|replace({ '%ITEM%': LocalStrings['indirizzo email'] }) }}">
+						</small>
+					</div>
+
+					<div class="col-md-6 form-group u-has-error-v1 g-mb-20">
+						<input name="object" id="objectID" value=""
+							class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v3 g-brd-primary--hover rounded g-py-13 g-px-15"
+							type="text" required="required"
+							placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': LocalStrings['oggetto'] })|capitalize }}">
+						<small for="objectID" class="form-control-feedback"
+							data-mess="{{ LocalStrings['Devi inserire un %ITEM%!']|replace({ '%ITEM%': LocalStrings['oggetto'] }) }}">
+						</small>
+					</div>
+
+					<div class="col-md-6 form-group u-has-error-v1 g-mb-20">
+						<input name="telephone" id="telephoneID" value=""
+							class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v3 g-brd-primary--hover rounded g-py-13 g-px-15"
+							required="required" type="tel"
+							placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': LocalStrings['numero di telefono'] })|capitalize }}">
+						<small for="telephoneID" class="form-control-feedback"
+							data-mess="{{ LocalStrings['Devi inserire un %ITEM%!']|replace({ '%ITEM%': LocalStrings['numero di telefono'] }) }}">
+						</small>
+					</div>
+
+					<div class="col-md-12 form-group u-has-error-v1 g-mb-40">
+						<textarea name="message" id="messageID"
+							class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v3 g-brd-primary--hover g-resize-none rounded g-py-13 g-px-15"
+							required="required" rows="7"
+							placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': LocalStrings['messaggio'] })|capitalize }}"></textarea>
+						<small for="messageID" class="form-control-feedback"
+							data-mess="{{ LocalStrings['Devi inserire un %ITEM%!']|replace({ '%ITEM%': LocalStrings['messaggio'] }) }}">
+						</small>
+					</div>
+
+					<div class="col-md-12 form-group u-has-error-v1 g-mb-40">
+						<label class="form-check-inline u-check g-color-gray-dark-v5 g-pl-25 mb-2">
+							<input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="privacy"
+								id="privacyID">
+							<div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
+								<i class="fa" data-check-icon="&#xf00c"></i>
+							</div>
+							I accept the <a href="#">Terms and Conditions</a>
+						</label>
+						<small for="privacyID" class="form-control-feedback"
+							data-mess="{{ LocalStrings['Devi accettare i termini e le condizioni relativi alla Privacy Policy!']  }}">
+						</small>
+					</div>
+
+					<input type="hidden" name="timesubmit" id="timesubmitID" value="{{ App.timeSubmit }}">
+					<input type="hidden" name="namesubmit" id="namesubmitID" value="">
+				</div>
+
+				<div class="text-center">
+					<button class="btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25" type="submit">{{
+						LocalStrings['invia'] }} {{ LocalStrings['messagio'] }}</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="col-lg-6 mt-3">
+
+
+			<div id="errorMessageID" class="alert alert-dismissible fade fooshow g-bg-red g-color-white rounded-0"
+				role="alert">
+				<button type="button" class="close u-alert-close--light" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+
+				<div class="media">
+					<span class="d-flex g-mr-10 g-mt-5">
+						<i class="icon-ban g-font-size-25"></i>
+					</span>
+					<span class="media-body align-self-center">
+
+					</span>
+				</div>
+			</div>
+
+			<div id="confirmMessageID" class="alert alert-dismissible fade fooshow g-bg-teal g-color-white rounded-0"
+				role="alert">
+				<button type="button" class="close u-alert-close--light" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+
+				<div class="media">
+					<span class="d-flex g-mr-10 g-mt-5">
+						<i class="icon-check g-font-size-25"></i>
+					</span>
+					<span class="media-body align-self-center">
+					</span>
+				</div>
+			</div>
+
+
+		</div>
+
+	</div>
+	<!-- End Contact Form -->
+</div>
+
+{{ include('strutture/struttura-call-to-action.html') }}
+
+<script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/functions.js"></script>
+<script>
+
+	const form = document.getElementById('contactFormID');
+	form.addEventListener('submit', logSubmit);
+
+	function logSubmit(event) {
+		event.preventDefault();
+		document.getElementById('errorMessageID').getElementsByClassName('media-body')[0].innerHTML = '';
+		document.getElementById('errorMessageID').style.opacity = "0";
+		document.getElementById('confirmMessageID').getElementsByClassName('media-body')[0].innerHTML = '';
+		document.getElementById('confirmMessageID').style.opacity = "0";
+
+		const name = document.getElementById('nameID').value;
+		const email = document.getElementById('emailID').value;
+		const telephone = document.getElementById('telephoneID').value;
+		const object = document.getElementById('objectID').value;
+		const message = document.getElementById('messageID').value;
+		const timesubmit = document.getElementById('timesubmitID').value;
+		const namesubmit = document.getElementById('namesubmitID').value;
+
+		// validazione
+		let validation = true;
+
+		// controllo privacy
+		let privacy = 0;
+		foo = document.querySelectorAll('small[for="privacyID"]');
+		foo[0].innerHTML = '';
+		if (document.getElementById('privacyID').checked == true) {
+			privacy = 1;
+		} else {
+			mess = foo[0].getAttribute('data-mess');
+			foo[0].innerHTML = mess;
+			validation = false;
+		}
+		console.log(privacy);
+
+		// controllo email
+		foo = document.querySelectorAll('small[for="emailID"]');
+		foo[0].innerHTML = '';
+		if (!validateEmail(email)) {
+			mess = foo[0].getAttribute('data-messvalidate');
+			foo[0].innerHTML = mess;
+			validation = false;
+		}
+
+		for (const el of form.querySelectorAll("[required]")) {
+			//console.log(el);
+			field = el.attributes.name.value;
+			fieldId = el.attributes.id.value;
+			value = document.getElementById(fieldId).value;
+			mess = 'Il campo ' + field + ' è obbligatorio';
+
+
+			if (document.querySelectorAll('small[for="' + fieldId + '"]').length) {
+				attr = document.querySelectorAll('small[for="' + fieldId + '"]');
+				attr[0].innerHTML = '';
+				if (attr[0].getAttribute('data-mess')) {
+					foo = attr[0].getAttribute('data-mess');
+					if (foo != '') mess = foo;
+
+					if (value == '') {
+						console.log(mess);
+						attr[0].innerHTML = mess;
+						validation = false;
+					}
+				}
+			}
+		}
+		if (validation == false) return false;
+
+		var data = new FormData();
+		data.append('name', name);
+		data.append('telephone', telephone);
+		data.append('email', email);
+		data.append('object', object);
+		data.append('message', message);
+		data.append('privacy', privacy);
+
+		data.append('timesubmit', timesubmit);
+		data.append('namesubmit', namesubmit);
+		var opts = {
+			method: 'POST',
+			headers: {},
+			body: data
+		};
+		fetch(siteUrl + CoreRequestAction + '/send', opts).then(function (response) {
+			return response.json();
+		})
+			.then(function (result) {
+				if (result.error == 1) {
+					const divalert = document.getElementById('errorMessageID');
+					divalert.getElementsByClassName('media-body')[0].innerHTML = result.message;
+					divalert.style.opacity = "1";
+
+				} else {
+					const divalert = document.getElementById('confirmMessageID');
+					divalert.getElementsByClassName('media-body')[0].innerHTML = result.message;
+					divalert.style.opacity = "1";
+				}
+
+			})
+			.catch(error => {
+				console.error('Problami con la richiesta del controllo form:', error);
+				return false;
+			});
+
+		return false;
+	}
+
+</script>

@@ -1,0 +1,77 @@
+<!--=== Breadcrumbs ===-->
+{{ App.breadcrumbsBar }}
+<!--=== End Breadcrumbs ===--> 
+
+<!-- Blog Classic Blocks -->
+<div class="container g-py-100">
+	<div class="masonry-grid row g-mb-70">
+		<div class="masonry-grid-sizer col-sm-1"></div>
+			{% if App.items is iterable %}
+				{% for key,value in App.items %}
+					<div class="masonry-grid-item col-sm-6 col-lg-4 g-mb-30">
+						<!-- Blog Classic Blocks -->
+						<article class="u-shadow-v11">
+							{% if (value.filename is defined) and (value.filename != '') %}
+								<img class="img-fluid w-100" src="{{ URLSITE }}img.php?src=/news/{{ value.filename }}&width=500&height=350&crop-to-fit" alt="{{ value.org_filename }}">
+							{% else %}
+								<img class="img-fluid w-100" src="{{ URLSITE }}img.php?src=/news/default/image.jpg&width=500&height=350&crop-to-fit" alt="{{ LocalStrings['immagine di default']|capitalize }}">
+							{% endif %}
+							<div class="g-bg-white g-pa-30">
+								<span class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ value.datains_string|capitalize }}</span>
+								<h2 class="h5 g-color-black g-font-weight-600 mb-3">
+									<a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer" title="{{ LocalStrings['leggi']|capitalize }} {{ value.titleSeo }}" href="{{ URLSITE }}news/dt/{{ value.id }}/{{ value.title }}">{{ value.title }}</a>
+								</h2>
+								<p class="g-color-gray-dark-v4 g-line-height-1_8">{{ value.summary|length > 160 ? value.summary|slice(0, 160) ~ '...' : value.summary  }}</p>
+								<a class="g-font-size-13" href="{{ URLSITE }}news/dt/{{ value.id }}/{{ value.title }}" title="{{ LocalStrings['leggi']|capitalize }} {{ value.titleSeo }}">{{ LocalStrings['leggi tutto']|capitalize }}...</a>
+							</div>
+						</article>
+						<!-- End Blog Classic Blocks -->
+					</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+
+
+		{% if (App.pagination.itemsTotal > 0) %}	
+			<!-- Pagination -->
+			<nav class="text-center" aria-label="Page Navigation">
+				<ul class="list-inline">
+					<li class="list-inline-item float-left g-hidden-xs-down">
+						<a title="{{ LocalStrings['vai alla pagina']}} {{ LocalStrings['precedente'] }}" class="u-pagination-v1__item u-pagination-v1-4 g-brd-gray-light-v3 g-brd-primary--hover g-rounded-50 g-pa-7-16" href="{{ App.pageUrl }}/page/{{ App.pagination.itemPrevious }}" aria-label="Previous">
+							<span aria-hidden="true">
+								 <i class="fa fa-angle-left g-mr-5"></i> {{ LocalStrings['nuove']|capitalize }}
+							</span>
+							<span class="sr-only">{{ LocalStrings['nuove']|capitalize }}</span>
+						</a>
+					</li>					
+					{% if App.pagination.pagePrevious is iterable %}
+						{% for key,value in App.pagination.pagePrevious %}
+							<li class="list-inline-item">
+								<a class="u-pagination-v1__item u-pagination-v1-4 u-pagination-v1-4--active g-rounded-50 g-pa-7-14" title="{{ LocalStrings['vai alla pagina'] }} {{ value }}" href="{{ App.pageUrl }}/page/{{ value }}">{{ value }}</a>
+							</li>
+						{% endfor %}
+					{% endif %}
+						<li class="list-inline-item">
+							<a class="u-pagination-v1__item u-pagination-v1-4 u-pagination-v1-4--active g-rounded-50 g-pa-7-14" href="#!">{{ App.pagination.page }}</a>
+						</li>					
+					{% if App.pagination.pageNext is iterable %}
+						{% for key,value in App.pagination.pageNext %}
+							<li class="list-inline-item">
+								<a class="u-pagination-v1__item u-pagination-v1-4 u-pagination-v1-4--active g-rounded-50 g-pa-7-14" title="{{ LocalStrings['vai alla pagina'] }} {{ value }}" href="{{ App.pageUrl}}/page/{{ value }}">{{ value }}</a>
+							</li>
+						{% endfor %}
+					{% endif %}
+					<li class="list-inline-item float-right g-hidden-xs-down">
+						<a title="{{ LocalStrings['vai alla pagina'] }} {{ LocalStrings['successiva'] }}" class="u-pagination-v1__item u-pagination-v1-4 g-brd-gray-light-v3 g-brd-primary--hover g-rounded-50 g-pa-7-16" href="{{ App.pageUrl }}/page/{{ App.pagination.itemNext }}" aria-label="Next">
+							<span aria-hidden="true">
+								{{ LocalStrings['vecchie']|capitalize }} <i class="fa fa-angle-right g-ml-5"></i>
+							</span>
+							<span class="sr-only">{{ LocalStrings['vecchie']|capitalize }}</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+			<!-- End Pagination -->
+		{% endif %}
+ </div>
+ <!-- End Blog Classic Blocks -->

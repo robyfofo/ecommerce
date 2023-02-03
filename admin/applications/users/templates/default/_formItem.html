@@ -1,0 +1,244 @@
+<!-- admin/users/formItem.html v.4.5.1. 19/03/2020 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{ App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+	
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" id="formTab" role="tablist">
+
+			<li class="nav-item">
+				<a class="nav-link{% if App.formTabActive == 1 %} active{% endif %}" href="#login" id="login-tab" data-toggle="tab" role="tab" aria-controls="login" aria-selected="false">{{ Lang['login']|capitalize }}</a>
+			</li>			
+	
+			<li class="nav-item">
+				<a class="nav-link{% if App.formTabActive == 2 %} active{% endif %}" href="#anagrafica" id="anagrafica-tab" data-toggle="tab" role="tab" aria-controls="anagrafica" aria-selected="false">{{ Lang['anagrafica']|capitalize }}</a>
+			</li>
+		
+			<li class="nav-item">
+				<a class="nav-link{% if App.formTabActive == 3 %} active{% endif %}" href="#contacts" id="contacts-tab" data-toggle="tab" role="tab" aria-controls="contacts" aria-selected="false">{{ Lang['contatti']|capitalize }}</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link{% if App.formTabActive == 4 %} active{% endif %}" href="#image" id="image-tab" data-toggle="tab" role="tab" aria-controls="image" aria-selected="false">{{ Lang['immagine']|capitalize }}</a>
+			</li>
+			
+			<li class="nav-item">
+				<a class="nav-link{% if App.formTabActive == 5 %} active{% endif %}" href="#options" id="options-tab" data-toggle="tab" role="tab" aria-controls="options" aria-selected="false">{{ Lang['opzioni']|capitalize }}</a>
+			</li>
+
+		</ul>
+		
+		<form id="applicationForm" class="form-horizontal" role="form" action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}"  enctype="multipart/form-data" method="post">
+
+			<!-- Tab panes -->
+			<div class="tab-content" id="formTabContent">
+			
+				<div class="tab-pane fade show{% if App.formTabActive == 1 %} active{% endif %}" id="login" role="tabpanel" aria-labelledby="login-tab">
+
+			
+					<fieldset>
+						<div class="form-group row">
+							<label for="usernameID" class="col-md-2 control-label">{{ Lang['nome utente']|capitalize }}</label>
+							<div class="col-md-3">
+								<input type="text" name="username" id="usernameID" value="{{ App.item.username|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['nome utente']})|capitalize }}"{% if App.params.fields['item']['username']['required'] == true %} required="required" oninvalid="this.setCustomValidity('{{ Lang['Devi inserire un %ITEM%!']|replace({'%ITEM%':Lang['nome utente']}) }}')" oninput="setCustomValidity('')"{% endif %}>
+					    	</div>
+					    	<div class="col-md-6" id="usernameMessageID"></div>
+						</div>
+						<hr>
+						<div class="form-group row">
+							<label for="levelID" class="col-md-2 control-label">{{ Lang['livello']|capitalize }}</label>
+							<div class="col-md-7">
+								{% if App.user_levels is iterable and App.user_levels|length > 0 %}
+								<select name="id_level" class="custom-select">	
+									{% for value in App.user_levels %}
+										<option value="{{ value.id }}"{% if App.item.id_level == value.id %} selected="selected"{% endif %}>{{ value.title|e('html') }}</option>								
+									{% endfor %}
+								</select>
+								{% endif %}				
+					    	</div>
+						</div>
+						<hr>
+						<div class="form-group row">
+							<label for="passwordID" class="col-md-2 control-label">{{ Lang['password']|capitalize }}</label>
+							<div class="col-md-2">
+								<input type="password" name="password" id="passwordID" value="" class="form-control" placeholder="{{ Lang['inserisci una %ITEM%']|replace({'%ITEM%': Lang['password']})|capitalize }}"{% if App.id == 0 %} required="required" oninvalid="this.setCustomValidity('{{ Lang['Devi inserire una %ITEM%!']|replace({'%ITEM%':Lang['password']}) }}')" oninput="setCustomValidity('')"{% endif %}>
+					    	</div>
+						</div>
+						<div class="form-group row">
+							<label for="passwordCFID" class="col-md-2 control-label">{{ Lang['password di controllo']|capitalize }}</label>
+							<div class="col-md-2">
+								<input type="password" name="passwordCF" id="passwordCFID" value="" class="form-control" placeholder="{{ Lang['inserisci una %ITEM%']|replace({'%ITEM%': Lang['password di controllo']})|capitalize }}"{% if App.id == 0 %} required="required" oninvalid="this.setCustomValidity('{{ Lang['Devi inserire una %ITEM%!']|replace({'%ITEM%':Lang['password di controllo']}) }}')" oninput="setCustomValidity('')"{% endif %}>
+					    	</div>
+						</div>
+						<hr>
+						<div class="form-group row">
+							<label for="emailID" class="col-md-2 control-label">{{ Lang['email']|capitalize }}</label>
+							<div class="col-md-6">
+								<input type="email" name="email" id="emailID" value="{{ App.item.email|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['indirizzo email']})|capitalize }}"{% if App.params.fields['item']['email']['required'] == true %} required="required" oninvalid="this.setCustomValidity('{{ Lang['Devi inserire un %ITEM%!']|replace({'%ITEM%':Lang['indirizzo email']}) }}')" oninput="setCustomValidity('')"{% endif %}>
+					    	</div>
+					    	<div class="col-md-6" id="emailMessageID"></div>
+						</div>
+					</fieldset>
+
+				</div>
+			
+				<div class="tab-pane fade{% if App.formTabActive == 2 %} active{% endif %}" id="anagrafica" role="tabpanel" aria-labelledby="anagrafica-tab">
+			
+					<fieldset>
+						<div class="form-group row">
+							<label for="nameID" class="col-md-2 control-label">{{ Lang['nome']|capitalize }}</label>
+							<div class="col-md-7">
+								<input type="text" name="name" id="nameID" value="{{ App.item.name|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['nome']})|capitalize }}">
+					    	</div>
+						</div>
+						<div class="form-group row">
+							<label for="surnameID" class="col-md-2 control-label">{{ Lang['cognome']|capitalize }}</label>
+							<div class="col-md-7">
+								<input type="text" name="surname" id="surnameID" value="{{ App.item.surname|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['cognome']})|capitalize }}">
+					    	</div>
+						</div>
+						<div class="form-group row">
+							<label for="streetID" class="col-md-2 control-label">{{ Lang['via']|capitalize }}</label>
+							<div class="col-md-7">
+								<input type="text" name="street" id="streetID" value="{{ App.item.street|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci una %ITEM%']|replace({'%ITEM%': Lang['via']})|capitalize }}">
+					    	</div>
+						</div>		
+						<div class="form-group row">
+							<label for="cityID" class="col-md-2 control-label">{{ Lang['città']|capitalize }}</label>
+							<div class="col-md-7">
+								<input type="text" name="city" id="cityID" value="{{ App.item.city|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['città']})|capitalize }}">
+					    	</div>
+						</div>	
+						<div class="form-group row">
+							<label for="zip_codeID" class="col-md-2 control-label">{{ Lang['c.a.p.']|capitalize }}</label>
+							<div class="col-md-2">
+								<input type="text" name="zip_code" id="zip_codeID" value="{{ App.item.zip_code|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['c.a.p.']})|capitalize }}">
+					    	</div>
+						</div>
+						<div class="form-group row">
+							<label for="provinceID" class="col-md-2 control-label">{{ Lang['provincia']|capitalize }}</label>
+							<div class="col-md-7">
+								<input type="text" name="province" id="provinceID" value="{{ App.item.province|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['provincia']})|capitalize }}">
+					    	</div>
+						</div>
+						<div class="form-group row">
+							<label for="stateID" class="col-md-2 control-label">{{ Lang['nazione']|capitalize }}</label>
+							<div class="col-md-7">
+								<input type="text" name="state" id="stateID" value="{{ App.item.state|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci una %ITEM%']|replace({'%ITEM%': Lang['nazione']})|capitalize }}">
+					    	</div>
+						</div>
+					</fieldset>
+					
+				</div>
+	<!-- sezione contacts --> 
+				<div class="tab-pane fade{% if App.formTabActive == 3 %} active{% endif %}" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">		
+					<fieldset>				
+						<div class="form-group row">
+							<label for="telephoneID" class="col-md-2 control-label">{{ Lang['telefono']|capitalize }}</label>
+							<div class="col-md-3">
+								<input type="text" name="telephone" id="telephoneID" value="{{ App.item.telephone|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['numero di telefono']})|capitalize }}">
+					    	</div>
+						</div>
+						<div class="form-group row">
+							<label for="mobileID" class="col-md-2 control-label">{{ Lang['mobile']|capitalize }}</label>
+							<div class="col-md-3">
+								<input type="text" name="mobile" id="mobileID" value="{{ App.item.mobile|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['numero mobile']})|capitalize }}">
+					    	</div>
+						</div>
+						<div class="form-group row">
+							<label for="emailID" class="col-md-2 control-label">{{ Lang['fax']|capitalize }}</label>
+							<div class="col-md-3">
+								<input type="text" name="fax" id="faxID" value="{{ App.item.fax|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['numero di fax']})|capitalize }}">
+					    	</div>
+						</div>
+						<div class="form-group row">
+							<label for="skypeID" class="col-md-2 control-label">{{ Lang['skype']|capitalize }}</label>
+							<div class="col-md-3">
+								<input type="text" name="skype" id="skypeID" value="{{ App.item.skype|e('html') }}" class="form-control" placeholder="{{ Lang['inserisci un %ITEM%']|replace({'%ITEM%': Lang['utente skype']})|capitalize }}">
+					    	</div>
+						</div>
+					</fieldset>				
+				</div>
+	<!-- sezione contacts -->
+	
+	<!-- sezione immagini -->		  
+				<div class="tab-pane fade{% if App.formTabActive == 4 %} active{% endif %}" id="image" role="tabpanel" aria-labelledby="image-tab">
+					<fieldset>
+						<div class="form-group row">
+							<label for="avatarID" class="col-md-2 control-label">{{ Lang['avatar']|capitalize }}</label>
+					    	<div class="col-md-4">						
+								<div class="custom-file">
+  									<input type="file" name="avatar" class="custom-file-input" id="avatarID">
+  									<label class="custom-file-label" for="customFile">{{ Lang['indica un file da caricare']|capitalize }}</label>
+								</div>	
+							</div>
+
+					    	<div class="col-md-4">
+					    	
+								{% if App.item.avatar != '' %}
+							
+									<img src="{{ URLSITE }}ajax/renderuseravatarfromdb.php?id={{ App.id }}" alt="{{ Lang['avatar']|capitalize }}" style="max-height: 140px;">
+									
+				            	{% endif %}				
+					    	</div>
+						</div>
+					</fieldset>
+					
+				</div>
+	<!-- sezione immagini -->	
+	
+	<!-- sezione opzioni --> 
+				<div class="tab-pane fade{% if App.formTabActive == 5 %} active{% endif %}" id="options" role="tabpanel" aria-labelledby="options">	
+					<fieldset>
+						<div class="form-group row">
+							<label for="templateID" class="col-md-2 control-label">{{ Lang['template']|capitalize }}</label>
+							<div class="col-md-7">
+								{% if App.templatesAvaiable is iterable and App.templatesAvaiable|length > 0 %}
+								<select name="template" class="custom-select">
+									{% for key,value in App.templatesAvaiable %}
+										<option value="{{ value }}"{% if App.item.template == value %} selected="selected"{% endif %}>{{ value|e('html') }}</option>								
+									{% endfor %}
+								</select>
+								{% endif %}				
+					    	</div>
+						</div>	
+						<hr>
+						<div class="form-group row">
+							<label for="activeID" class="col-md-2 control-label">{{ Lang['attiva']|capitalize }}</label>
+							<div class="col-md-7">
+								<input type="checkbox" name="active" id="activeID" class="form-check-input"{% if App.item.active == 1 %} checked="checked"{% endif %} value="1">     					
+	   						</div>
+	   					</div>
+					</fieldset>
+					
+				</div>
+	<!-- sezione opzioni -->	  
+			 
+			</div>
+			<!--/Tab panes -->
+			
+			<hr>
+			
+			<div class="form-group row">
+				<div class="col-md-6 col-xs-12 text-center">
+					<input type="hidden" name="created" id="createdID" value="{{ App.item.created }}">
+					<input type="hidden" name="id" id="idID" value="{{ App.id }}">
+					<input type="hidden" name="method" value="{{ App.methodForm }}">
+					<button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ Lang['invia']|capitalize }}</button>
+					{% if App.id > 0 %}
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform">{{ Lang['applica']|capitalize }}</button>
+					{% endif %}
+				</div>
+				<div class="col-md-6 col-xs-12 text-right">			
+					<a href="{{ URLSITEADMIN }}{{ CoreRequest.action }}/listItem" title="{{ Lang['torna alla lista']|capitalize }}" class="btn btn-success">{{ Lang['indietro']|capitalize }}</a>
+				</div>
+			</div>
+		
+		</form>
+	</div>
+</div>

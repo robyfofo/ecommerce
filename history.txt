@@ -1,0 +1,25 @@
+
+
+Versione 1.0.0.
+
+Frontend:
+- Template Unify                                2.6.3
+- Bootstrap                                     4.4.1
+- jQuery                                        3.4.1
+
+Backend:
+
+Librerie PHP:
+- Dsymfony/polyfill-ctype                       1.22.0
+- symfony/polyfill-mbstring                     1.22.0
+- twig/twig                                     3.3.0
+- symfony/polyfill-php72                        1.22.0
+- symfony/polyfill-intl-normalizer              1.22.0
+- symfony/polyfill-intl-idn                     1.22.0
+- symfony/polyfill-iconv                        1.22.0
+- doctrine/lexer                                1.2.1
+- egulias/email-validator                       2.1.25
+- swiftmailer/swiftmailer                       6.2.5
+- mos/cimage                                    0.7.23
+- google/recaptcha                              1.2.4
+

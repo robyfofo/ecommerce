@@ -1,0 +1,134 @@
+<!-- admin/levels/formLevel.html v.1.0.0. 19/02/2021 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{ App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+		
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" id="formTab" role="tablist">	
+					
+			<li class="nav-item">
+				<a class="nav-link active" href="#datibase" id="datibase-tab" data-toggle="tab" role="tab" aria-controls="datibase" aria-selected="true">{{ LocalStrings['dati base']|capitalize }}</a>
+			</li>
+			
+			<li class="nav-item">
+				<a class="nav-link" href="#modules" id="modules-tab" data-toggle="tab" role="tab" aria-controls="modules" aria-selected="false">{{ LocalStrings['moduli']|capitalize }}</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link" href="#options" id="options-tab" data-toggle="tab" role="tab" aria-controls="options" aria-selected="false">{{ LocalStrings['opzioni']|capitalize }}</a>
+			</li>
+
+		</ul>
+		
+		<form id="applicationForm" class="form-horizontal" role="form" action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}"  enctype="multipart/form-data" method="post">
+
+			<!-- Tab panes -->
+			<div class="tab-content" id="formTabContent">	
+			
+				<div class="tab-pane fade show active" id="datibase" role="tabpanel" aria-labelledby="datibase-tab">
+					<fieldset>
+						<div class="form-group row">
+							<label for="titleID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item']['title']['label']|capitalize }}</label>
+							<div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+								<input
+								{% if App.params.fields['item']['title']['required'] == true %} required="required"{% endif %}
+								type="text" 
+								name="title" 
+								id="titleID" 
+								value="{{ App.item.title|e('html') }}" 
+								class="form-control" 
+								placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({'%ITEM%': App.params.fields['item']['title']['label'] })|capitalize }}"
+								>
+					    	</div>
+						</div>
+					</fieldset>
+
+				</div>
+
+				<!-- sezione moduli --> 
+				<div class="tab-pane fade" id="modules" role="tabpanel" aria-labelledby="modules-tab">
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ LocalStrings['moduli attivi']|capitalize }}</label>
+						<div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+							{{ LocalStrings['accessi']|capitalize }}
+						</div>
+					</div>
+
+					<fieldset class="mt-3">	
+						{% for sectionKey,sectionModules in App.modules %}
+							{% for module in sectionModules %}								
+								<div class="form-group row">
+									<label class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ module.label }}</label>
+									<div class="col-sm-12 col-md-6 col-lg-5 col-xl-5">																	
+										<div class="form-check-inline">
+											<label class="form-check-label{% if App.level_modules[module.name].read_access == 1 %} text-success{% endif %}">
+												{{ LocalStrings['lettura']|capitalize }}
+												<input type="checkbox" class="form-check-input" name="modules_read[{{ module.id }}]" id="" value="1" {% if App.level_modules[module.name].read_access is defined and App.level_modules[module.name].read_access == 1 %} checked="checked"{% endif %}>
+											</label>
+										</div>
+										<div class="form-check-inline">
+											<label class="form-check-label{% if App.level_modules[module.name].read_access == 1 %} text-green{% endif %}">
+												{{ LocalStrings['scrittura']|capitalize }}
+												<input type="checkbox" class="form-check-input" name="modules_write[{{ module.id }}]" id="" value="1" {% if App.level_modules[module.name].write_access is defined and App.level_modules[module.name].write_access == 1 %} checked="checked"{% endif %}>
+											</label>
+										</div>						
+						    		</div>					    		
+									<div class="col-sm-12 col-md-6 col-lg-5 col-xl-5">
+										{{ module.content }}
+						    		</div>
+								</div>									
+							{% endfor %}
+						{% endfor %}								
+					</fieldset>
+				</div>
+				<!-- sezione moduli -->	  
+		
+	
+				<!-- sezione opzioni --> 
+				<div class="tab-pane fade" id="options" role="tabpanel" aria-labelledby="options-tab">			
+					<fieldset>
+						
+						<div class="form-group row ml-2">
+							<div class="custom-control custom-checkbox">
+								<input 
+								name="active" 
+								id="activeID"{% if App.item.active == 1 %} checked="checked"{% endif %} 
+								value="1" 
+								type="checkbox" 
+								class="custom-control-input"
+								>
+								<label class="custom-control-label" for="activeID">{{ App.params.fields['item']['active']['label']|capitalize }}</label>
+							</div>
+						</div>
+
+					</fieldset>					
+				</div>
+				<!-- sezione opzioni -->	  
+			 
+			</div>
+			<!--/Tab panes -->
+			
+			<hr>
+			
+			<div class="form-group row">
+				<div class="col-md-6 col-xs-12 text-center actionbutton mt-2">
+					<input type="hidden" name="id" id="idID" value="{{ App.id }}">
+					<input type="hidden" name="method" value="{{ App.methodForm }}">
+					<button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ LocalStrings['invia']|capitalize }}</button>
+					{% if App.id > 0 %}
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform ml-5">{{ LocalStrings['applica']|capitalize }}</button>
+					{% endif %}
+				</div>
+				<div class="col-md-6 col-xs-12 text-center deletebutton mt-2">			
+					<a href="{{ URLSITEADMIN }}{{ CoreRequest.action }}/list" title="{{ LocalStrings['torna alla lista']|capitalize }}" class="btn btn-success">{{ LocalStrings['indietro']|capitalize }}</a>
+				</div>
+			</div>
+		
+		</form>
+	</div>
+</div>

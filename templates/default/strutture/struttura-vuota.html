@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="{{ LocalStrings['user'] }}">
+
+<head>
+    <!-- Title -->
+    <title>{{ App.metaTitlePage }}</title>
+
+    <!-- Required Meta Tags Always Come First -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="{{ App.metaDescriptionPage }}">
+    <meta name="keyword" content="{{ App.metaKeywordsPage }}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ URLSITE }}templates/{{ App.templateUser }}/favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,900">
+
+    <!-- CSS Global Compulsory -->
+    <link rel="stylesheet"
+        href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/bootstrap/bootstrap.min.css">
+
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet"
+        href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/icon-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/icon-line-pro/style.css">
+    <link rel="stylesheet"
+        href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/icon-hs/style.css">
+    <link rel="stylesheet"
+        href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/hamburgers/hamburgers.min.css">
+    <link rel="stylesheet"
+        href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/hs-megamenu/src/hs.megamenu.css">
+    <link rel="stylesheet"
+        href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/animate.css">
+
+    <!-- CSS for Template -->
+    {% if App.addPluginCss is iterable %}
+    {% for key,value in App.addPluginCss %}
+    {{ value|raw }}
+    {% endfor %}
+    {% endif %}
+
+    <!-- CSS Unify Theme -->
+    <link rel="stylesheet" href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/css/styles.e-commerce.css">
+
+    <!-- CSS Customization -->
+    <link rel="stylesheet" href="{{ URLSITE }}templates/{{ App.templateUser }}/assets/css/custom.css">
+
+    <!-- CSS for Page -->
+    {% if App.css is iterable %}
+    {% for key,value in App.css %}
+    {{ value|raw }}
+    {% endfor %}
+    {% endif %}
+
+    <script>
+        var siteUrl = '{{ URLSITE }}';
+        var siteUrlAdmin = '{{ URLSITEADMIN }}';
+        var sitePath = '{{ PATHSITE }}';
+        var siteTemplateUrl = '{{ URLSITEADMIN }}templates/{{ App.templateUser }}/';
+        var siteTemplatePath = '{{ PATHSITE }}templates/{{ App.templateUser }}/';
+        var siteDocumentPath = '{{ PATHDOCUMENT }}';
+        var CoreRequestAction = '{{ CoreRequest.action }}';
+        var cur_lang = "{{ LocalStrings['user'] }}";
+        var messages = new Array();
+
+        var cookiestecnicidatabase = '{{ GlobalSettings.cookiestecnicidatabase }}';
+        var cookiestecnici = '{{ GlobalSettings.cookiestecnici }}';
+        var cookiesterzeparti = '{{ GlobalSettings.cookiesterzeparti }}';
+
+        messages['privacy policy'] = '{{ LocalStrings["cookie advise panel text"]|e }}';
+        messages['Sei sicuro?'] = '{{ LocalStrings["Sei sicuro?"]|e }}';
+    </script>
+
+    {% if App.jscriptCodeTop is defined and App.jscriptCodeTop != '' %}
+    <script>
+        { { App.jscriptCodeTop | raw } }
+    </script>
+    {% endif %}
+
+</head>
+
+<body>
+    <main>
+
+        <!-- Header -->
+        <header id="js-header" class="u-header u-header--static u-shadow-v19">
+            <!-- Top Bar -->
+            <div class="u-header__section g-brd-bottom g-brd-gray-light-v4 g-bg-black g-transition-0_3">
+                <div class="container">
+                    <div class="row justify-content-between align-items-center g-mx-0--lg">
+                        <div class="col-sm-auto g-hidden-sm-down">                         
+                            {{ include('strutture/struttura-head-social-inc.html') }}
+                        </div>
+
+                        <div class="col-sm-auto g-hidden-sm-down g-color-white-opacity-0_6 g-font-weight-400 g-pl-15 g-pl-0--sm g-py-14">
+                            <i class="icon-communication-163 u-line-icon-pro g-font-size-18 g-valign-middle g-color-white-opacity-0_8 g-mr-10 g-mt-minus-2"></i>{{ GlobalSettings['azienda mobile'] }}
+                        </div>
+
+                        <div class="col-sm-auto g-pos-rel g-py-14">
+                            <!-- List -->
+                            <ul class="list-inline g-pt-1 mb-0">
+                                <!-- Currency -->
+                                <li class="list-inline-item g-pos-rel">
+                                    <a id="currency-dropdown-invoker-2"
+                                        class="g-color-white-opacity-0_6 g-color-primary--hover g-font-weight-400 g-text-underline--none--hover"
+                                        href="#" aria-controls="currency-dropdown-2" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <i class="g-ml-20--md mr-2 fa fa-euro"></i>
+                                        Euro
+                                    </a>
+                                </li>
+                                <!-- End Currency -->
+
+                                <li class="list-inline-item g-color-white-opacity-0_3 g-mx-4">|</li>
+
+                                <!-- language -->
+                                {% if App.languagesBar is defined and App.languagesBar != '' %}
+                                    {{ App.languagesBar|raw }}
+                                {% endif %}
+                                <!-- End language -->
+                            </ul>
+                            <!-- End List -->
+                        </div>
+
+                        <div class="col-sm-auto g-pos-rel g-py-14">
+                            <!-- List -->
+                            <ul class="list-inline g-overflow-hidden g-pt-1 g-mx-minus-4 mb-0">
+                                <li class="list-inline-item g-mx-4">
+                                    <a class="g-color-white-opacity-0_6 g-color-primary--hover g-font-weight-400 g-text-underline--none--hover"
+                                        href="{{ URLSITE }}pages/privacy-policy"
+                                        title="{{ LocalStrings['href-title privacy policy']|title }}">{{ LocalStrings['privacy policy']|title }}</a>
+                                </li>
+
+                                <li class="list-inline-item g-color-white-opacity-0_3 g-mx-4">|</li>
+                                <li class="list-inline-item g-mx-4">
+                                    <a class="g-color-white-opacity-0_6 g-color-primary--hover g-font-weight-400 g-text-underline--none--hover" href="{{ URLSITE }}pages/cookies-policy" title="{{ LocalStrings['href-title cookies policy']|title }}">{{ LocalStrings['cookies policy']|title }}</a>
+                                </li>
+                                <li class="list-inline-item g-color-white-opacity-0_3 g-mx-4">|</li>
+                                <!-- Account -->
+                                    {{ include('strutture/struttura-head-account-inc.html') }}
+                                <!-- End Account -->
+                            </ul>
+                            <!-- End List -->
+                        </div>
+
+                        <div class="col-sm-auto g-pr-15 g-pr-0--sm">
+                            {{ include('strutture/struttura-head-carts-inc.html') }}
+                            {{ include('strutture/struttura-head-search-inc.html') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Top Bar -->
+
+            <div class="u-header__section u-header__section--light g-bg-white g-transition-0_3 g-py-10">
+                <nav class="js-mega-menu navbar navbar-expand-lg">
+                    <div class="container">
+                        <!-- Responsive Toggle Button -->
+                        <button
+                            class="navbar-toggler navbar-toggler-right btn g-line-height-1 g-brd-none g-pa-0 g-pos-abs g-top-3 g-right-0"
+                            type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar"
+                            data-toggle="collapse" data-target="#navBar">
+                            <span class="hamburger hamburger--slider g-pr-0">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </span>
+                        </button>
+                        <!-- End Responsive Toggle Button -->
+
+                        <!-- Logo -->
+                        <a class="navbar-brand" href="home-page-1.html">
+                            <img src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/img/logo/logo-1.png"
+                                alt="Image Description">
+                        </a>
+                        <!-- End Logo -->
+
+                        <!-- Navigation -->
+                        <div id="navBar" class="collapse navbar-collapse align-items-center flex-sm-row g-pt-15 g-pt-0--lg">
+                            {{ include('strutture/struttura-navbar-inc.html') }}
+                        </div>
+                        <!-- End Navigation -->
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- End Header -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {{ include(App.templateApp) }}
+
+
+
+        <!-- Footer -->
+        {{ include('strutture/struttura-footer-inc.html') }}
+        <!-- End Footer -->
+
+        <!-- Go To Top -->
+        <a class="js-go-to u-go-to-v2" href="#" data-type="fixed" data-position='{
+   "bottom": 15,
+   "right": 15
+ }' data-offset-top="400" data-compensation="#js-header" data-show-effect="zoomIn">
+            <i class="hs-icon hs-icon-arrow-top"></i>
+        </a>
+        <!-- End Go To Top -->
+
+    </main>
+
+    <div class="u-outer-spaces-helper"></div>
+
+
+
+    <div class="u-outer-spaces-helper"></div>
+
+    <!-- JS Global Compulsory -->
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/popper.js/popper.min.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/bootstrap/bootstrap.min.js"></script>
+
+    <!-- JS Implementing Plugins -->
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/jquery.countdown.min.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/slick-carousel/slick/slick.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/hs-megamenu/src/hs.megamenu.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/appear.js"></script>
+
+    <!-- JS added for Plugin --> 
+    {% if App.pluginJscript is iterable %}							
+        {% for key,value in App.pluginJscript %}
+            {{ value|raw }}
+        {% endfor %}
+    {% endif %}
+    <!-- <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/vendor/gmaps/gmaps.min.js"></script> -->
+
+    <!-- JS Unify -->
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/hs.core.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/components/hs.header.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/helpers/hs.hamburgers.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/components/hs.dropdown.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/components/hs.scrollbar.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/components/hs.countdown.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/components/hs.carousel.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/components/hs.go-to.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/components/hs.count-qty.js"></script>
+
+
+    <!-- JS added for Component --> 
+    {% if App.pluginComponentJscript is iterable %}							
+       {% for key,value in App.pluginComponentJscript %}
+           {{ value|raw }}
+       {% endfor %}
+   {% endif %}
+
+    <!-- JS Customization -->
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/custom.js"></script>
+    <script src="{{ URLSITE }}templates/{{ App.templateUser }}/assets/js/custom.js"></script>
+
+    <!-- JS Plugins Init. -->
+    <script>
+        // initialization of google map
+        function initMap() {
+            $.HSCore.components.HSGMap.init('.js-g-map');
+        }
+
+        $(document).on('ready', function () {
+            // initialization of header
+            $.HSCore.components.HSHeader.init($('#js-header'));
+            $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+            // initialization of HSMegaMenu component
+            $('.js-mega-menu').HSMegaMenu({
+                event: 'hover',
+                pageContainer: $('.container'),
+                breakpoint: 991
+            });
+
+            // initialization of HSDropdown component
+            $.HSCore.components.HSDropdown.init($('[data-dropdown-target]'), {
+                afterOpen: function () {
+                    $(this).find('input[type="search"]').focus();
+                }
+            });
+
+            // initialization of HSScrollBar component
+            $.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
+
+            // initialization of go to
+            $.HSCore.components.HSGoTo.init('.js-go-to');
+        });
+    </script>
+
+
+
+
+    <!-- JS for Page --> 
+	{% if App.jscript is iterable %}							
+        {% for key,value in App.jscript %}
+            {{ value|raw }}
+        {% endfor %}
+    {% endif %}	
+
+
+{% if App.codeJavascriptEndBody is defined and App.codeJavascriptEndBody != '' %}
+        <script>
+            {{ App.codeJavascriptEndBody|raw }}
+        </script>
+    {% endif %}
+
+    <!-- cookie bar -->
+    {{ include('strutture/struttura-footer-cookiesbar.inc.html') }}
+    <!-- End cookie bar -->
+
+   <!-- JS for Page --> 
+	{% if App.jscriptEnd is iterable %}							
+        {% for key,value in App.jscriptEnd %}
+            {{ value|raw }}
+        {% endfor %}
+    {% endif %}	
+
+    
+
+    {% if App.includeJscriptPHPBottom is defined and App.includeJscriptPHPBottom != '' %}			
+        <script>
+            {{ include(App.includeJscriptPHPBottom|raw) }}
+        </script>
+	{% endif %}
+
+</body>
+
+</html>

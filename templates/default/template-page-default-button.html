@@ -1,0 +1,24 @@
+<!--=== Breadcrumbs ===-->
+{{ App.breadcrumbsBar }}
+<!--=== End Breadcrumbs ===--> 
+
+<section class="container g-py-20">
+	{% if App.pageData.blocks is iterable %}
+		{% for key,value in App.pageData.blocks %}
+			<div class="g-mb-10">
+        		<h2 class="h3 g-color-black g-font-weight-600 mb-3">{{ value.title }}</h2>
+        		<div class="mb-4">
+					{{ value.content|raw }}	      
+				</div>			
+			</div>	
+			<div class="g-mb-50">
+        		
+        		<div class="mb-4 text-center">
+					<a class="btn btn-md u-btn-skew u-btn-primary g-mr-10 g-mb-15" href="{{ value.url }}" title="{{ value.url_text }}" target="{{ value.target }}">
+						<span class="u-btn-skew__inner">{{ value.url_text }}</span>
+					</a>
+				</div>			
+			</div>			
+		{% endfor %}
+	{% endif %}
+</section>

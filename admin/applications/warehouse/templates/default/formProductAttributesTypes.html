@@ -1,0 +1,75 @@
+<!-- admin/warehouse/formProductAttributes.html v.1.0.0. 25/02/2021 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{ App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" id="formTab" role="tablist">
+		
+			<li class="nav-item">
+				<a class="nav-link active" href="#datibase" id="datibase-tab" aria-controls="datibase" aria-selected="true" data-toggle="tab">{{ LocalStrings['['dati base']|capitalize }}</a>
+			</li>
+			
+  		</ul>
+
+		<form id="applicationForm" method="post" class="form-horizontal" role="form" action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}" enctype="multipart/form-data">
+						
+			<div class="tab-content">
+			
+				<div class="tab-pane active" id="datibase" role="tabpanel" aria-labelledby="datibase">
+					<fieldset>				
+						
+						{% for LocalStrings[' in GlobalSettings['LocalStrings['uages'] %} 
+							{% set titleField = "title_#{LocalStrings['}" %}				
+							<div class="form-group row">
+								<label for="title_{{ LocalStrings[' }}ID" class="col-md-2 control-label">{{ App.params.fields['proatypes'][titleField]['label']|capitalize }}</label>
+								<div class="col-md-7">
+									<input type="text" name="title_{{ LocalStrings[' }}" id="title_{{ LocalStrings[' }}ID" value="{{ attribute(App.item, titleField) }}" class="form-control"  placeholder="{{ LocalStrings['['inserisci un %ITEM%']|replace({'%ITEM%': LocalStrings['['titolo']})|capitalize }}"{% if App.params.fields['prod'][titleField]['required'] == true %} required="required" oninvalid="this.setCustomValidity('{{ LocalStrings['['Devi inserire un %ITEM%!']|replace({'%ITEM%':LocalStrings['['titolo']}) }}')" oninput="setCustomValidity('')"{% endif %}>
+								</div>
+							</div>							
+						{% endfor %}
+						<hr>
+
+						<div class="form-group row">
+							<label for="value_typeID" class="col-md-2 control-label">{{ App.params.fields['proatypes']['value_type']['label']|capitalize }}</label>
+							<div class="col-md-4">		
+								<select name="value_type" id="value_type" class="form-control input-md">								
+									<option value="string">String</option>														
+								</select>																					
+					    	</div>
+						</div>
+
+						<hr>
+						<div class="form-group row">
+							<label for="activeID" class="col-md-2 control-label">{{ App.params.fields['proatypes']['active']['label']|capitalize }}</label>
+							<div class="col-md-4">
+								<input type="checkbox" name="active" id="activeID" class="form-check-input"{% if App.item.active == 1 %} checked="checked"{% endif %} value="1">     					
+	   						</div>
+	   					</div>
+						
+					</fieldset>
+				</div>
+
+			</div>
+<!--/Tab panes -->			
+			<hr>
+			<div class="form-group row">
+				<div class="col-md-6 col-xs-12 text-center actionbutton mt-2">
+					<input type="hidden" name="id" id="idID" value="{{ App.id }}">
+					<input type="hidden" name="products_id" id="idID" value="{{ App.products_id }}">
+					<input type="hidden" name="method" value="{{ App.methodForm }}">
+					<button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ LocalStrings['['invia']|capitalize }}</button>
+					{% if App.id > 0 %}
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform ml-5">{{ LocalStrings['['applica']|capitalize }}</button>
+					{% endif %}				
+				</div>
+				<div class="col-md-6 col-xs-12 text-center deletebutton mt-2">
+					<a href="{{ URLSITEADMIN }}{{ CoreRequest.action }}/listPrat" title="{{ LocalStrings['['torna alla lista']|capitalize }}" class="btn btn-success">{{ LocalStrings['['indietro']|capitalize }}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

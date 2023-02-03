@@ -1,0 +1,62 @@
+<!-- Social Icons -->
+<ul class="list-inline g-py-14 mb-0">
+    {% if GlobalSettings['link facebook'] is defined and GlobalSettings['link facebook'] !=
+    '' %}
+    <li class="list-inline-item">
+        <a title="{{ LocalStrings['vai all account'] }} facebook" target="_blank"
+            class="g-color-white-opacity-0_8 g-color-primary--hover g-pa-3"
+            href="{{ GlobalSettings['link facebook'] }}">
+            <i class="fa fa-facebook"></i>
+        </a>
+    </li>
+    {% endif %}
+    {% if GlobalSettings['link twitter'] is defined and GlobalSettings['link twitter'] != ''
+    %}
+    <li class="list-inline-item">
+        <a href="{{ GlobalSettings['link twitter'] }}"
+            title="{{ LocalStrings['vai all account'] }} twitter" target="_blank"
+            class="g-color-white-opacity-0_8 g-color-primary--hover g-pa-3">
+            <i class="fa fa-twitter"></i>
+        </a>
+    </li>
+    {% endif %}
+    {% if GlobalSettings['link google'] is defined and GlobalSettings['link google'] != '' %}
+    <li class="list-inline-item">
+        <a href="{{ GlobalSettings['link google'] }}"
+            title="{{ LocalStrings['vai all account'] }} google-plus" target="_blank"
+            class="g-color-white-opacity-0_8 g-color-primary--hover g-pa-3">
+            <i class="fa fa-google"></i>
+        </a>
+    </li>
+    {% endif %}
+    {% if GlobalSettings['link instagram'] is defined and GlobalSettings['link instagram'] != '' %}
+    <li class="list-inline-item">
+        <a href="{{ GlobalSettings['link instagram'] }}"
+            title="{{ LocalStrings['vai all account'] }} instagram" target="_blank"
+            class="g-color-white-opacity-0_8 g-color-primary--hover g-pa-3">
+            <i class="fa fa-instagram"></i>
+        </a>
+    </li>
+    {% endif %}
+    {% if GlobalSettings['link pinterest'] is defined and GlobalSettings['link pinterest']
+    != '' %}
+    <li class="list-inline-item">
+        <a href="{{ GlobalSettings['link pinterest'] }}"
+            title="{{ LocalStrings['vai all account'] }} pinterest" target="_blank"
+            class="g-color-white-opacity-0_8 g-color-primary--hover g-pa-3">
+            <i class="fa fa-pinterest"></i>
+        </a>
+    </li>
+    {% endif %}
+    {% if GlobalSettings['link linkedin'] is defined and GlobalSettings['link linkedin'] !=
+    '' %}
+    <li class="list-inline-item">
+        <a href="{{ GlobalSettings['link linkedin'] }}"
+            title="{{ LocalStrings['vai all account'] }} linkedin" target="_blank"
+            class="g-color-white-opacity-0_8 g-color-primary--hover g-pa-3">
+            <i class="fa fa-linkedin"></i>
+        </a>
+    </li>
+    {% endif %}
+</ul>
+<!-- End Social Icons -->

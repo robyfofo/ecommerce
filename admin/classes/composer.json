@@ -1,0 +1,44 @@
+{
+    "name": "websync/classes",
+    "description": "Il framework PHP di Roberto Mantovani",
+    "authors": [
+        {
+            "name": "Roberto Mantovani",
+            "email": "ime@robertomantovani.vr.it"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0",
+        "swiftmailer/swiftmailer": "^6.0",
+        "soundasleep/html2text": "^0.5.0",
+        "mos/cimage": "^0.7.20",
+        "google/recaptcha": "~1.1"
+    },
+    "autoload": {
+        "classmap": [
+            "class.Config.php",
+            "class.Core.php",
+            "class.Sessions.php",
+            "class.Permissions.php",
+            "class.ToolsStrings.php",
+            "class.SanitizeStrings.php",
+            "class.htmLawed.php",
+            "class.ToolsUpload.php",
+            "class.Sql.php",
+            "class.Utilities.php",
+            "class.DateFormat.php",
+            "class.Subcategories.php",
+            "class.Products.php",
+            "class.Form.php",
+            "class.Mails.php",
+            "class.Applications.php",
+            "class.Menu.php",
+            "class.Pages.php",
+            "class.Multilanguage.php",
+            "class.Users.php",
+            "class.Carts.php",
+            "class.Orders.php",
+            "class.Wishes.php"
+        ]
+      }
+}

@@ -1,0 +1,207 @@
+<div id="buttonCookieManagerID" style="
+position: absolute;
+left: 0px;
+bottom: 0px;
+
+padding: 5px;
+text-align: center;
+line-height: 0 !important;
+background-color: #eee;
+border: 1px solid #555;
+display: none;
+line-height: 12px;"><a style="line-height:12px !important;font-size:11px;margin:2px 0 2px 0"
+        href="javascript:windowCookieManagerApri();">Cookie</a></div>
+
+
+<div id="windowCookieManagerID" style="
+position: absolute;
+left: 0px;
+bottom: 0px;
+background-color: #fff;
+border: 1px solid #ccc;
+display:none;
+letter-spacing: 0 !important;
+line-height: 0 !important;
+max-width: 600px;
+padding: 10px;
+line-height: 0 !important;
+">
+    <p id=""
+        style="margin: 0;line-height: 15px !important;font-size: 14px;font-style: normal;font-weight: 700;color: #444 !important;text-transform: uppercase">
+        Questo sito web utilizza cookie di terze parti</p>
+    <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:0;border:0;margin:0">
+        <tr>
+            <td style="width:auto!important">
+                <p id="dwDesc"
+                    style="font-weight: 400 !important;text-align: left;line-height: 18px !important;font-size: 12px !important;color: #444 !important;padding: 0 !important">
+                    Questo sito utilizza Google Analytics per monitorare il traffico inoltre può includere Google Maps e
+                    <a style="font-size:12px;text-decoration:underline!important" rel="nofollow" target="_blank"
+                        href="https://www.google.com/search?q=widget">widget</a> dei social. I cookie di terze parti
+                    verranno installati solo se il check "Cookie di terze parti" é selezionato e viene premuto il
+                    pulsante OK. Senza i cookie di terze parti alcune pagine potrebbero non funzionare. Puoi cambiare
+                    idea in ogni momento cliccando sul link "Cookie" presente in ogni pagina in basso a sinistra.
+                    <b>Cliccando OK dichiari di aver preso visione dell'<a
+                            style="font-size:12px;font-weight:600;text-decoration:underline!important" rel="nofollow"
+                            href="[E:PRIVACYURL]">informativa sulla privacy</a> e di accettarne le condizioni</b>.
+                </p>
+            </td>
+        </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:0;margin:0;border:0">
+        <tr>
+            <td style="padding:0;width:100%">
+                <table style="border:#ccc 1px solid;width:100%;table-layout:initial;margin-bottom:0;margin:0">
+                    <tr>
+                        <td style="padding:0;width:100%">
+                            <div style="float:left;margin:0; margin: 0; margin-top: 8px;">
+                                <input type="checkbox" checked="checked" disabled="disabled"
+                                    style="position: relative;min-height:0;-webkit-appearance: checkbox;margin:0 0 0 8px;display:inline-block;width:auto;height:auto;opacity:unset!important;margin-left:8px!important" /><span
+                                    class="opz">Cookie tecnici</span>
+                            </div>
+                            <div style="float:left;margin:0;margin:0; margin-top: 8px;">
+                                <input type="checkbox" id="checkCookieRGPDTerzePartiID"
+                                    style="position: relative;min-height:0;-webkit-appearance: checkbox;margin:0;display:inline-block;width:auto;height:auto;opacity:unset!important;margin-left:8px!important" /><span
+                                    class="opz">Cookie di terze parti</span>
+                            </div>
+                            <div style="float:right;margin:0;margin:0">
+                                <input id="cookieRGPDOkID" type="button" value="OK" onclick="windowCookieManagerChiudi()"
+                                    style="height: 26px; width: 50px; font-size: 12px; line-height: 18px; float: right; margin:3px; background-color: #888 !important;color: #fff !important;border: 0 !important;box-shadow: none !important;border-radius: 0 !important;font-family: Arial !important;min-width: auto;min-height: auto"
+                                    class="button" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<script>
+
+function setCookie(n, t) {
+    var i = new Date;
+    i.setTime(i.getTime() + 2592e6);
+    document.cookie = n + "=" + t + "; expires=" + i.toUTCString() + "; path=/"
+}
+
+function getCookie(n) {
+    for (var t, r = n + "=", u = document.cookie.split(";"), i = 0; i < u.length; i++) {
+        for (t = u[i];
+            " " == t.charAt(0);) t = t.substring(1, t.length);
+        if (0 == t.indexOf(r)) return t.substring(r.length, t.length)
+    }
+    return ""
+}
+
+function consentApri() {
+    var n = document.getElementById("dw"),
+        t = document.getElementById("dwPref");
+    setCookie("dw", "0");
+    n.style.display = "block";
+    t.style.display = "none"
+}
+
+function consentChiudi() {
+    var i = document.getElementById("dw"),
+        r = document.getElementById("dwPref"),
+        n, t;
+    setCookie("dw", "1");
+    i.style.display = "none";
+    r.style.display = "block";
+    n = getCookie("dwterzeparti");
+    t = document.getElementById("dwCheckboxTerzeParti").checked;
+    t && n == "" && (setCookie("dwterzeparti", "1"), window.location.reload());
+    t || n != "1" || (setCookie("dwterzeparti", ""), window.location.reload())
+}
+var x = getCookie("dw"),
+    tp;
+(x == "0" || x == "") && (document.getElementById("dw").style.display = "block", document.getElementById("dwPref").style.display = "none");
+tp = getCookie("dwterzeparti");
+document.getElementById("dwCheckboxTerzeParti").checked = tp == "1" || x == "";
+typeof SetCookieBanner == "function" && SetCookieBanner();
+
+
+/*
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        // controlla cookie
+        //alert(cookieName);
+        var cookieRGPD = getCookie(cookiestecnici);
+        //alert('cookieRGPD = '+cookieRGPD);
+        if (cookieRGPD == "") {
+            windowCookieManagerApri();
+        } else {
+            var bc = document.getElementById("buttonCookieManagerID");
+            bc.style.display = "block";
+        }
+    });
+
+    function windowCookieManagerApri() {
+        var wc = document.getElementById("windowCookieManagerID");
+        var bc = document.getElementById("buttonCookieManagerID");
+        setCookie(cookiestecnici,"0");
+        wc.style.display="block";
+        bc.style.display="none";
+    }
+
+    function windowCookieManagerChiudi() {
+        var wc = document.getElementById("windowCookieManagerID");
+        var bc = document.getElementById("buttonCookieManagerID");
+        var t;
+        setCookie(cookiestecnici,"1");
+        wc.style.display="none";
+        bc.style.display="block";
+        var cookieRGPDtp = getCookie(cookiesterzetarti);
+        t = document.getElementById("checkCookieRGPDTerzePartiID").checked;
+        if ( t && cookieRGPDtp == '' && (setCookie(cookiesterzetarti,"1")) )
+        {
+            window.location.reload();
+        }
+        if ( t || cookieRGPDtp != "1" || (setCookie(cookiesterzetarti,"")) )
+        {
+            window.location.reload();
+        }
+        var x = getCookie(cookiestecnici);
+        var tp;
+
+        if ( (x == 0 || x == '') && (document.getElementById("windowCookieManagerID").style.display="block") )
+        {
+            document.getElementById("buttonCookieManagerID").style.display = "none";
+        }
+
+        tp = getCookie(cookiesterzetarti);
+        if (tp == "1") {
+            document.getElementById("checkCookieRGPDTerzePartiID").checked = '1';
+            document.getElementById("checkCookieRGPDTerzePartiID").checked = true;
+        } else {
+            document.getElementById("checkCookieRGPDTerzePartiID").checked = '';
+            document.getElementById("checkCookieRGPDTerzePartiID").checked = false;
+        }
+        
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+*/
+</script>

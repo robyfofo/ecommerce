@@ -1,0 +1,86 @@
+<!--=== Breadcrumbs ===-->
+{{ App.breadcrumbsBar }}
+<!--=== End Breadcrumbs ===-->
+
+{{ App.systemMessages }}
+
+<div class="container g-pt-70 g-pb-30">
+    <div class="row">
+        <!-- Profile Settings -->
+        <div class="col-lg-3 g-mb-50">
+            {{ include('users-sidebar.html') }}
+        </div>
+        <!-- End Profile Settings -->
+
+        <!-- Addresses -->
+        <div class="col-lg-9 g-mb-50">
+            <div class="row">
+                <div class="col-md-12 g-mb-30">
+                    <!-- Addresses -->
+                    <div class="g-brd-around g-brd-gray-light-v4 rounded g-pa-30">
+                        <div class="g-mb-50">
+                            <h3 class="h5 mb-3">{{ LocalStrings['anagrafica']|capitalize }}</h3>
+                            <span class="d-block g-color-gray-dark-v3 g-font-weight-600 mb-2">{{ App.user.name }}
+                                {{ App.use.surname }}</span>
+
+                            <!-- Address -->
+                            <address class="media">
+                                <div class="d-flex mr-3">
+                                    <span class="u-icon-v1 g-color-gray-dark-v4">
+                                        <i class="icon-real-estate-027 u-line-icon-pro"></i>
+                                    </span>
+                                </div>
+
+                                <div class="media-body g-color-text">
+                                    {{ App.user.street }}
+                                    <br>
+                                    {{ App.user.name }}
+                                    <br>
+                                    Portland, Or 97252-1777
+                                    <br>
+                                    United States
+                                    <br>
+                                </div>
+                            </address>
+                            <!-- End Address -->
+
+                            <!-- Phone -->
+                            <div class="media">
+                                <div class="d-flex mr-3">
+                                    <span class="u-icon-v1 g-color-gray-dark-v4">
+                                        <i class="icon-electronics-005 u-line-icon-pro"></i>
+                                    </span>
+                                </div>
+                                <div class="media-body g-color-text">
+                                    +(01) 503­-914­-6317
+                                </div>
+                            </div>
+                            <!-- End Phone -->
+                        </div>
+
+                        <!-- Edit/Delete -->
+                        <ul class="d-flex align-items-center list-inline mb-0">
+                            <li class="list-inline-item">
+                                <a class="u-icon-v1 g-font-size-16 g-text-underline--none--hover"
+                                    href="{{ URLSITE }}{{ CoreRequest.action }}/modify"
+                                    title="{{ LocalStrings['modifica %ITEM%']|replace({ '%ITEM%': LocalStrings['profilo'] })|capitalize }}"
+                                    data-toggle="tooltip" data-placement="top">
+                                    <i class="icon-finance-023 u-line-icon-pro"></i>
+                                </a>
+                            </li>
+                            <!--
+							                                <li class="list-inline-item g-width-1 g-height-16 g-bg-gray-light-v2 g-pr-1 ml-2 mr-3"></li>
+							                            -->
+
+                        </ul>
+                        <!-- End Edit/Delete -->
+                    </div>
+                    <!-- End Addresses -->
+                </div>
+            </div>
+        </div>
+        <!-- Addresses -->
+    </div>
+</div>
+
+{{ include('strutture/struttura-call-to-action.html') }}

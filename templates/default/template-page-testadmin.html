@@ -1,0 +1,53 @@
+<!--=== Breadcrumbs ===-->
+{{ App.breadcrumbsBar }}
+<!--=== End Breadcrumbs ===--> 
+
+<div class="container g-pt-50 g-pb-70">
+	{% if App.pageData.blocks is iterable %}
+		{% for key,value in App.pageData.blocks %}
+			<div class="mb-20">
+        		<h2 class="h3 g-color-black g-font-weight-600 mb-3">{{ value.title }}</h2>
+        		<div class="mb-4">
+					{{ value.content|raw }}	      
+				</div>			
+			</div>	
+
+			<div class="col d-flex justify-content-center">
+			<div class="card mb-3 w-50 bg-secondary pull-center">
+				<div class="row no-gutters">
+					<div class="col-md-4">
+						<img src="{{ UPLOADDIR }}uploadfiles/sezioneadmin.png" class="card-img" alt="admin section">
+					</div>
+					<div class="col-md-8">
+						<div class="card-body text-center">
+							<h5 class="text-light">{{ LocalStrings['['login']|capitalize }}</h5>
+						
+						
+							<div class="container mt-5">
+								<div class="row">
+									<div class="col-sm text-light"><strong>Username:</strong></div>
+									<div class="col-sm text-light">utente</div>
+								</div>
+						
+								<div class="row">
+									<div class="col-sm text-light"><strong>Password:</strong></div>
+									<div class="col-sm text-light">utente</div>
+								</div>
+							</div>
+							
+						</div>
+
+					</div>
+				</div>
+			</div>
+			</div>		
+
+			<div class="col d-flex justify-content-center mt-2">
+				<a class="btn btn-md u-btn-skew u-btn-primary g-mr-10 g-mb-15" href="{{ value.url }}" title="{{ value.url_text }}" target="{{ value.target }}">
+					<span class="u-btn-skew__inner">{{ value.url_text }}</span>
+				</a>
+			</div>	
+
+		{% endfor %}
+	{% endif %}
+</div>

@@ -1,0 +1,225 @@
+<!-- admin/help/formContact.html v.1.0.0. 23/06/2021 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{ App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+
+		<ul class="nav nav-tabs" id="formTab" role="tablist">	
+			<li class="nav-item">
+				<a class="nav-link active" href="#datibase" id="datibase-tab" aria-controls="datibase" aria-selected="true" data-toggle="tab">{{ LocalStrings['dati base']|capitalize }}</a>
+			</li>
+			
+			<li class="nav-item">
+				<a class="nav-link" href="#options" id="options-tab" aria-controls="options" aria-selected="false" data-toggle="tab">{{ LocalStrings['opzioni']|capitalize }}</a>
+			</li>
+  		</ul>
+
+		<form id="applicationForm" class="form-horizontal" role="form" action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}"  enctype="multipart/form-data" method="post">
+
+			<div class="tab-content" id="formTabContent">
+			
+				<!-- sezione dati base  -->
+				<div class="tab-pane active" id="datibase" role="tabpanel" aria-labelledby="datibase">	
+					<fieldset>
+
+						<div class="form-group row">
+							<label 
+							for="nameID" 
+							class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label"
+							>{{ App.params.fields['contacts']['name']['label']|capitalize }}
+							{% if App.params.fields['contacts']['name']['required'] == true %}
+								<span class="required-sign">*</span>
+							{% endif %}
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<input
+								type="text" 
+								name="name" 
+								id="nameID" 
+								value="{{ App.item.name|e('html') }}"  
+								class="form-control" 
+								placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['contacts']['name']['label'] })|capitalize }}"
+								{% if App.params.fields['contacts']['name']['required'] == true %}
+									{% set label = LocalStrings['Devi inserire un %ITEM%!']|replace({'%ITEM%': App.params.fields['contacts']['name']['label'] })  %}
+									required="required" 
+									oninvalid="this.setCustomValidity('{{ label }}')" 
+									oninput="setCustomValidity('')"
+								{% endif %}
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="emailID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">
+								{{ App.params.fields['contacts']['email']['label']|capitalize }}
+								{% if App.params.fields['contacts']['email']['required'] == true %}
+									<span class="required-sign">*</span>
+								{% endif %}
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<input
+								type="email" 
+								name="email" 
+								id="emailID" 
+								value="{{ App.item.email|e('html') }}" 
+								class="form-control" 
+								placeholder="{{ LocalStrings['inserisci una %ITEM%']|replace({ '%ITEM%': App.params.fields['contacts']['email']['label'] })|capitalize }}"
+								{% if App.params.fields['contacts']['email']['required'] == true %} 
+									{% set label = App.params.fields['contacts']['email']['error message']  %}
+									required="required" 
+									oninvalid="this.setCustomValidity('{{ label }}')" 
+									oninput="setCustomValidity('')"
+								{% endif %}
+								>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label for="telephoneID" 
+								class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label"
+								>
+								{{ App.params.fields['contacts']['telephone']['label']|capitalize }}
+								{% if App.params.fields['contacts']['telephone']['required'] == true %}
+									<span class="required-sign">*</span>
+								{% endif %}
+								</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<input
+									type="text" 
+									name="telephone" 
+									id="telephoneID" 
+									value="{{ App.item.telephone|e('html') }}" 
+									class="form-control" 
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['contacts']['telephone']['label'] })|capitalize }}"
+									{% if App.params.fields['contacts']['telephone']['required'] == true %}
+										{% set label = LocalStrings['Devi inserire un %ITEM%!']|replace({'%ITEM%': App.params.fields['contacts']['telephone']['label'] })  %}
+										required="required" 
+										oninvalid="this.setCustomValidity('{{ label }}')" 
+										oninput="setCustomValidity('')"
+									{% endif %}
+									data-errormessage = "{{ App.params.fields['contacts']['telephone']['label']|capitalize }}: {{ App.params.fields['contacts']['telephone']['error message'] }}"
+									data-errorvalidationmessage = "{{ App.params.fields['contacts']['telephone']['label']|capitalize }}: {{ App.params.fields['contacts']['telephone']['validation error message'] }}"
+								>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label for="objectID" 
+								class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label"
+								>
+								{{ App.params.fields['contacts']['object']['label']|capitalize }}
+								{% if App.params.fields['contacts']['email']['required'] == true %}
+									<span class="required-sign">*</span>
+								{% endif %}
+								</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<input
+									type="text" 
+									name="object" 
+									id="objectID" 
+									value="{{ App.item.object|e('html') }}" 
+									class="form-control" 
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['contacts']['object']['label'] })|capitalize }}"
+									{% if App.params.fields['contacts']['object']['required'] == true %} 
+										{% set label = LocalStrings['Devi inserire un %ITEM%!']|replace({'%ITEM%': App.params.fields['contacts']['object']['label'] })  %}
+										required="required" 
+										oninvalid="this.setCustomValidity('{{ label }}')" 
+										oninput="setCustomValidity('')"
+									{% endif %}
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="messageID" 
+								class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label"
+								>
+								{{ App.params.fields['contacts']['message']['label']|capitalize }}
+								{% if App.params.fields['contacts']['email']['required'] == true %}
+									<span class="required-sign">*</span>
+								{% endif %}
+								</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<textarea
+									name="message" 
+									id="messageID" 
+									class="form-control editorHTML" 
+									rows="5" 													
+									{% if App.params.fields['contacts']['object']['required'] == true %} required="required"{% endif %}
+								>{{ App.item.message|e('html') }}</textarea>
+
+							</div>
+						</div>
+
+					</fieldset>					
+				</div>
+				<!-- /sezione dati base  -->
+
+				<!-- sezione opzioni --> 
+				<div class="tab-pane fade" id="options" role="tabpanel" aria-labelledby="options">		
+					<fieldset>
+
+						<div class="form-group row">
+							<label for="ip_addressID" 
+								class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label"
+								>
+								{{ App.params.fields['contacts']['ip_address']['label']|capitalize }}
+								</label>
+							<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<input
+									type="text" 
+									name="ip_address" 
+									id="ip_addressID" 
+									value="{{ App.item.ip_address|e('html') }}" 
+									class="form-control" 
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['contacts']['ip_address']['label'] })|capitalize }}"
+									{% if App.params.fields['contacts']['ip_address']['required'] == true %} required="required"{% endif %}
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-form-label col-form-label-custom-checkbox">{{ App.params.fields['contacts']['is_span']['label']|capitalize }}</label>	
+							<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">		
+								<div class="custom-control custom-checkbox">
+									<input 
+									name="is_span" 
+									id="is_spanID"{% if App.item.is_span == 1 %} checked="checked"{% endif %} 
+									value="1" 
+									type="checkbox" 
+									class="custom-control-input"
+									>
+									<label class="custom-control-label" for="is_spanID"></label>
+								</div>
+							</div>  					
+	   					</div>
+					
+					</fieldset>
+
+				</div>
+				<!-- sezione opzioni -->	  		
+	
+			</div>
+		
+			<hr>
+			<div class="form-group row">
+				<div class="col-md-6 col-xs-12 text-center actionbutton mt-2">
+					<input type="hidden" name="id" id="idID" value="{{ App.id }}">
+					<input type="hidden" name="method" value="{{ App.methodForm }}">
+					<button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ LocalStrings['invia']|capitalize }}</button>
+					{% if App.id > 0 %}
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform">{{ LocalStrings['applica']|capitalize }}</button>
+					{% endif %}
+				</div>
+				<div class="col-md-6 col-xs-12 row-back mt-2">				
+					<a href="{{ URLSITEADMIN }}{{ CoreRequest.action }}/listCont" title="{{ LocalStrings['torna alla lista']|capitalize }}" class="btn btn-success">{{ LocalStrings['indietro']|capitalize }}</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>

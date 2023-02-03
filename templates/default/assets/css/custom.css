@@ -1,0 +1,51 @@
+/* Add here all your css styles (customizations) */
+
+.megamenu-categories-g-pos-abs,
+.home-category-g-pos-abs,
+.home-categoryrandom-g-pos-abs
+{
+    background-color: rgb(230, 230, 230);
+    opacity: 0.6;
+    padding: 3px 10px;
+}
+
+.megamenu-h1
+{
+    font-size: 1.5rem !important;
+}
+
+
+.megamenu-h2 
+{
+    font-size: 1.1rem !important;
+}
+
+.home-d-block-category-color
+{
+    opacity: 1;
+}
+
+.home-category-g-pos-abs h2
+{
+    font-size: 1.5rem !important;
+    opacity: 1;
+}
+
+.home-newarrival-article .h5{
+    font-size: 1.0rem !important;
+}
+
+
+.overlay-for-content
+{
+    background-color: rgb(230, 230, 230);
+    opacity: 0.6;
+    padding: 3px 10px;
+    color:black !important;
+}
+.nooverlay-for-content
+{
+    background-color: rgb(230, 230, 230);
+    padding: 3px 10px;
+    color:black !important;
+}

@@ -1,0 +1,53 @@
+<!-- admin/help/formConfiguration.html v.1.0.0. 26/06/2021 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{
+		App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+
+		<form id="applicationForm" class="form-horizontal" role="form"
+			action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}" enctype="multipart/form-data"
+			method="post">
+
+			{% set lang = LocalStrings['user'] %}
+			{% set nolang = 'lang' %}
+			
+			<fieldset>
+		
+
+						<div class="form-group row">
+							<label for="email_addressID" class="col-sm-12 col-md-12 col-lg-4 col-xl-3 col-form-label">
+								{{ LocalStrings['indirizzo email']|capitalize }}
+								<br><small>{{ attribute(App.contact_help['email_address'], lang) }}</small>
+							</label>
+							<div class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
+								<input type="text" class="form-control" name="email_address" id="email_addressID"
+									value="{{ App.contact_config.email_address|e('html') }}"
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': LocalStrings['indirizzo email'] })|capitalize }}">
+							</div>
+						</div>
+
+
+			</fieldset>
+			
+			<hr>
+			<fieldset>
+				<div class="form-group row">
+					<div class="col-md-12 col-xs-12 text-center actionbutton mt-2">
+						<input type="hidden" name="method" value="{{ App.methodForm }}">
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform">{{
+							LocalStrings['applica']|capitalize }}</button>
+					</div>
+				</div>
+
+
+			</fieldset>
+		</form>
+
+
+	</div>
+</div>

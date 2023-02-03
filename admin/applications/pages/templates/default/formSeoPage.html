@@ -1,0 +1,111 @@
+<!-- admin/pages/formSeoPage.html v.1.0.0. 25/03/2021 -->
+<div class="row">
+	<div class="col-md-3 new"></div>
+	<div class="col-md-7 help-small-form">{% if App.params.help_small is defined and App.params.help_small != '' %}{{ App.params.help_small }}{% endif %}</div>
+	<div class="col-md-2 help"></div>
+</div>
+
+<div class="card shadow mt-3 mb-4">
+	<div class="card-body">
+		<ul class="nav nav-tabs" id="formTab" role="tablist">
+			{% for lang in GlobalSettings['languages'] %}		
+				<li class="nav-item">
+					<a class="nav-link{% if lang == LocalStrings['user'] %} active{% endif %}" href="#seo{{ lang }}" id="seo{{ lang }}-tab" data-toggle="tab" role="tab" aria-controls="seo{{ lang }}" aria-selected="false">{{ LocalStrings['Tag SEO'] }} {{ lang }}</a>
+				</li>
+			{% endfor %}
+  		</ul>
+
+		<form id="applicationForm" method="post" class="form-horizontal" role="form" action="{{ URLSITEADMIN }}{{ CoreRequest.action }}/{{ App.methodForm }}"  enctype="multipart/form-data" method="post">
+			<!-- Tab panes -->	
+			<div class="tab-content" id="formTabContent">
+			
+				<!-- sezione dati base dinamica lingue -->
+				{% for lang in GlobalSettings['languages'] %} 
+					{% set metaTitleField = "meta_title_#{lang}" %}
+					{% set metaDescriptionField = "meta_description_#{lang}" %}
+					{% set metaKeywordField = "meta_keyword_#{lang}" %}
+					{% set titleSeoField = "title_seo_#{lang}" %}
+
+					<div class="tab-pane fade show{% if lang == LocalStrings['user'] %} active{% endif %}" id="seo{{ lang }}" role="tabpanel" aria-labelledby="seo{{ lang }}-tab">
+						<fieldset>
+											
+                            <div class="form-group row">
+								<label for="meta_title_{{ lang }}ID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item'][metaTitleField]['label']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+									<input 
+									type="text" 
+									class="form-control" 
+									name="meta_title_{{ lang }}" 
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['item'][metaTitleField]['label'] })|capitalize }}"id="meta_title_{{ lang }}ID" 
+									value="{{ attribute(App.item, metaTitleField)|e('html') }}"
+									>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label for="description_{{ lang }}ID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item'][metaDescriptionField]['label']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+									<textarea 
+									data-bv-stringlength="true" 
+									data-bv-stringlength-min="0" 
+									data-bv-stringlength-max="300" 
+									data-bv-stringlength-message="{{ LocalStrings['massimo %ITEM% caratteri']|replace({ '%ITEM%': '300' })|capitalize }}" 
+									data-messagecontainer="metaDescriptionLength{{ lang|upper }}ID" 
+									name="meta_description_{{ lang }}" 
+									class="form-control checknumchars" 
+									id="meta_description_{{ lang }}ID" 
+									rows="4"
+									>{{ attribute(App.item, metaDescriptionField)|e('html') }}</textarea>
+									<small class="form-text text-muted">
+										{{ LocalStrings['caratteri disponibili']|capitalize }}: <span id="metaDescriptionLength{{ lang|upper }}ID">300</span>
+									</small>
+								</div>	
+							</div>
+
+							<div class="form-group row">
+								<label for="meta_keyword_{{ lang }}ID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item'][metaKeywordField]['label']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+									<textarea name="meta_keyword_{{ lang }}" class="form-control" id="meta_keyword_{{ lang }}ID" rows="2">{{ attribute(App.item, metaKeywordField)|e('html') }}</textarea>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label for="title_seo_{{ lang }}ID" class="col-sm-12 col-md-12 col-lg-2 col-xl-2 col-form-label">{{ App.params.fields['item'][titleSeoField]['label']|capitalize }}</label>
+								<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+									<input 
+									type="text" 
+									class="form-control" 
+									name="title_seo_{{ lang }}" 
+									placeholder="{{ LocalStrings['inserisci un %ITEM%']|replace({ '%ITEM%': App.params.fields['item'][titleSeoField]['label'] })|capitalize }}"id="meta_title_{{ lang }}ID" 
+									id="title_seo_{{ lang }}ID" 
+									value="{{ attribute(App.item, titleSeoField)|e('html') }}"
+									>
+								</div>
+							</div>	
+					
+						</fieldset>				
+					</div>		
+
+				{% endfor %}
+				<!-- /sezione dati base dinamica lingue -->	
+			</div>
+			<!--/Tab panes -->			
+			<hr>
+			<div class="form-group row">
+
+				<div class="col-md-6 col-xs-12 text-center actionbutton mt-2">
+					<input type="hidden" name="id" id="idID" value="{{ App.id }}">
+					<input type="hidden" name="method" value="{{ App.methodForm }}">
+					<button type="submit" name="submitForm" value="submit" class="btn btn-primary submittheform">{{ LocalStrings['invia']|capitalize }}</button>
+					{% if App.id > 0 %}
+						<button type="submit" name="applyForm" value="apply" class="btn btn-primary submittheform ml-5">{{ LocalStrings['applica']|capitalize }}</button>
+					{% endif %}				
+				</div>
+				<div class="col-md-6 col-xs-12 text-center deletebutton mt-2">
+					<a href="{{ URLSITEADMIN }}{{ CoreRequest.action }}/listPage" title="{{ LocalStrings['torna alla lista']|capitalize }}" class="btn btn-success">{{ LocalStrings['indietro']|capitalize }}</a>
+				</div>
+				
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,286 @@
+<footer class="g-bg-main-light-v1">
+    <!-- Content -->
+    <div class="g-brd-bottom g-brd-secondary-light-v1">
+        <div class="container g-pt-100">
+            <div class="row justify-content-start g-mb-30 g-mb-0--md">
+                <!-- lista prodotti -->
+                <div class="col-md-5 g-mb-30">
+                    <h2 class="h5 g-color-gray-light-v3 mb-4">{{ LocalStrings['prodotti']|capitalize }}</h2>
+
+                    <div class="row">
+                        <div class="col-4 g-mb-20">
+                            <!-- Links --> 
+                            <ul class="list-unstyled g-font-size-13 mb-0">
+                                {% if App.siteCategories['left'] is iterable  and App.siteCategories['left']|length > 0 %}
+                                    {% for key,value in App.siteCategories['left'] %}
+                                        {% set titleField = "title_#{LocalStrings['user']}" %}
+                                        <li class="g-mb-10">
+                                            <a class="u-link-v5 g-color-gray-dark-v5 g-color-primary--hover"
+                                                    href="{{ value.url }}">{{ attribute(value,titleField) }}</a>
+                                        </li>                       
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                            <!-- End Links -->
+                        </div>
+
+                        <div class="col-4 g-mb-20">
+                            <!-- Links -->
+                            <ul class="list-unstyled g-font-size-13 mb-0">
+                                {% if App.siteCategories['center'] is iterable  and App.siteCategories['center']|length > 0 %}
+                                    {% for key,value in App.siteCategories['center'] %}
+                                        {% set titleField = "title_#{LocalStrings['user']}" %}
+                                        <li class="g-mb-10">
+                                            <a class="u-link-v5 g-color-gray-dark-v5 g-color-primary--hover"
+                                                    href="{{ value.url }}">{{ attribute(value,titleField) }}</a>
+                                        </li>                       
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                            <!-- End Links -->
+                        </div>
+
+                        <div class="col-4 g-mb-20">
+                            <!-- Links -->
+                            <ul class="list-unstyled g-font-size-13 mb-0">
+                                {% if App.siteCategories['right'] is iterable  and App.siteCategories['right']|length > 0 %}
+                                    {% for key,value in App.siteCategories['right'] %}
+                                        {% set titleField = "title_#{LocalStrings['user']}" %}
+                                        <li class="g-mb-10">
+                                            <a class="u-link-v5 g-color-gray-dark-v5 g-color-primary--hover"
+                                                    href="{{ value.url }}">{{ attribute(value,titleField) }}</a>
+                                        </li>                       
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                            <!-- End Links -->
+                        </div>
+                    </div>
+                </div>
+                <!-- lista prodotti -->
+                <!-- lista brand -->
+                <div class="col-sm-6 col-md-3 g-mb-30 g-mb-0--sm">
+                    <h2 class="h5 g-color-gray-light-v3 mb-4">{{ LocalStrings['marchi']|capitalize }}</h2>
+                    <div class="row">
+                        <div class="col-6 g-mb-20">
+                         <!-- Links -->
+                            <ul class="list-unstyled g-font-size-13 mb-0">
+                                {% if App.siteBrand['left'] is iterable  and App.siteBrand['left']|length > 0 %}
+                                    {% for key,value in App.siteBrand['left'] %}
+                                        {% set titleField = "title_#{LocalStrings['user']}" %}
+                                        <li class="g-mb-10">
+                                            <a class="u-link-v5 g-color-gray-dark-v5 g-color-primary--hover"
+                                                    href="{{ value.url }}">{{ attribute(value,titleField) }}</a>
+                                        </li>                       
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                            <!-- End Links -->
+                        </div>
+                        <div class="col-6 g-mb-20">
+                            <!-- Links -->
+                            <ul class="list-unstyled g-font-size-13 mb-0">
+                                {% if App.siteBrand['right'] is iterable  and App.siteBrand['right']|length > 0 %}
+                                    {% for key,value in App.siteBrand['right'] %}
+                                        {% set titleField = "title_#{LocalStrings['user']}" %}
+                                        <li class="g-mb-10">
+                                            <a class="u-link-v5 g-color-gray-dark-v5 g-color-primary--hover"
+                                                    href="{{ value.url }}">{{ attribute(value,titleField) }}</a>
+                                        </li>                      
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                            <!-- End Links -->
+                        </div>
+                    </div>
+                </div>
+                <!-- lista brand -->
+                <!-- lista contatti -->
+                <div class="col-sm-5 col-md-3 ml-auto g-mb-30 g-mb-0--sm">
+                    <h2 class="h5 g-color-gray-light-v3 mb-4">{{ LocalStrings['contatti']|capitalize }}</h2>
+                    <!-- Links -->
+                    <ul class="list-unstyled g-color-gray-dark-v5 g-font-size-13">
+                        <li class="media my-3">
+                            <i class="d-flex mt-1 mr-3 icon-hotel-restaurant-235 u-line-icon-pro"></i>
+                            <div class="media-body">
+                               {{ GlobalSettings['azienda indirizzo'] }}
+                                <br>
+                                {{ GlobalSettings['azienda comune'] }} {{ GlobalSettings['azienda cap'] }}
+                                <br>
+                                {{ GlobalSettings['azienda provincia'] }} {{ GlobalSettings['azienda nazione'] }}
+                            </div>
+                        </li>
+                        <li class="media my-3">
+                            <i class="d-flex mt-1 mr-3 icon-communication-062 u-line-icon-pro"></i>
+                            <div class="media-body">
+                                {{ GlobalSettings['azienda email'] }}
+                            </div>
+                        </li>
+                        <li class="media my-3">
+                            <i class="d-flex mt-1 mr-3 icon-communication-062 u-line-icon-pro"></i>
+                            <div class="media-body">
+                                {{ GlobalSettings['azienda pec'] }}
+                            </div>
+                        </li>
+                        <li class="media my-3">
+                            <i class="d-flex mt-1 mr-3 icon-communication-033 u-line-icon-pro"></i>
+                            <div class="media-body">
+                                {{ GlobalSettings['azienda telefono'] }}
+                            </div>
+                        </li>
+                        <li class="media my-3">
+                            <i class="d-flex mt-1 mr-3 icon-communication-023 u-line-icon-pro"></i>
+                            <div class="media-body">
+                                {{ GlobalSettings['azienda mobile'] }}
+                            </div>
+                        </li>
+                        <li class="media my-3">
+                            <i class="d-flex mt-1 mr-3 icon-communication-054 u-line-icon-pro"></i>
+                            <div class="media-body">
+                                {{ GlobalSettings['azienda fax'] }}
+                            </div>
+                        </li> 
+                    </ul>
+                    <!-- End Links -->
+                </div>
+                <!-- lista contatti -->
+            </div>
+
+            <!-- Secondary Content -->
+            <div class="row">
+                <div class="col-md-4 g-mb-50">
+                    <h2 class="h5 g-color-gray-light-v3 mb-4">{{ LocalStrings['iscrizione']|capitalize }}</h2>
+                    <!-- Subscribe Form -->
+                    <form class="input-group u-shadow-v19 rounded">
+                        <input
+                            class="form-control g-brd-none g-color-gray-dark-v5 g-bg-main-light-v2 g-bg-main-light-v2--focus g-placeholder-gray-dark-v3 rounded g-px-20 g-py-8"
+                            type="email" placeholder="{{ LocalStrings['inserisci un indirizzo email']|capitalize }}">
+                        <span class="input-group-addon u-shadow-v19 g-brd-none g-bg-main-light-v2 g-pa-5">
+                            <button class="btn u-btn-primary rounded text-uppercase g-py-8 g-px-18"
+                                type="submit">
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </span>
+                    </form>
+                    <!-- End Subscribe Form -->
+                </div>
+                <!-- lingua e valuta -->
+                <div class="col-6 col-md-3 offset-lg-1 g-mb-30">
+                    <h2 class="h5 g-color-gray-light-v3 mb-4">{{ LocalStrings['lingua']|capitalize }}/{{ LocalStrings['valuta']|capitalize }}</h2>
+                    <!-- Large Button Group -->
+                    <!-- LocalStrings['uage -->                               
+                        {% if App.languagesBarFooter is defined and  App.languagesBarFooter != '' %}                                   
+                                {{ App.languagesBarFooter|raw }}
+                        {% endif %}	                                                                                                 
+                    <!-- End LocalStrings['uage -->
+
+                    <!-- End Large Button Group -->
+                    <!-- Large Button Group -->
+                    <div class="btn-group dropup">
+                        <button
+                            class="btn btn-black g-bg-main-light-v1 btn-lg g-color-gray-dark-v5 g-color-primary--hover g-font-size-default g-pl-0"
+                            type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mr-2 fa fa-euro"></i>
+                            Euro
+                            <i class="mr-2 g-font-size-12 ml-2 fa fa-caret-up"></i>
+                        </button>
+                    </div>
+                    <!-- End Large Button Group -->
+                </div>
+                <!-- lingua e valuta -->
+                <div class="col-6 col-md-3 ml-auto g-mb-30">
+                    <h2 class="h5 g-color-gray-light-v3 mb-4">{{ LocalStrings['seguici su']|capitalize }}:</h2>
+                    <!-- Social Icons -->
+                    <ul class="list-inline mb-50">
+                        {% if GlobalSettings['facebook link'] is defined and GlobalSettings['facebook link'] != '' %}                                               
+                        <li class="list-inline-item g-mr-2">
+                            <a href="{{ GlobalSettings['facebook link'] }}" title="{{ LocalStrings['vai all account'] }} facebook" target="_blank" class="u-icon-v1 u-icon-slide-up--hover g-color-gray-dark-v4 g-color-white--hover g-bg-facebook--hover rounded">
+                                <i class="g-font-size-18 g-line-height-1 u-icon__elem-regular fa fa-facebook"></i>
+                                <i class="g-color-white g-font-size-18 g-line-height-0_8 u-icon__elem-hover fa fa-facebook"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if GlobalSettings['twitter link'] is defined and GlobalSettings['twitter link'] != '' %}           
+                        <li class="list-inline-item g-mx-2">
+                            <a href="{{ GlobalSettings['twitter link'] }}" title="{{ LocalStrings['vai all account'] }} twitter" target="_blank"class="u-icon-v1 u-icon-slide-up--hover g-color-gray-dark-v4 g-color-white--hover g-bg-twitter--hover rounded">
+                                <i class="g-font-size-18 g-line-height-1 u-icon__elem-regular fa fa-twitter"></i>
+                                <i class="g-color-white g-font-size-18 g-line-height-0_8 u-icon__elem-hover fa fa-twitter"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if GlobalSettings['instagram link'] is defined and GlobalSettings['instagram link'] != '' %}                                              
+                        <li class="list-inline-item g-mx-2">
+                            <a href="{{ GlobalSettings['instagram link'] }}" title="{{ LocalStrings['vai all account'] }} instagram" target="_blank" class="u-icon-v1 u-icon-slide-up--hover g-color-gray-dark-v4 g-color-white--hover g-bg-instagram--hover rounded">
+                                <i class="g-font-size-18 g-line-height-1 u-icon__elem-regular fa fa-instagram"></i>
+                                <i class="g-color-white g-font-size-18 g-line-height-0_8 u-icon__elem-hover fa fa-instagram"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if GlobalSettings['google-plus link'] is defined and GlobalSettings['google-plus link'] != '' %}
+                        <li class="list-inline-item g-mx-2">
+                            <a href="{{ GlobalSettings['google-plus link'] }}" title="{{ LocalStrings['vai all account'] }} google-plus" target="_blank" class="u-icon-v1 u-icon-slide-up--hover g-color-gray-dark-v4 g-color-white--hover g-bg-google-plus--hover rounded">
+                                <i class="g-font-size-18 g-line-height-1 u-icon__elem-regular fa fa-google-plus"></i>
+                                <i class="g-color-white g-font-size-18 g-line-height-0_8 u-icon__elem-hover fa fa-google-plus"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if GlobalSettings['linkedin link'] is defined and GlobalSettings['linkedin link'] != '' %}                                   
+                        <li class="list-inline-item g-mx-2">
+                            <a href="{{ GlobalSettings['linkedin link'] }}" title="{{ LocalStrings['vai all account'] }} linkedin" target="_blank" class="u-icon-v1 u-icon-slide-up--hover g-color-gray-dark-v4 g-color-white--hover g-bg-linkedin--hover rounded">
+                                <i class="g-font-size-18 g-line-height-1 u-icon__elem-regular fa fa-linkedin"></i>
+                                <i class="g-color-white g-font-size-18 g-line-height-0_8 u-icon__elem-hover fa fa-linkedin"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <!-- End Social Icons -->
+                </div>
+            </div>
+            <!-- End Secondary Content -->
+        </div>
+    </div>
+    <!-- End Content -->
+
+    <!-- Copyright -->
+    <div class="container g-pt-30 g-pb-10">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-md-3 g-mb-20">
+                 <p class="g-font-size-13 mb-0">{{ GlobalSettings['anno creazione'] }} &copy;. {{ LocalStrings['tutti i diritti riservati']|title }}.</p>
+            </div>
+            <div class="col-md-5 g-mb-20">
+                 <p class="g-font-size-13 mb-0">
+                    {{ LocalStrings['c. f.']|upper }}: {{ GlobalSettings['azienda codice fiscale'] }} - 
+                    {{ LocalStrings['p. iva']|upper }}: {{ GlobalSettings['azienda partita iva'] }} - 
+                    SID: {{ GlobalSettings['azienda sid'] }}                    
+                </p>
+            </div>
+            <div class="col-md-4 text-md-right g-mb-20">
+                <ul class="list-inline g-color-gray-dark-v5 g-font-size-25 mb-0">
+                    <li class="list-inline-item g-cursor-pointer mr-1">
+                        <i class="fa fa-cc-visa" title="Visa" data-toggle="tooltip" data-placement="top"></i>
+                    </li>
+                    <li class="list-inline-item g-cursor-pointer mx-1">
+                        <i class="fa fa-cc-paypal" title="Paypal" data-toggle="tooltip"
+                            data-placement="top"></i>
+                    </li>
+                    <li class="list-inline-item g-cursor-pointer mx-1">
+                        <i class="fa fa-cc-mastercard" title="Master Card" data-toggle="tooltip"
+                            data-placement="top"></i>
+                    </li>
+                    <li class="list-inline-item g-cursor-pointer ml-1">
+                        <i class="fa fa-cc-stripe" title="Stripe" data-toggle="tooltip"
+                            data-placement="top"></i>
+                    </li>
+                    <li class="list-inline-item g-cursor-pointer ml-1">
+                        <i class="fa fa-cc-discover" title="Discover" data-toggle="tooltip"
+                            data-placement="top"></i>
+                    </li>
+                    <li class="list-inline-item g-cursor-pointer ml-1">
+                        <i class="fa fa-cc-jcb" title="JCB" data-toggle="tooltip" data-placement="top"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Copyright -->
+</footer>
